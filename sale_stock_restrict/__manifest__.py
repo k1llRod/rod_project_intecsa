@@ -34,6 +34,7 @@
     'data': [
         'views/res_config_settings_views.xml',
         'views/sale_order.xml',
+        # 'views/sale_order_line.xml',
     ],
     'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',
