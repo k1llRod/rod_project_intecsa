@@ -10,7 +10,6 @@
                    position="after">
                 <field name="qty_available"/>
                 <field name="forecast_quantity"/>
-                <field name="warehouse_ids"/>
             </xpath>
             <xpath expr="//field[@name='payment_term_id']"
                    position="after">

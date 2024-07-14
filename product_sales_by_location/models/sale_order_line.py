@@ -19,7 +19,7 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-from odoo import fields, models
+from odoo import api, fields, models, _
 
 
 class SaleOrderLine(models.Model):
@@ -31,3 +31,17 @@ class SaleOrderLine(models.Model):
                                        domain="[('usage','=','internal')]",
                                        help=' Choose the location from'
                                             ' where the product taken from')
+
+    warehouse_id = fields.Many2one('stock.warehouse', readonly=False)
+    warehouse_ids = fields.Many2one('stock.warehouse', string='Almacen')
+
+    @api.onchange('warehouse_ids')
+    def _onchange_warehouse_ids(self):
+        for record in self:
+            record.warehouse_id = record.warehouse_ids.id
+
+    @api.onchange('line_location_id')
+    def _onchange_warehouse(self):
+        for record in self:
+            record.warehouse_ids = record.line_location_id.warehouse_id.id
+            # record.warehouse_ids = record.line_location_id.warehouse_id.id

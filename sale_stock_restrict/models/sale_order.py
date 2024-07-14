@@ -34,13 +34,7 @@ class SaleOrderLine(models.Model):
     forecast_quantity = fields.Float(
         string="Forecast Quantity",
         help='Count of forecast quantity')
-    warehouse_id = fields.Many2one('stock.warehouse', readonly=False)
-    warehouse_ids = fields.Many2one('stock.warehouse', string='Almacen')
 
-    @api.onchange('warehouse_ids')
-    def _onchange_warehouse_ids(self):
-        for record in self:
-            record.warehouse_id = record.warehouse_ids.id
 
     @api.onchange('product_id')
     def _onchange_product_id(self):
