@@ -1,0 +1,20 @@
+<odoo>
+<!--    <data>-->
+<!--        <record id="sale_order_form_readonly_id" model="ir.ui.view">-->
+<!--            <field name="name">sale.order.form.inh</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale.view_order_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"-->
+<!--                       position="after">-->
+<!--                    <field name="standard_price" string="Costo 1"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//group[@name='partner_details']/field[@name='partner_id']" position="after">-->
+<!--                    <field name="readonly_user"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+<!--    </data>-->
+    <menuitem id="menu_rod_commission" name="Comisiones" parent="sale.sale_menu_root" sequence="22" />
+    <menuitem id="menu_rod_sales_commissions" name="Tipo de comision" parent="menu_rod_commission" action="action_commission_id" sequence="1" />
+</odoo>

@@ -1,0 +1,62 @@
+<odoo>
+    <data>
+        <record id="sale_order_form_readonly_id" model="ir.ui.view">
+            <field name="name">sale.order.form.inh</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"
+                       position="after">
+                    <field name="standard_price" readonly="parent.readonly_user == True" sum="Total"/>
+                    <field name="delivery_cost" sum="Total"/>
+                </xpath>
+                <xpath expr="//group[@name='partner_details']/field[@name='partner_id']" position="after">
+                    <field name="validity"/>
+                    <field name="warranty"/>
+                    <field name="payment_method"/>
+                    <field name="readonly_user"/>
+                    <field name="commission_percentage"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="sale_margin_sale_order_line_form_inh" model="ir.ui.view">
+            <field name="name">sale.order.line.tree.margin.view.form.inh</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='purchase_price']"
+                       position="replace">
+                    <field name="purchase_price" readonly="parent.readonly_user == True" optional="hide"/>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_margin_sale_order_inh" model="ir.ui.view">
+            <field name="name">sale.order.margin.view.form.inh</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='text-nowrap'][1]" position="after">
+                    <label for="cost_total" groups="base.group_user"/>
+                    <div class="text-nowrap" groups="base.group_user">
+                        <field name="cost_total" class="oe_inline"/>
+                    </div>
+                    <label for="commission_total" groups="base.group_user"/>
+                    <div class="text-nowrap" groups="base.group_user">
+                        <field name="commission_total" class="oe_inline"/>
+                        <span class="oe_inline" >
+                            (<field name="commission_percentage" nolabel="1" class="oe_inline" widget="percentage"/>)
+                        </span>
+                    </div>
+                    <label for="delivery_total" groups="base.group_user"/>
+                    <div class="text-nowrap" groups="base.group_user">
+                        <field name="delivery_total" class="oe_inline"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <record id="view_partner_form_inh" model="ir.ui.view">
+            <field name="name">res.partner.form.inh</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="sheet/notebook/page[@name='sales_purchases']" position="after">
+                    <page string="Comisiones" name="commission" invisible="commission_active == False">
+                        <group string="Asignacion">
+                            <group>
+                                <field name="commission_ids"/>
+                                <field name="date"/>
+                                <field name="commission_active" invisible="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

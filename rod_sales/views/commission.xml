@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<!--    <record model="ir.ui.view" id="commission_form_id">-->
+<!--        <field name="name">Comision formulario</field>-->
+<!--        <field name="model">commission</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form>-->
+<!--                <group>-->
+<!--                    <field name="name"/>-->
+<!--                    <field name="percentage"/>-->
+<!--                </group>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+    <record model="ir.ui.view" id="commission_tree_id">
+        <field name="name">Comision tree</field>
+        <field name="model">commission</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name"/>
+                <field name="percentage"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_commission_id">
+        <field name="name">Configuracion comision</field>
+        <field name="res_model">commission</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem
+        name="Comisiones"
+        id="menu_commission_id"
+        action="action_commission_id"
+        parent="sale.menu_sale_config"
+    />
+</odoo>
