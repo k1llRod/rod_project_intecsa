@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sale_margin_sale_order_line_form_inh">
+            <field name="name">sale.view_order_form.inh</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='action_draft']" position="after">
+                    <button name="action_create_payment" string="Registrar comision" class="oe_highlight" type="object" />
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="payment_comision" invisible="0"/>
+                </xpath>
+                <xpath expr="//sheet/div[@name='button_box']" position="after">
+                    <widget name="web_ribbon" text="Pagado" />
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="date_invoice"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

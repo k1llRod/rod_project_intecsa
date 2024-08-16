@@ -812,6 +812,7 @@ class WhatsappComposeMessage(models.TransientModel):
                                     #ATTACHMENT SENT
                                     elif attachment_new_ids:
                                         for att in attachment_new_ids:
+                                            # print ('==Whatsapp Server=',att)
                                             message_attach = {
                                                 'method': 'sendFile',
                                                 'phone': whatsapp,
@@ -826,20 +827,11 @@ class WhatsappComposeMessage(models.TransientModel):
                                             if message_attach['body']:
                                                 send_attach = {}
                                                 status = 'pending'
-                                                # data_attach = json.dumps(message_attach)
-                                                # #_logger.warning('Failed to send Message to WhatsApp number %s, No attachment found', whatsapp)
-                                                # send_attach = KlikApi.post_request(method='sendFile', data=data_attach)
-                                                # if send_attach.get('message')['sent']:        
-                                                #     status = 'send'                
-                                                #     _logger.warning('Success to send Attachment to WhatsApp number %s', whatsapp)
-                                                # else:
-                                                #     status = 'error'
-                                                #     _logger.warning('Failed to send Attachment to WhatsApp number %s', whatsapp)
-                                                chatID = partner.chat_id if partner.chat_id else whatsapp#send_attach.get('chatID')
-                                                vals = self._prepare_mail_message(self.env.user.partner_id.id, chatID, record and record.id, active_model, texttohtml.formatHtml(message.replace('_PARTNER_', partner.name).replace('_NUMBER_', origin).replace('_AMOUNT_TOTAL_', str(self.format_amount(amount_total, currency_id)) if currency_id else '').replace('\xa0', ' ')), message_attach, rec.subject, [partner.id], rec.attachment_ids, send_attach, status)
-                                                MailMessage += MailMessage.sudo().create(vals)
-                                                #partner.chat_id = chatID
-                                                new_cr.commit()
+                                        chatID = partner.chat_id if partner.chat_id else whatsapp#send_attach.get('chatID')
+                                        vals = self._prepare_mail_message(self.env.user.partner_id.id, chatID, record and record.id, active_model, texttohtml.formatHtml(message.replace('_PARTNER_', partner.name).replace('_NUMBER_', origin).replace('_AMOUNT_TOTAL_', str(self.format_amount(amount_total, currency_id)) if currency_id else '').replace('\xa0', ' ')), message_attach, rec.subject, [partner.id], rec.attachment_ids, send_attach, status)
+                                        MailMessage += MailMessage.sudo().create(vals)
+                                        #partner.chat_id = chatID
+                                        new_cr.commit()
                         # else:
                         #     whatsapp = partner._formatting_mobile_number()
                         #     if partner.whatsapp and partner.whatsapp != '0' and whatsapp not in opt_out_list:                          

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="readonly_user_rod" model="res.groups">
+           <field name="name">Coste productos solo lectura</field>
+        </record>
+    </data>
+</odoo>

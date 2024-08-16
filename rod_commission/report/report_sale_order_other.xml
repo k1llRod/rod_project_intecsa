@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <template id="external_layout_inh" inherit_id="web.external_layout_standard">-->
+<!--            <xpath expr="//div[1]" position="replace">-->
+<!--                <div class="header">-->
+<!--                    <t1>TEST</t1>-->
+<!--                </div>-->
+
+<!--            </xpath>-->
+<!--        </template>-->
+        <template id="report_sale_order_other">
+            <t t-call="web.html_container">
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"></t>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"></t>
+                </t>
+                <t t-foreach="docs" t-as="o">
+                    <div class="header" style="">
+                        <div class="row mt32 mb32" style="padding-bottom: 10px;border-bottom:1px solid #dddbdb;">
+                            <div class="col-4 text-center" style="">
+                                <tr>
+                                    <!--<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="max-height: 90px;" />-->
+                                    <img t-if="company.logo"
+                                         t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"
+                                         style="resize:both;width:95%;height:auto"/>
+                                </tr>
+                            </div>
+                            <div class="col-4 text-center" style="">
+                                <h2 style="padding-top: 20px;">
+                                    <span>
+                                        <font>PROFORMA</font>
+                                    </span>
+                                    <font>
+                                        <span t-field="o.name"/>
+                                    </font>
+                                </h2>
+                            </div>
+                            <div class="col-4 text-center" style="font-style:arial;font-size:10px;padding-top:10px;">
+                                <span t-field="company.partner_id" style="font-size: 12px;"/>
+                                <br/>
+                                <span>C. LUIS ARCE, ESQ.COMBATIENTE BELLA FLOR</span>
+                                <br/>
+                                <span>PISO</span>
+                                <br/>
+                                <span t-field="company.partner_id.phone"/>
+                                <br/>
+                                <span>Santa Cruz</span>
+                                <br/>
+                                <span t-field="company.partner_id.country_id"/>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <t t-call="web.external_layout">
+                        <div class="page" style="min-height: 100%;">
+                            <div class="oe_structure"/>
+                            <div class="row mt32 mb32">
+                                <div class="col-6" style="font-size:14px;">
+                                    <style type="text/css">
+                                        .transformacion1 { text-transform: capitalize;}
+                                        .transformacion2 { text-transform: uppercase;}
+                                        .transformacion3 { text-transform: lowercase;}
+                                    </style>
+                                    <!--<span t-esc="o.today_date.strftime(' %A, %d de %B del %Y')"></span><br/>-->
+                                    <span class="transformacion1" t-field="o.date_order"
+                                          t-options="{'format': 'eeee, d '}"/>
+                                    de
+                                    <span class="transformacion1" t-field="o.date_order"
+                                          t-options="{'format': 'MMMM '}"/>
+                                    del
+                                    <span t-field="o.date_order" t-options="{'format': 'YYYY'}"/>
+                                    <br/>
+                                    <strong>Señor (es):</strong>
+                                    <br/>
+                                    <span t-field="o.partner_id"/>
+                                    <br/>
+                                    <span t-if="o.partner_id.street"
+                                          t-field="o.partner_id.street"/>
+                                    <br/>
+                                    <span t-if="o.partner_id.street2"
+                                          t-field="o.partner_id.street2"/>
+                                    <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>
+                                    <span t-if="o.partner_id.state_id"
+                                          t-field="o.partner_id.state_id"/>
+                                    <span t-if="o.partner_id.country_id" t-field="o.partner_id.country_id"/>
+                                </div>
+                                <div class="col-6 text-left" style="font-size:14px;">
+                                    <br/>
+                                    <strong t-if="o.vr_validez">Validéz:</strong>
+                                    <span t-if="o.vr_validez" t-field="o.vr_validez"/>
+                                    <br/>
+                                    <strong t-if="o.vr_garantia">Garantía:</strong>
+                                    <span t-if="o.vr_garantia" t-field="o.vr_garantia"/>
+                                    <br/>
+                                    <strong t-if="o.vr_entrega">Entrega:</strong>
+                                    <span t-if="o.vr_entrega" t-field="o.vr_entrega"/>
+                                    <br/>
+                                    <strong t-if="o.vr_fpago">Forma de pago:</strong>
+                                    <span t-if="o.vr_fpago" t-field="o.vr_fpago"/>
+                                </div>
+                            </div>
+
+                            <!-- Is there a discount on at least one line? -->
+                            <style type="text/css">
+                                table { page-break-inside:auto }
+                                tr { page-break-inside:avoid; page-break-after:auto }
+                                thead { display:table-header-group }
+                                tfoot { display:table-footer-group }
+                            </style>
+                            <t t-set="display_discount" t-value="any([l.discount for l in o.order_line])"/>
+                            <br/>
+                            <table class="table table-bordered"
+                                   style="page-break-inside: auto; page-break-after: auto; font-size:12px;margin-top:10px;">
+                                <col t-if="o.print_image " width="30%"/>
+                                <col width="80%"/>
+                                <col width="10%"/>
+                                <col width="10%"/>
+                                <col width="10%"/>
+                                <tr style="font-size:11px; position:relative; display: contents;orphans: 2;widows: 2;">
+                                    <th t-if="o.print_image" style="orphans: 2;widows: 2;">Imagen</th>
+                                    <th class="text-left" style="orphans: 2;widows: 2;">Descripción</th>
+                                    <th class="text-right" style="orphans: 2;widows: 2;">Cant.</th>
+                                    <th class="text-right" style="orphans: 2;widows: 2;">P. U.</th>
+                                    <th class="text-right" style="orphans: 2;widows: 2;">Subtotal</th>
+                                </tr>
+                                <tbody class="invoice_tbody" style="min-height: 100%; font-size:11px;">
+                                    <t t-foreach="o.order_line" t-as="l">
+                                        <tr t-if="l.product_uom_qty and l.price_unit" style="page-break-inside: auto;">
+                                            <td class="text-center" t-if="o.image_sizes == 'image' and o.print_image "
+                                                style="">
+                                                <img t-if="l.image_small"
+                                                     t-attf-src="data:image/*;base64,{{l.image_small}}"
+                                                     style="resize:both;width:95%;height:auto"/>
+                                            </td>
+                                            <td class="text-center"
+                                                t-if="o.image_sizes == 'image_medium' and o.print_image " style="">
+                                                <img t-if="l.image_small"
+                                                     t-attf-src="data:image/*;base64,{{l.image_small}}"
+                                                     style="resize:both;width:70%;height:auto"/>
+                                            </td>
+                                            <td class="text-center"
+                                                t-if="o.image_sizes == 'image_small' and o.print_image " style="">
+                                                <img t-if="l.image_small"
+                                                     t-attf-src="data:image/*;base64,{{l.image_small}}"
+                                                     style="resize:both;width:50%;height:auto"/>
+                                            </td>
+                                            <td class="text-left" style="">
+                                                <span t-field="l.name"/>
+                                            </td>
+                                            <td class="text-right" style="">
+                                                <span t-field="l.product_uom_qty"/>
+                                                <span groups="product.group_uom" t-field="l.product_uom"/>
+                                            </td>
+                                            <td class="text-right" style="">
+                                                <span t-field="l.price_unit"/>
+                                            </td>
+                                            <td class="text-right" style="">
+                                                <t t-set="t_total" t-value="l.product_uom_qty*l.price_unit"/>
+                                                <t t-esc="'{0:,.2f}'.format(t_total)"/>
+                                            </td>
+                                        </tr>
+                                        <tr t-if="l.display_type == 'line_note' and o.print_image ">
+                                            <td class="text-center" style="">
+                                                &amp;nbsp;
+                                            </td>
+                                            <td class="text-left" colspan="3" style="page-break-after: always;">
+<!--                                                <t t-foreach="l.name.split('br')" t-as="fragment">-->
+<!--                                                    <t t-if="fragment != '' and len(fragment) > 0">-->
+<!--                                                        <span t-esc="fragment"/><br/>-->
+<!--                                                        <p><t t-esc="fragment"/></p>-->
+<!--                                                    </t>-->
+<!--                                                </t>-->
+                                                <span t-field="l.name"/>
+                                            </td>
+
+                                        </tr>
+                                        <tr t-if="l.display_type == 'line_note' and not o.print_image">
+                                            <td class="text-left" colspan="4" style="page-break-after: always;">
+<!--                                                <t t-foreach="l.name.split(' ')" t-as="fragment">-->
+<!--                                                    <t t-if="fragment != '' and len(fragment) > 0">-->
+<!--                                                        <t t-esc="fragment"/>-->
+<!--                                                    </t>-->
+<!--                                                </t>-->
+
+                                                <span t-field="l.name"/>
+                                            </td>
+
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div  name="total">
+                            <div class="col-4 pull-right" style="margin-top: 5px;">
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <td>
+                                            <strong>Total</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.amount_total"
+                                                  t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="oe_structure"/>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

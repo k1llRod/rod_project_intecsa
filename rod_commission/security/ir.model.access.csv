@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_seller_commission,seller_commission,model_seller_commission,base.group_user,1,1,1,1
+access_wizard_commission_payment,wizard_commission_payment,model_wizard_commission_payment,base.group_user,1,1,1,1
+access_commission_payment,commission_payment,model_commission_payment,base.group_user,1,1,1,1

@@ -19,6 +19,7 @@
     'external_dependencies': {'python': ['html2text']},
     'data': [
         'security/ir.model.access.csv',
+        'data/ir_config_parameter.xml',
         'data/whatsapp_data.xml',
         'data/whatsapp_mail_message_cron.xml',
         'views/res_partner_view.xml',

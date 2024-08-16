@@ -62,6 +62,15 @@ class IrWhatsappServer(models.Model):
         help="Users to notify when a message is received and there is no template send in last 15 days")
     notes = fields.Text(readonly=True)
 
+    def _check_whatsapp_number_exist(self):
+        """Method to check mobile is on whatsapp."""
+        number_dict = {}
+        if self.whatsapp_number and self.status == 'authenticated':
+            # whatsapp = self._formatting_mobile_number()
+            # KlikApi = whatsapp_ids.klikapi()
+            number_dict = KlikApi.get_phone(method='checkPhone', phone=self.whatsapp_number)
+        return number_dict
+
     @api.model
     def _find_default_for_server(self):
         return [
@@ -263,6 +272,7 @@ A QR code is valid only for 45 seconds. Message sennding will be available right
             'author_id': self.env['res.partner'].search([('whatsapp','=',sender_mobile)], limit=1).id,#channel.whatsapp_partner_id.id,
             'subtype_xmlid': 'mail.mt_comment',
             'body': messages,
+            'whatsapp_status': 'send',#BIAR GA MASUK SCHEDULER
             # 'whatsapp_number': sender_mobile,
         }
         if attachments:

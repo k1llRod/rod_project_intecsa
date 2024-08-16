@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_seller_commission" model="ir.sequence">
+            <field name="name">Secuencia de comisiones</field>
+            <field name="code">seller.commission</field>
+            <field name="prefix">COM</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="seq_commission_payment" model="ir.sequence">
+            <field name="name">Secuencia de pago de comisiones</field>
+            <field name="code">commission.payment</field>
+            <field name="prefix">PAGCOM</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

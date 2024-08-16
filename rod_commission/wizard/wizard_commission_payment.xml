@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="wizard_commission_payment_id">
+            <field name="name">wizard.commission.payment</field>
+            <field name="model">wizard.commission.payment</field>
+            <field name="arch" type="xml">
+                <form string="Formulario">
+                    <group>
+                        <group string="Pagar comision">
+                            <field name="user_id" readonly="1"/>
+                            <field name="total_commission" readonly="1"/>
+                            <field name="date_from"/>
+                            <field name="date_to" required="1"/>
+                            <field name="seller_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_payment" string="Liquidar" type="object" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

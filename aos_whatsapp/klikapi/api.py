@@ -9,7 +9,9 @@ import datetime
 
 class KlikApi(object):
     def __init__(self, klik_key, klik_secret, **kwargs):
-        self.APIUrl = 'https://klikodoo.id/api/wa/'
+        APIUrl = request.env['ir.config_parameter'].sudo().get_param('aos_whatsapp.url_klikodoo_whatsapp_server')
+        self.APIUrl = APIUrl or 'https://klikodoo.id/api/wa/'
+        # self.APIUrl = 'https://klikodoo.id/api/wa/'
         self.klik_key = klik_key or ''
         self.klik_secret = klik_secret or ''
     

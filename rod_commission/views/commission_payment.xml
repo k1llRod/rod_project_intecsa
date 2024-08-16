@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="commission_payment_tree_id">
+        <field name="name">commission.payment.tree</field>
+        <field name="model">commission.payment</field>
+        <field name="arch" type="xml">
+            <tree string="Comisiones" create="false">
+<!--                <header>-->
+<!--                    <button name="action_confirm" string="Pagar comision" class="oe_highlight" type="object"-->
+<!--                            />-->
+<!--                </header>-->
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="total_commission"/>
+<!--                <field name="state" decoration-success="state == 'done'" decoration-info="state == 'draft'" widget="badge"/>-->
+            </tree>
+        </field>
+
+    </record>
+
+    <record model="ir.ui.view" id="commission_payment_form_id">
+        <field name="name">commission.payment.form</field>
+        <field name="model">commission.payment</field>
+        <field name="arch" type="xml">
+            <form string="Pago de comisiones">
+                <header>
+                    <field name="state" widget="statusbar" />
+                    <button name="register_payment" string="Registrar pago" class="oe_highlight" type="object" invisible="state == 'done'"/>
+                    <button name="register_draft" string="Borrador"  type="object" invisible="state == 'draft'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="user_id" />
+                        <field name="date_from" />
+                        <field name="date_to" />
+                        <field name="total_commission"/>
+<!--                        <field name="seller_ids" readonly="1"/>-->
+                    </group>
+                    <notebook>
+                        <page string="Comisiones">
+                            <field name="seller_ids" readonly="1">
+                                <tree string="Comisiones" editable="bottom">
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+<!--            <div class="oe_chatter">-->
+<!--                <field name="message_follower_ids" groups="base.group_user"/>-->
+<!--                <field name="activity_ids"/>-->
+<!--                <field name="message_ids"/>-->
+<!--            </div>-->
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_commission_payment_id">
+        <field name="name">Liquidacion comisiones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">commission.payment</field>
+        <field name="binding_view_types">tree,form</field>
+    </record>
+
+
+</odoo>

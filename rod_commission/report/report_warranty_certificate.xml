@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <template id="external_layout_inh" inherit_id="web.external_layout_standard">-->
+<!--            <xpath expr="//div[1]" position="replace">-->
+<!--                <div class="header">-->
+<!--                    <t1>TEST</t1>-->
+<!--                </div>-->
+
+<!--            </xpath>-->
+<!--        </template>-->
+        <template id="report_warranty_certificate">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <center><h2>CERTIFICADO DE GARANTIA</h2></center>
+                    <br/>
+                    <table style="width:100%;">
+                        <tr>
+                            <td>N ITC/1685/2024</td>
+                            <td><span t-field="o.name"/></td>
+                        </tr>
+                        <tr>
+                            <td><span t-field="o.date_invoice"/></td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <p>
+                        La empresa INTECSA SRL, en todos sus productos nuevos tiene la garantía
+                        correspondiente del fabricante por el plazo que indica cada producto, salvo
+                        algunas excepciones claramente identificadas. El fabricante de la marca es el
+                        único responsable de esta garantía y la función de INTECSA SRL. es la de
+                        tramitar esa garantía ante el fabricante, por medio de su Centro Autorizado
+                        de Servicio (CAS), para su respectiva reparación y/o cambio de la parte dañada.
+                        INTECSA SRL., hará todo lo posible para procesar todos los productos recibidos
+                        para reparación por garantía en el menor tiempo posible. En este contexto, se
+                        establece que INTECSA SRL estará sujeto a los tiempos de ejecución de garantía
+                        propia de la marca.
+
+                    </p>
+                    <p>
+                        Cualquier defecto debido a componentes o materiales, está cubierto por la
+                        presente garantía, con la excepción de los siguientes casos:
+                    </p>
+                    <p>
+                        <ul>
+                            <li>Problemas derivados de transporte después de la compra.</li>
+                            <li>Falla producida por conexiones externas, derivadas de la instalación, conexión a fuentes de alimentación diferentes a las indicaciones de las especificaciones técnicas del producto.</li>
+                            <li>Mal manejo, mal trato uso indebido del producto o uso de accesorios inadecuados.</li>
+                            <li>Uso del producto bajo condiciones externas: intemperie, humedad, alta temperatura.</li>
+                            <li>Intervención de personal ajeno a nuestros Servicios Técnicos Autorizados</li>
+                            <li>Casos fortuitos o de causa mayor.</li>
+                            <li>Daños accidentales, o por negligencia del CLIENTE en el uso de enchufe, voltaje
+                                inadecuado u otra alteración que afecte la confiabilidad y calidad de la unidad no
+                                atribuible a una falla en la fabricación del equipo de computación y sus accesorios. </li>
+                            <li>Soporte técnico en laboratorio técnico del proveedor</li>
+                        </ul>
+                        Los equipos en garantía son:
+                        <br/>
+                        <div style="border:1px solid black; padding-left:20px; padding-right:20px;">
+                            <t t-foreach="o.order_line" t-as="l">
+                                <span t-field="l.name"/>
+                            </t>
+
+                        </div>
+                        <br/>
+                        <center>MARIO MIGUEL ROBLES MONTAÑO</center>
+                        <center>MANAGER OFFICE</center>
+                    </p>
+
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -11,6 +11,7 @@ import threading
 import requests
 import json
 import logging
+from ..klikapi import texttohtml
 
 _logger = logging.getLogger(__name__)
 
@@ -78,34 +79,57 @@ class MailMessage(models.Model):
                         data = json.loads(data)
                         message_data = {
                             'chatId': mail.whatsapp_chat_id,
-                            'body': html2text.html2text(mail.body),
+                            'body': texttohtml.formatText(mail.body),#html2text.html2text(mail.body),
                             'phone': data.get('phone') or '',
                             'origin': data.get('origin') or '',
                             'link': data.get('link') or '',
                             'get_version': get_version,
                         }
+                        # message_data.update({'body': attachment, 'filename': [att for att in mail.attachment_ids][0].name, 'caption': data.get('caption')})
+                        # data_message = json.dumps(message_data)
                         if mail.whatsapp_method == 'sendFile' and mail.attachment_ids:
-                            attach = [att for att in mail.attachment_ids][0]#.datas
-                            mimetype = guess_mimetype(base64.b64decode(attach.datas))
-                            if mimetype == 'application/octet-stream':
-                                mimetype = 'video/mp4'
-                            str_mimetype = 'data:' + mimetype + ';base64,'
-                            attachment = str_mimetype + str(attach.datas.decode("utf-8"))
-                            message_data.update({'body': attachment, 'filename': [att for att in mail.attachment_ids][0].name, 'caption': data.get('caption')})
-                        #print ('==data_message==',message_data)
-                        data_message = json.dumps(message_data)
-                        # print ('==data_message==',mail.whatsapp_method)
-                        send_message = KlikApi.post_request(method=mail.whatsapp_method, data=data_message)
-                        if send_message.get('message')['sent']:
-                            mail.whatsapp_status = 'send'
-                            mail.whatsapp_response = send_message
-                            _logger.warning('Success send Message to WhatsApp number %s', data.get('phone'))
+                            #KLO ADA ATTACHMENT LEBIH DARI SATU
+                            send_message_response = []
+                            whatsapp_status = 'error'
+                            i = 1
+                            # attach = [att for att in mail.attachment_ids][0]#.datas
+                            for attach in mail.attachment_ids:
+                                mimetype = guess_mimetype(base64.b64decode(attach.datas))
+                                if mimetype == 'application/octet-stream':
+                                    mimetype = 'video/mp4'
+                                str_mimetype = 'data:' + mimetype + ';base64,'
+                                attachment = str_mimetype + str(attach.datas.decode("utf-8"))
+                                message_data.update({'body': attachment, 'filename': attach.name, 'caption': data.get('caption') if i == 1 else ''})
+                                data_message = json.dumps(message_data)
+                                send_message = KlikApi.post_request(method=mail.whatsapp_method, data=data_message)
+                                if send_message.get('message')['sent']:
+                                    whatsapp_status = 'send'
+                                    send_message_response.append(attach.name + ': ' + str(send_message))
+                                    # mail.whatsapp_response += send_message
+                                    _logger.warning('%s. Success send Attachment %s to WhatsApp %s', str(i), attach.name, data.get('phone'))
+                                else:
+                                    whatsapp_status = 'error'
+                                    send_message_response.append(attach.name + ': ' + str(send_message))
+                                    # mail.whatsapp_response += send_message
+                                    _logger.warning('%s. Failed send Attachment %s to WhatsApp %s', str(i), attach.name, data.get('phone'))
+                                i += 1
+                            # print ('==send_message_res?ponse==',send_message_response)
+                            mail.whatsapp_status = whatsapp_status
+                            mail.whatsapp_response = '\n'.join(send_message_response)
+                            new_cr.commit()
                         else:
-                            mail.whatsapp_status = 'error'
-                            mail.whatsapp_response = send_message
-                            _logger.warning('Failed send Message to WhatsApp number %s', data.get('phone'))
-                        #print ('==data_message==',mail,mail.whatsapp_status)
-                        new_cr.commit()
+                            #KLO GA ADA ATTACHMENT
+                            data_message = json.dumps(message_data)
+                            send_message = KlikApi.post_request(method=mail.whatsapp_method, data=data_message)
+                            if send_message.get('message')['sent']:
+                                mail.whatsapp_status = 'send'
+                                mail.whatsapp_response = send_message
+                                _logger.warning('Success send Message to WhatsApp %s', data.get('phone'))
+                            else:
+                                mail.whatsapp_status = 'error'
+                                mail.whatsapp_response = send_message
+                                _logger.warning('Failed send Message to WhatsApp %s', data.get('phone'))
+                            new_cr.commit()
                     finally:
                         pass
         finally:
@@ -117,13 +141,28 @@ class MailMessage(models.Model):
         WhatsappServer = self.env['ir.whatsapp_server']
         whatsapp_ids = WhatsappServer.search([('status','=','authenticated')], order='sequence asc')
         #if len(whatsapp_ids) == 1:            
-        #print ('===',whatsapp_ids,whatsapp_ids.filtered(lambda ws: not ast.literal_eval(str(ws.message_response))))
-        for wserver in whatsapp_ids.filtered(lambda ws: not ast.literal_eval(str(ws.message_response))['block']):
-            #company_id = self.env.user.company_id
-            if wserver.status != 'authenticated':
-                _logger.warning('Whatsapp Authentication Failed!\nConfigure Whatsapp Configuration in General Setting.')
-            KlikApi = wserver.klikapi()
-            KlikApi.auth()
-            thread_start = threading.Thread(target=self._resend_whatsapp_message_resend(KlikApi))
-            thread_start.start()
+        # print ('===',whatsapp_ids,whatsapp_ids.filtered(lambda ws: not ast.literal_eval(str(ws.message_response))))
+        try:
+            #print ('==resend_whatsapp_mail_message==',whatsapp_ids,whatsapp_ids.mapped('message_response'))
+            for wserver in whatsapp_ids.filtered(lambda ws: not ast.literal_eval(str(ws.message_response))['block']):
+                #company_id = self.env.user.company_id
+                if wserver.status != 'authenticated':
+                    _logger.warning('Whatsapp Authentication Failed!\nConfigure Whatsapp Configuration in General Setting.')
+                KlikApi = wserver.klikapi()
+                KlikApi.auth()
+                thread_start = threading.Thread(target=self._resend_whatsapp_message_resend(KlikApi))
+                thread_start.start()
+        except Exception:
+            _logger.exception('Error while checking whatapp connection')
         return True
+        # for wserver in whatsapp_ids.filtered(lambda ws: not ast.literal_eval(str(ws.message_response))['block']):
+        #     #company_id = self.env.user.company_id
+        #     if wserver.status != 'authenticated':
+        #         _logger.warning('Whatsapp Authentication Failed!\nConfigure Whatsapp Configuration in General Setting.')
+        #     KlikApi = wserver.klikapi()
+        #     KlikApi.auth()
+        #     thread_start = threading.Thread(target=self._resend_whatsapp_message_resend(KlikApi))
+        #     thread_start.start()
+        # return True
+
+    

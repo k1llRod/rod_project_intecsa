@@ -11,8 +11,8 @@
             <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_template_id']"
                    position="after">
                 <field name="line_location_id"/>
-                <field name="warehouse_ids"/>
-                <field name="warehouse_id"/>
+                <field name="warehouse_ids" column_invisible="1"/>
+                <field name="warehouse_id" column_invisible="1"/>
             </xpath>
         </field>
     </record>

@@ -25,7 +25,8 @@ class Partner(models.Model):
     def _onchange_mobile(self):
         if not self.mobile:
             return
-        self.whatsapp = self.mobile.replace('+','').replace(' ','').replace('-','') if self.mobile else ''
+        mobile_validate = self._phone_format(fname='mobile', force_format='INTERNATIONAL') or self.mobile
+        self.whatsapp = mobile_validate.replace('+','').replace(' ','').replace('-','')
     
     def send_whatsapp(self):
         return {

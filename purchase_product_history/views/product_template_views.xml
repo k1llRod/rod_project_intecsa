@@ -12,7 +12,8 @@
             <notebook position="inside">
                 <page string="Purchase History" name="po_history">
                     <field name="po_history_line_ids">
-                        <tree editable="bottom">
+                        <tree editable="bottom">}
+                            <field name="partner_id"/>
                             <field name="order_reference_id"/>
                             <field name="description"/>
                             <field name="price_unit"/>

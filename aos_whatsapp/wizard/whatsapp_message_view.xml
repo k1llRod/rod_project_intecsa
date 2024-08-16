@@ -50,7 +50,7 @@
     <menuitem id="menu_contacts_whatsapp" 
         name="Whatsapp" 
         parent="contacts.menu_contacts"
-        sequence="25"
+        sequence="35"
         />
         
     <record id="action_whatsapp_compose_message_post" model="ir.actions.act_window">

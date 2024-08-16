@@ -58,6 +58,7 @@ class ProductTemplate(models.Model):
         ], limit=(None if limit == 0 else limit))
         self.env['purchase.template.history.line'].create([
             {
+                'partner_id': rec.order_id.partner_id.id,
                 'history_id': self.id,
                 'order_reference_id': rec.order_id.id,
                 'description': rec.name,

@@ -62,6 +62,7 @@ class ProductProduct(models.Model):
                     [('product_id', '=', self.id), ('state', 'in', state)],
                     limit=int(limit))
             self.env['purchase.product.history.line'].create([{
+                'partner_id': line.partner_id.id,
                 'product_history_id': self.id,
                 'order_reference_id': line.order_id.id,
                 'description': line.name,

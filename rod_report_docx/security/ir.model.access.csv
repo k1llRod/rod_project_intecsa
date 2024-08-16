@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rod_report_docx_rod_report_docx,rod_report_docx.rod_report_docx,model_rod_report_docx_rod_report_docx,base.group_user,1,1,1,1

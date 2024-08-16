@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_seller_commission_tree_id">
+        <field name="name">seller.commission.tree</field>
+        <field name="model">seller.commission</field>
+        <field name="arch" type="xml">
+            <tree
+                string="Settlements"
+                decoration-muted="state == 'done'"
+                editable="bottom"
+                create="false">
+                <header>
+                    <button name="action_confirm" string="Pagar comision" class="oe_highlight" type="object"
+                            />
+                </header>
+                <field name="name" readonly="1"/>
+                <field name="agent_id" readonly="1"/>
+                <field name="sale_id" readonly="1"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="amount_untaxed" sum="Total"/>
+                <field name="amount_tax" sum="Total"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="cost_total" sum="Total"/>
+                <field name="total" sum="Settled total"/>
+                <field name="state" decoration-success="state == 'done'" decoration-info="state == 'draft'" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_search_seller_commission" model="ir.ui.view">
+        <field name="name">Buscar comision</field>
+        <field name="model">seller.commission</field>
+        <field name="arch" type="xml">
+            <search string="Search Model Name">
+                <filter string="Por Estado" name="state" domain="[('state','in',('draft','done'))]" />
+                <!-- Agrupadores por defecto -->
+                <group expand="1" string="Agrupadores">
+                    <filter string="Por Fecha" name="date_from" context="{'group_by': 'date_from'}"/>
+                    <filter string="Por vendedor" name="agent_id" context="{'group_by': 'agent_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_seller_commission">
+        <field name="name">Liquidacion comisiones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">seller.commission</field>
+        <field name="binding_view_types">tree,form</field>
+    </record>
+    <menuitem
+            name="Liquidacion comisiones"
+            id="menu_seller_commission"
+            parent="sale.sale_menu_root"
+            sequence="100"
+            groups="sales_team.group_sale_manager"
+    />
+    <menuitem
+            id="menu_seller_commission_tree"
+            name="Lista de comisiones"
+            parent="rod_commission.menu_seller_commission"
+            action="action_seller_commission"
+            sequence="1"/>
+    <menuitem
+            id="menu_seller_commission_form"
+            name="Pago de comisiones"
+            parent="rod_commission.menu_seller_commission"
+            action="action_commission_payment_id"
+            sequence="2"/>
+<!--    <menuitem-->
+<!--            id="menu_commission_payment_form"-->
+<!--            name="Nota de pago comision"-->
+<!--            parent="rod_commission.menu_seller_commission_tree"-->
+<!--            action="action_commission_payment"-->
+<!--            sequence="3"/>-->
+</odoo>

@@ -27,6 +27,8 @@ class PurchaseProductHistoryLine(models.Model):
     _name = 'purchase.product.history.line'
     _description = 'Product history line for product'
 
+    partner_id = fields.Many2one('res.partner', string='Proveedor',)
+
     product_history_id = fields.Many2one('product.product', string='Product',
                                          help='Name of the product')
     order_reference_id = fields.Many2one('purchase.order', string='Order',

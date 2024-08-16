@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--     <record id="action_report_pdf_sale_order_other" model="ir.actions.report">-->
+<!--        <field name="name">Cotización / pedido Santa Cruz</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="report_name">rod_intecsa.report_sale_order_other</field>-->
+<!--        <field name="report_file">rod_intecsa.report.report_sale_order_other</field>-->
+<!--        <field name="binding_model_id" ref="sale.model_sale_order"/>-->
+<!--        <field name="paperformat_id" ref="rod_cooperativa_aportes.paperformat_certificate" />-->
+<!--        <field name="binding_type">report</field>-->
+<!--    </record>-->
+    <record id="action_report_pdf_sale_order_other" model="ir.actions.report">
+        <field name="name">Recibo de pago</field>
+        <field name="model">commission.payment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">rod_commission.payment_receipt_pdf_id</field>
+        <field name="report_file">rod_commission.payment_receipt_pdf_id</field>
+        <field name="binding_model_id" ref="rod_commission.model_commission_payment"/>
+<!--        <field name="paperformat_id" ref="rod_cooperativa_aportes.paperformat_certificate" />-->
+        <field name="binding_type">report</field>
+    </record>
+
+<!--    <record id="paperformat_warranty_certificate" model="report.paperformat">-->
+<!--        <field name="name">Warranty certificate Paperformat</field>-->
+<!--        <field name="default" eval="True" />-->
+<!--        <field name="format">custom</field>-->
+<!--        <field name="page_height">279</field> &lt;!&ndash; Tamaño carta en puntos &ndash;&gt;-->
+<!--        <field name="page_width">216</field>-->
+<!--        <field name="orientation">Portrait</field>-->
+<!--        <field name="margin_top">25</field> &lt;!&ndash; Margen superior en puntos &ndash;&gt;-->
+<!--        <field name="margin_bottom">25</field>-->
+<!--        <field name="margin_left">25</field>-->
+<!--        <field name="margin_right">25</field>-->
+<!--        <field name="header_line" eval="False"/>-->
+<!--        <field name="header_spacing">20</field>-->
+<!--        &lt;!&ndash; Otros campos del formato de papel según tus necesidades &ndash;&gt;-->
+<!--    </record>-->
+
+<!--    <record id="action_report_warranty_certificate" model="ir.actions.report">-->
+<!--        <field name="name">Certificado de garantia</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="report_name">rod_intecsa.report_warranty_certificate</field>-->
+<!--        <field name="report_file">rod_intecsa.report_warranty_certificate</field>-->
+<!--        <field name="binding_model_id" ref="sale.model_sale_order"/>-->
+<!--        <field name="paperformat_id" ref="rod_intecsa.paperformat_warranty_certificate" />-->
+<!--        <field name="binding_type">report</field>-->
+<!--    </record>-->
+
+</odoo>
+
+

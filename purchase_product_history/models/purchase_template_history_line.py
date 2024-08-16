@@ -27,6 +27,8 @@ class PurchaseTemplateHistoryLine(models.Model):
     _name = 'purchase.template.history.line'
     _description = 'Purchase history line for template'
 
+    partner_id = fields.Many2one('res.partner', string='Proveedor', )
+
     history_id = fields.Many2one('product.template', string='Product',
                                  help='Name of the product variant')
     order_reference_id = fields.Many2one('purchase.order', string='Order',

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="rod_layout">
+            <div class="header">
+                <div class="row">
+                    <div class="o_background_header">
+                        <table style="width:100%;font-size:14px;">
+                            <tr>
+                                <td style="width:500px;text-align:center;center;">IMPORTADORA INTECSA
+                                </td>
+                                <td style="width:160px"></td>
+                                <td>Paginas:
+                                    <span class="topage"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;center;">INTECSA SRL
+                                </td>
+                                <td></td>
+                                <td>Fecha:
+                                    <!--                                    <t t-set="now" t-value="context.get('tz').localize(fields.Datetime.now())" />-->
+                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">LA PAZ - BOLIVIA</td>
+                                <td></td>
+                                <td>Usuario:
+                                    <span t-esc="user.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <div>
+                            <center>
+                                <h2>RECIBO DE PAGO</h2>
+                            </center>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="article o_report_standard">
+                <t t-out="0"/>
+            </div>
+            <div class="footer o_standard_footer">
+                <center>
+                    Page:
+                    <span class="page"/>
+                    /
+                    <span class="topage"/>
+                </center>
+            </div>
+        </template>
+
+        <template id="payment_receipt_pdf_id">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page">
+                            <table class="table table-striped">
+                                <tr>
+                                    <td>Numero de pago:</td>
+                                    <td>
+                                        <span t-esc="o.name"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Vendedor:</td>
+                                    <td>
+                                        <span t-esc="o.user_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Desde:</td>
+                                    <td>
+                                        <span t-esc="o.date_from"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Hasta:</td>
+                                    <td>
+                                        <span t-esc="o.date_to"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Comision Total</td>
+                                    <td>
+                                        <span t-esc="o.total_commission"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Lista</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Codigo comision</th>
+                                        <th>Vendedor</th>
+                                        <th>Orden venta</th>
+                                        <th>Desde</th>
+                                        <th>Hasta</th>
+                                        <th>Base imponible</th>
+                                        <th>Impuestos</th>
+                                        <th>Total</th>
+                                        <th>Costo Total</th>
+                                        <th>Comision</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.seller_ids" t-as="s">
+                                        <td>
+                                            <span t-esc="s.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="s.agent_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="s.sale_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="s.date_from"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="s.date_to"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="round(s.amount_untaxed,2)"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="round(s.amount_tax,2)"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="round(s.amount_total,2)"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="round(s.cost_total,2)"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="round(s.total,2)"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
