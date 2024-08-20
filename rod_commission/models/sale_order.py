@@ -5,6 +5,7 @@ class SaleOrder(models.Model):
     _inherit ='sale.order'
 
     payment_comision = fields.Boolean(string='Pago de comisión', default=False)
+    payment_comision_id = fields.Many2one('seller.commission', string='Pago de comisión')
     date_invoice = fields.Date(string='Fecha de factura', related='invoice_ids.invoice_date')
     def action_create_payment(self):
         for rec in self:
@@ -20,3 +21,4 @@ class SaleOrder(models.Model):
                 'date_from': datetime.today(),
                 'state': 'draft',
             })
+            rec.payment_comision_id = create_payment.id

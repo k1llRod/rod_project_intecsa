@@ -6,13 +6,14 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//header/button[@name='action_draft']" position="after">
-                    <button name="action_create_payment" string="Registrar comision" class="oe_highlight" type="object" />
+                    <button name="action_create_payment" string="Registrar comision" class="oe_highlight" type="object" invisible="payment_comision_id != False"/>
                 </xpath>
-                <xpath expr="//field[@name='name']" position="after">
-                    <field name="payment_comision" invisible="0"/>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+<!--                    <field name="payment_comision" invisible="0"/>-->
+                    <field name="payment_comision_id" readonly="1"/>
                 </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="after">
-                    <widget name="web_ribbon" text="Pagado" />
+                    <widget name="web_ribbon" text="Pagado" invisible="payment_comision_id == False"/>
                 </xpath>
                 <xpath expr="//field[@name='date_order']" position="after">
                     <field name="date_invoice"/>
