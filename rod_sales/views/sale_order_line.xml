@@ -7,13 +7,14 @@
             <field name="arch" type="xml">
                 <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"
                        position="after">
-                    <field name="standard_price" readonly="parent.readonly_user == True" sum="Total"/>
+                    <field name="standard_price" readonly="parent.readonly_user == True" sum="Total" optional="hidden"/>
                     <field name="delivery_cost" sum="Total"/>
                 </xpath>
                 <xpath expr="//group[@name='partner_details']/field[@name='partner_id']" position="after">
                     <field name="validity"/>
                     <field name="warranty"/>
                     <field name="payment_method"/>
+                    <field name="delivery"/>
                     <field name="readonly_user"/>
                     <field name="commission_percentage"/>
                 </xpath>
@@ -39,22 +40,49 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
             <field name="arch" type="xml">
-                <xpath expr="//div[@class='text-nowrap'][1]" position="after">
-                    <label for="cost_total" groups="base.group_user"/>
-                    <div class="text-nowrap" groups="base.group_user">
-                        <field name="cost_total" class="oe_inline"/>
-                    </div>
-                    <label for="commission_total" groups="base.group_user"/>
-                    <div class="text-nowrap" groups="base.group_user">
-                        <field name="commission_total" class="oe_inline"/>
-                        <span class="oe_inline" >
-                            (<field name="commission_percentage" nolabel="1" class="oe_inline" widget="percentage"/>)
-                        </span>
-                    </div>
+                <xpath expr="//div[@class='text-nowrap'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='margin'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='tax_totals']" position="after">
                     <label for="delivery_total" groups="base.group_user"/>
                     <div class="text-nowrap" groups="base.group_user">
                         <field name="delivery_total" class="oe_inline"/>
                     </div>
+                    <label for="cost_total" groups="base.group_user"/>
+                    <div class="text-nowrap" groups="base.group_user">
+                        <field name="cost_total" class="oe_inline"/>
+                    </div>
+<!--                    <label for="margin" groups="base.group_user"/>-->
+<!--                    <div class="text-nowrap" groups="base.group_user">-->
+<!--                        <field name="margin" class="oe_inline"/>-->
+<!--                        <field name="amount_untaxed" invisible="1"/>-->
+<!--                        <span class="oe_inline" invisible="amount_untaxed == 0">-->
+<!--                            (<field name="margin_percent" nolabel="1" class="oe_inline" widget="percentage"/>)-->
+<!--                        </span>-->
+<!--                    </div>-->
+                    <label for="margin_commission" groups="base.group_user"/>
+                    <div class="text-nowrap" groups="base.group_user">
+                        <field name="margin_commission" class="oe_inline"/>
+                        <field name="amount_untaxed" invisible="1"/>
+                        <span class="oe_inline" invisible="amount_untaxed == 0">
+                            (<field name="margin_percent" nolabel="1" class="oe_inline" widget="percentage"/>)
+                        </span>
+                    </div>
+                    <label for="commission_total" groups="base.group_user"/>
+                    <div class="text-nowrap" groups="base.group_user">
+                        <field name="commission_total" class="oe_inline"/>
+                        <span class="oe_inline">
+                            (<field name="commission_percentage" nolabel="1" class="oe_inline" widget="percentage"/>)
+                        </span>
+                    </div>
+
+<!--                    <label for="commission_total" groups="base.group_user"/>-->
+<!--                    <div class="text-nowrap" groups="base.group_user">-->
+<!--                        <field name="commission_total" class="oe_inline"/>-->
+<!--                    </div>-->
                 </xpath>
             </field>
         </record>

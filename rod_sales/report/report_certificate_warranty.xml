@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="rod_layout_warranty">
+            <div class="header">
+                <div class="row">
+                    <t t-set="company" t-value="o.company_id"/>
+                    <t t-set="user" t-value="user"/>
+                    <div class="row mt20 mb32" style="border-bottom:1px solid #dddbdb;padding-bottom:10px;">
+                        <div class="col-4">
+                            <img src="/rod_sales/static/src/img/intecsa.jpeg" style="width:200px;"/>
+                        </div>
+                        <div class="col-4 text-center" style="font-size:20px;margin-top:25px;">
+                            <span style="font-weight:bold;">
+                                <strong>CERTIFICADO DE GARANTIA</strong>
+                            </span>
+
+                        </div>
+                        <div class="col-4 text-center" style="font-style:arial;font-size:11px;">
+                            <span t-field="company.partner_id"/>
+                            <br/>
+                            <span t-field="user.property_warehouse_id.street"/>
+                            <br/>
+                            <span t-field="user.property_warehouse_id.street2"/>
+                            <br/>
+                            <span t-field="user.property_warehouse_id.city"/>
+                            <br/>
+                            <span t-field="user.property_warehouse_id.state_id.name"/>-
+                            <span t-field="user.property_warehouse_id.country_id"/>
+
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article o_report_layout_standard">
+                <t t-out="0"/>
+            </div>
+            <div class="footer o_standard_footer">
+                <div class="row">
+                    <div class="row mt20 mb32" style="border-top:1px solid #dddbdb;padding-bottom:10px;">
+                        <div class="col-4">
+                            <center><img src="/rod_sales/static/src/img/footer.png" style="width:900px;"/></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template id="report_pdf_certificate_warranty">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <t t-call="rod_sales.rod_layout_warranty">
+                            <div class="oe_structure"/>
+                            <div class="row mt20 mb32">
+                                <div class="col-6" style="font-size:16px;">
+                                    <ul style="list-style:none;">
+                                        <li>
+                                            Nro. <t t-esc="o.name_ent"/>
+                                        </li>
+                                        <li>
+                                            <span t-field="o.date_order"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-6" style="font-size:16px;">
+                                    <ul style="list-style:none;">
+                                        <li>
+                                            <strong><t t-esc="o.name"/></strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                                <p>
+                                    La empresa <strong>INTECSA SRL</strong>, en todos sus productos nuevos tiene la garantía correspondiente
+                                    del fabricante por el plazo que indica cada producto, salvo algunas excepciones claramente
+                                    identificadas. El fabricante de la marca es el único responsable de esta garantía y la
+                                    función de INTECSA SRL. es la de tramitar esa garantía ante el fabricante, por medio
+                                    de su Centro Autorizado de Servicio (CAS), para su respectiva reparación y/o cambio de
+                                    la parte dañada. INTECSA SRL., hará todo lo posible para procesar todos los productos
+                                    recibidos para reparación por garantía en el menor tiempo posible. En este contexto,
+                                    se establece que INTECSA SRL estará sujeto a los tiempos de ejecución de garantía propia
+                                    de la marca, para mayor información, escanear el código QR y/o visita: <u><strong>https://intecsa.com.bo/politicas/</strong></u>
+                                </p>
+                                <p>
+                                    Los equipos en garantia son:
+                                </p>
+                                <table class="table table-bordered">
+                                    <t t-foreach="o.picking_ids" t-as="o">
+                                        <t t-foreach="o.move_ids_without_package" t-as="p">
+                                            <tr>
+                                                <td rowspan="2" style="width:80%;">
+                                                    <ul style="list-style:none;">
+                                                        <li><center><span t-field="p.product_id.name"/></center></li>
+                                                        <li><center><span t-field="p.lot_ids"/></center></li>
+                                                    </ul>
+
+                                                </td>
+                                                <td style="width:20%;">
+                                                    <center>POLITICAS DE GARANTIA</center>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <center><img src="/rod_sales/static/src/img/qr_warranty.png"
+                                                         style="width:100px;"/></center>
+                                                </td>
+                                            </tr>
+
+                                        </t>
+                                    </t>
+                                </table>
+                                <p>
+                                    Cualquier defecto debido a componentes o materiales, está cubierto
+                                    por la presente garantía, con la excepción de los siguientes casos:
+                                </p>
+                                <ul>
+                                    <li>Problemas derivados de transporte después de la compra.</li>
+                                    <li>Falla producida por conexiones externas, derivadas de la instalación, conexión a
+                                        fuentes de alimentación diferentes a las indicaciones de las especificaciones técnicas del producto.</li>
+                                    <li>Mal manejo, mal trato uso indebido del producto o uso de accesorios inadecuados.</li>
+                                    <li>Uso del producto bajo condiciones externas: intemperie, humedad, alta temperatura.</li>
+                                    <li>Intervención de personal ajeno a nuestros Servicios Técnicos Autorizados</li>
+                                    <li>Casos fortuitos o de causa mayor.</li>
+                                    <li>Daños accidentales, o por negligencia del CLIENTE en el uso de enchufe, voltaje inadecuado u otra alteración
+                                        que afecte la confiabilidad y calidad de la unidad no atribuible a una falla en la fabricación del equipo
+                                        de computación y sus accesorios.</li>
+                                    <li>Soporte técnico en laboratorio técnico del proveedor.</li>
+                                </ul>
+                                <p>
+                                    De acuerdo a las políticas y condiciones de garantía de la empresa Intecsa SRL, el cliente firma en señal de conformidad:
+                                </p>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="row mt20 mb32">
+                                    <div class="col-6" style="font-size:16px;">
+                                        <center><h4>SOPORTE TI INTECSA SRL</h4></center>
+                                    </div>
+                                    <div class="col-6" style="font-size:16px;">
+                                        <center><h4>FIRMA CLIENTE Y/O SELLO</h4></center>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="oe_structure"/>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

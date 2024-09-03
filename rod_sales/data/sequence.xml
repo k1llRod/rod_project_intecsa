@@ -1,0 +1,13 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Crear una secuencia personalizada -->
+        <record id="sequence_stock_picking_id" model="ir.sequence">
+            <field name="name">Numero de entrega</field>
+            <field name="code">stock.picking</field>
+            <field name="prefix">ITC/%(year)s/</field> <!-- Prefijo de la secuencia -->
+            <field name="padding">5</field>  <!-- Número de dígitos del número secuencial -->
+            <field name="number_increment">1</field>  <!-- Incremento de la secuencia -->
+            <field name="implementation">standard</field>  <!-- Tipo de implementación de la secuencia -->
+        </record>
+    </data>
+</odoo>

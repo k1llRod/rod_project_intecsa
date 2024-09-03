@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="rod_layout">
+            <div class="header">
+                <div class="row">
+                    <t t-set="company" t-value="o.company_id"/>
+                    <t t-set="user" t-value="user"/>
+                    <div class="row mt20 mb32" style="border-bottom:1px solid #dddbdb;padding-bottom:10px;">
+                        <div class="col-4">
+                            <img src="/rod_sales/static/src/img/intecsa.jpeg" style="width:200px;"/>
+                        </div>
+                        <div class="col-4 text-center" style="font-size:20px;margin-top:25px;">
+                            <span style="font-weight:bold;">
+                                <strong>PROFORMA</strong>
+                            </span>
+                            <span t-field="o.name"/>
+                        </div>
+                        <div class="col-4 text-center" style="font-style:arial;font-size:11px;">
+                            <span t-field="company.partner_id"/>
+                            <br/>
+                            <span t-field="user.property_warehouse_id.street"/>
+                            <br/>
+                            <span t-field="user.property_warehouse_id.street2"/>
+                            <br/>
+                            <span t-field="user.property_warehouse_id.city"/>
+                            <br/>
+                            <span t-field="user.property_warehouse_id.state_id.name"/>-
+                            <span t-field="user.property_warehouse_id.country_id"/>
+                            <!--                            <span t-field="company.partner_id.phone"/>-->
+                            <!--                            <br/>-->
+                            <!--                            <span>Santa Cruz</span>-->
+                            <!--                            <br/>-->
+                            <!--                            <span t-field="company.partner_id.country_id"/>-->
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article o_report_layout_standard">
+                <t t-out="0"/>
+            </div>
+            <div class="footer o_standard_footer">
+                <div class="row">
+                    <table style="width:100%;border-top:1px solid black;border-bottom:1px solid black;">
+                        <tr>
+                            <td style="width:33%;">
+                                <center>Vendedor</center>
+                            </td>
+                            <td style="width:33%;">
+                                <center>Telefono</center>
+                            </td>
+                            <td style="width:33%;">
+                                <center>Email</center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <center>
+                                    <span t-field="o.user_id.name"/>
+                                </center>
+                            </td>
+                            <td>
+                                <center></center>
+                            </td>
+                            <td>
+                                <center></center>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%;border-top:1px solid black;border-bottom:1px solid black;margin-top:2px;">
+                        <tr>
+                            <td style="width:33%;">
+                                <center>Telf: 2311120 - 2314946</center>
+                            </td>
+                            <td style="width:33%;">
+                                <center>@ intecsa@intecsa.com.bo</center>
+                            </td>
+                            <td style="width:33%;">
+                                <center>https://www.intecsa.com.bo</center>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </template>
+        <template id="report_pdf_proforma">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <t t-call="rod_sales.rod_layout">
+                            <div class="oe_structure"/>
+                            <div class="row mt20 mb32">
+                                <div class="col-6" style="font-size:16px;">
+                                    <ul style="list-style:none;">
+                                        <li>
+                                            <t t-esc="o.date_order.strftime('%A, %d de %B de %Y')"/>
+                                        </li>
+                                        <li style="font-weigh;">
+                                            <strong>Señor(es):</strong>
+                                        </li>
+                                        <li>
+                                            <t t-esc="o.partner_id.name"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-6" style="font-size:16px;">
+                                    <ul style="list-style:none;">
+                                        <li>
+                                            <strong>Validez:</strong>
+                                            <t t-esc="o.validity"/>
+                                        </li>
+                                        <li>
+                                            <strong>Garantia:</strong>
+                                            <t t-esc="o.warranty"/>
+                                        </li>
+                                        <li>
+                                            <strong>Entrega:</strong>
+                                            <t t-esc="o.delivery"/>
+                                        </li>
+                                        <li>
+                                            <strong>Forma de pago:</strong>
+                                            <t t-esc="o.payment_method"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                                <table class="table table-bordered" style="font-size:13px;width:100%;">
+                                    <tr style="page-break-inside:avoid;">
+                                        <th style="width:20%">Imagen</th>
+                                        <th style="width:50%;">Descripcion</th>
+                                        <th style="width:10%;">Cant.</th>
+                                        <th style="width:10">P. U.</th>
+                                        <th style="width:10%;">Subtotal</th>
+                                    </tr>
+                                    <t t-foreach="o.order_line" t-as="p">
+                                        <tr t-if="p.product_uom_qty and p.price_unit" style="page-break-inside:avoid;">
+                                            <td class="text-center"><img t-if="p.image_128" t-att-src="image_data_uri(p.image_128)" style="width: 90%"/></td>
+<!--                                            <td></td>-->
+                                            <td>
+                                                <span t-field="p.product_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="p.product_uom_qty"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="p.price_unit"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="p.price_subtotal"/>
+                                            </td>
+                                        </tr>
+                                        <tr t-if="p.display_type =='line_note'" style="page-break-inside:avoid;">
+<!--                                            <td class="text-left">-->
+<!--                                                &amp;nbsp;-->
+<!--                                            </td>-->
+                                            <td class="text-left" colspan="5">
+                                                <span t-field="p.name"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                </table>
+                            </div>
+                            <div class="oe_structure"/>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

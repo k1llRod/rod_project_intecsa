@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_pdf_proforma" model="ir.actions.report">
+        <field name="name">Cotizacion</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">rod_sales.report_pdf_proforma</field>
+        <field name="report_file">rod_sales.report.report_pdf_proforma</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+<!--        <field name="paperformat_id" ref="rod_cooperativa_aportes.paperformat_certificate" />-->
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_certificate_warranty" model="ir.actions.report">
+        <field name="name">Certificado de garantia</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">rod_sales.report_pdf_certificate_warranty</field>
+        <field name="report_file">rod_sales.report.report_pdf_certificate_warranty</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+<!--        <field name="paperformat_id" ref="rod_cooperativa_aportes.paperformat_certificate" />-->
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

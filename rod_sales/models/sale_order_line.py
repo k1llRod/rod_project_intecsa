@@ -11,6 +11,8 @@ class SaleOrderLine(models.Model):
             if record.product_template_id.tracking == 'serial':
                 record.standard_price = record.product_template_id.standard_price
 
+
+
     @api.model
     def create(self, vals):
         # Crear la línea de producto original

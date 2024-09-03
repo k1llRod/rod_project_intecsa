@@ -18,20 +18,24 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale','sale_margin','report_py3o'],
+    'depends': ['base','sale','sale_margin','report_py3o','stock'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'security/security.xml',
+        'data/sequence.xml',
         # 'views/sale_order.xml',
-        # 'views/stock_move_line.xml',
+        'views/stock_move_line.xml',
         'views/sale_order_line.xml',
         'views/commission.xml',
         'views/res_partner.xml',
         'views/res_users.xml',
+        'views/stock_warehouse.xml',
+        'report/report.xml',
         'report/report_sale.xml',
-        # 'views/templates.xml',
+        'report/report_pdf_proforma.xml',
+        'report/report_certificate_warranty.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
