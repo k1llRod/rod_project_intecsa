@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <record id="view_partner_form_inh_rod_contacts" model="ir.ui.view">
+            <field name="name">res.partner.form.inh.rod_contacts</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="field[@name='title']" position="atrributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="sheet/group[1]/group[2]/field[@name='mobile']" position="attributes">-->
+<!--                    <attribute name="required">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="sheet/group[1]/group[2]/field[@name='category_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="sheet/group[1]/group[2]/field[@name='title']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="sheet/group[1]/group[2]/field[@name='function']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="sheet/group[1]" position="inside">
+                    <group>
+                        <field name="category_id" string="Categorias" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                    </group>
+                </xpath>
+<!--                <xpath expr="sheet/group[1]/group[1]/div[@class='o_address_format']" position="before">-->
+<!--                    <field name="category_id" string="Categorias" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>-->
+<!--                </xpath>-->
+                <xpath expr="sheet/group[1]/group[2]/field[@name='website']" position="after">
+                    <field name="area"/>
+                    <field name="name_contact"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

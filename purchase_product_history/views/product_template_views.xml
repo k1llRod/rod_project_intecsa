@@ -10,7 +10,7 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <notebook position="inside">
-                <page string="Purchase History" name="po_history">
+                <page string="Historial compras" name="po_history">
                     <field name="po_history_line_ids">
                         <tree editable="bottom">}
                             <field name="partner_id"/>

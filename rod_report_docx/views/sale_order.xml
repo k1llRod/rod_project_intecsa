@@ -6,7 +6,7 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//header" position="inside">
-                    <button name="%(action_generate_word_report)d" string="Prints Word Report" type="action" class="btn-primary"/>
+                    <button name="%(action_generate_word_report)d" string="Orden de entrega" type="action" class="btn-primary" invisible="state != 'sale'"/>
                 </xpath>
             </field>
         </record>

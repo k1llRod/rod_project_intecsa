@@ -6,7 +6,12 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//header/button[@name='action_draft']" position="after">
-                    <button name="action_create_payment" string="Registrar comision" class="oe_highlight" type="object" invisible="payment_comision_id != False"/>
+                    <button name="action_create_payment"
+                            string="Registrar comision"
+                            class="oe_highlight"
+                            type="object"
+                            invisible="payment_comision_id == False"
+                            groups="sales_team.group_sale_manager"/>
                 </xpath>
                 <xpath expr="//field[@name='payment_term_id']" position="after">
 <!--                    <field name="payment_comision" invisible="0"/>-->

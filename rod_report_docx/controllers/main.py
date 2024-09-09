@@ -43,7 +43,7 @@ class SaleOrderReportController(http.Controller):
         document.add_heading('Orden de entrega', level=1).alignment = WD_ALIGN_PARAGRAPH.CENTER
         table_information = document.add_table(rows=1, cols=2)
         table_information.style = 'Table Grid'
-        # hdr_cells = table_information.rows[0].cells
+        hdr_cells = table_information.rows[0].cells
 
         for rec in sale_order:
             # Nombre

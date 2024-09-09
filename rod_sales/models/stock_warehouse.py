@@ -10,5 +10,6 @@ class StockWarehouse(models.Model):
     zip = fields.Char(string='Código postal')
     country_id = fields.Many2one('res.country', string='País')
     phone = fields.Char(string='Teléfono')
+    mobile = fields.Char(string='Movil')
 
 

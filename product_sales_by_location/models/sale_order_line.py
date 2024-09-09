@@ -30,7 +30,8 @@ class SaleOrderLine(models.Model):
                                        string='Location',
                                        domain="[('usage','=','internal')]",
                                        help=' Choose the location from'
-                                            ' where the product taken from')
+                                            ' where the product taken from',
+                                       default=lambda self: self.env.user.property_warehouse_id.view_location_id.id)
 
     warehouse_id = fields.Many2one('stock.warehouse', readonly=False)
     warehouse_ids = fields.Many2one('stock.warehouse', string='Almacen')
@@ -44,4 +45,4 @@ class SaleOrderLine(models.Model):
     def _onchange_warehouse(self):
         for record in self:
             record.warehouse_ids = record.line_location_id.warehouse_id.id
-            # record.warehouse_ids = record.line_location_id.warehouse_id.id
+            record.warehouse_ids = record.line_location_id.warehouse_id.id

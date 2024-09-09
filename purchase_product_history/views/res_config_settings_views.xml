@@ -14,7 +14,7 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@name='matrix_setting_container']"
                    position="after">
-                <h2>Product Purchase History</h2>
+                <h2>Producto historial compras</h2>
                 <div class="row mt16 o_settings_container">
                     <div class="col-12 col-lg-6 o_setting_box">
                         <div class="o_setting_left_pane">

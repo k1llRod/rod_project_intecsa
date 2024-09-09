@@ -35,9 +35,12 @@
     'website': 'https://www.cybrosys.com',
     'depends': ['sale_management', 'stock', 'portal'],
     'data':
-        ['views/sale_order_views.xml',
-         'views/sale_portal_templates.xml',
-         'report/sale_order_templates.xml'
+        [
+            'security/custom_group.xml',
+            'security/ir.model.access.csv',
+            'views/sale_order_views.xml',
+            'views/sale_portal_templates.xml',
+            'report/sale_order_templates.xml'
          ],
     'images': ['static/description/banner.jpg'],
     'license': 'LGPL-3',

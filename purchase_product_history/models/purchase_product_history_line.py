@@ -34,10 +34,10 @@ class PurchaseProductHistoryLine(models.Model):
     order_reference_id = fields.Many2one('purchase.order', string='Order',
                                          help='Purchase order reference of the'
                                               ' product')
-    description = fields.Text(string='Description', help='Description of the'
+    description = fields.Text(string='Descripcion', help='Description of the'
                                                          ' product')
-    price_unit = fields.Float(string='Unit Price', help='Unit price of the'
+    price_unit = fields.Float(string='Precio unidad', help='Unit price of the'
                                                         ' product')
-    product_qty = fields.Float(string='Quantity', help='Product quantity')
+    product_qty = fields.Float(string='Cantidad', help='Product quantity')
     price_subtotal = fields.Float(string='Subtotal', help='Subtotal of the '
                                                           'product')

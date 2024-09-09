@@ -48,7 +48,7 @@
         </template>
         <template id="report_pdf_certificate_warranty">
             <t t-call="web.html_container">
-                <t t-foreach="docs" t-as="o">
+                <t t-foreach="docs" t-as="d">
                     <div class="page">
                         <t t-call="rod_sales.rod_layout_warranty">
                             <div class="oe_structure"/>
@@ -56,23 +56,23 @@
                                 <div class="col-6" style="font-size:16px;">
                                     <ul style="list-style:none;">
                                         <li>
-                                            Nro. <t t-esc="o.name_ent"/>
+                                            Nro. <t t-esc="d.name_ent"/>
                                         </li>
                                         <li>
-                                            <span t-field="o.date_order"/>
+                                            <span t-field="d.date_order"/>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="col-6" style="font-size:16px;">
                                     <ul style="list-style:none;">
                                         <li>
-                                            <strong><t t-esc="o.name"/></strong>
+                                            <strong><t t-esc="d.name"/></strong>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div>
-                                <p>
+                                <p style="text-align:justify;">
                                     La empresa <strong>INTECSA SRL</strong>, en todos sus productos nuevos tiene la garantía correspondiente
                                     del fabricante por el plazo que indica cada producto, salvo algunas excepciones claramente
                                     identificadas. El fabricante de la marca es el único responsable de esta garantía y la
@@ -87,13 +87,18 @@
                                     Los equipos en garantia son:
                                 </p>
                                 <table class="table table-bordered">
-                                    <t t-foreach="o.picking_ids" t-as="o">
+                                    <t t-foreach="d.picking_ids" t-as="o">
                                         <t t-foreach="o.move_ids_without_package" t-as="p">
                                             <tr>
                                                 <td rowspan="2" style="width:80%;">
                                                     <ul style="list-style:none;">
                                                         <li><center><span t-field="p.product_id.name"/></center></li>
                                                         <li><center><span t-field="p.lot_ids"/></center></li>
+                                                        <li><center><span t-field="d.validity"/></center></li>
+                                                        <li><center><span t-field="d.warranty"/></center></li>
+                                                        <li><strong><center><span t-field="d.partner_id.name"/></center></strong></li>
+                                                        <li><strong><center>SEGUN DETALLE DE CARACTERISTICAS EN NOTA DE</center></strong></li>
+                                                        <li><strong><center><span t-field="d.name_ent"/></center></strong></li>
                                                     </ul>
 
                                                 </td>
@@ -137,10 +142,7 @@
                                 <br/>
                                 <br/>
                                 <div class="row mt20 mb32">
-                                    <div class="col-6" style="font-size:16px;">
-                                        <center><h4>SOPORTE TI INTECSA SRL</h4></center>
-                                    </div>
-                                    <div class="col-6" style="font-size:16px;">
+                                    <div class="col-12" style="font-size:16px;">
                                         <center><h4>FIRMA CLIENTE Y/O SELLO</h4></center>
                                     </div>
                                 </div>
