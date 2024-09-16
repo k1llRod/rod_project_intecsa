@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from datetime import datetime, timedelta
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -19,6 +20,7 @@ class SaleOrder(models.Model):
     payment_method = fields.Selection([('transfer','Transferencia'),('cheque','Cheque'),('qr','QR')], string='Forma de pago')
     name_ent = fields.Char(string='Numero de Entrega')
 
+    type_sale_id = fields.Many2one('type.sale', string='Tipo de venta')
     def _compute_commission_percentage(self):
         for record in self:
             record.commission_percentage = 10
@@ -47,6 +49,9 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
         picking = self.picking_ids[-1].move_ids_without_package
+        for record in self.picking_ids:
+            if record.state == 'confirmed' or record.state == 'borrador':
+                record.scheduled_date = self.validity_date
         suma = 0
         for rec in picking:
             c = 0
@@ -59,5 +64,16 @@ class SaleOrder(models.Model):
                     c += 1
                 suma = round(suma / c, 2) if c > 0 else 0
                 rec.price_unit = suma
+                # rec.date_deadline = self.validity_date
+                # rec.picking_id.scheduled_date = self.validity_date
         return res
 
+    @api.onchange('type_sale_id')
+    def _onchange_type_sale_id(self):
+        for record in self:
+            record.validity_date = fields.Date.today() + timedelta(days=record.type_sale_id.number_days)
+
+    def sale_verification(self):
+        a = 1
+        # Lógica a ejecutar por el cron
+        pass

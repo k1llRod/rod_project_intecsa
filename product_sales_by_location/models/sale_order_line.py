@@ -30,8 +30,8 @@ class SaleOrderLine(models.Model):
                                        string='Location',
                                        domain="[('usage','=','internal')]",
                                        help=' Choose the location from'
-                                            ' where the product taken from',
-                                       default=lambda self: self.env.user.property_warehouse_id.view_location_id.id)
+                                            ' where the product taken from'
+                                       )
 
     warehouse_id = fields.Many2one('stock.warehouse', readonly=False)
     warehouse_ids = fields.Many2one('stock.warehouse', string='Almacen')

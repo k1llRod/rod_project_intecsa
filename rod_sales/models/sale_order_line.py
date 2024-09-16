@@ -10,7 +10,8 @@ class SaleOrderLine(models.Model):
         for record in self:
             if record.product_template_id.tracking == 'serial':
                 record.standard_price = record.product_template_id.standard_price
-
+            if record.product_template_id:
+                record.line_location_id = record.env.user.property_warehouse_id.lot_stock_id
 
 
     @api.model

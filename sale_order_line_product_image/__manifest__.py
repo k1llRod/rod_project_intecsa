@@ -23,6 +23,7 @@
     'depends': ['base', 'sale_management'],
 	'data': [
 			'report/sale_order_report.xml',
+			'views/sale_order.xml',
 			'views/view_sale_order.xml',
 			],
 	'currency': "EUR",

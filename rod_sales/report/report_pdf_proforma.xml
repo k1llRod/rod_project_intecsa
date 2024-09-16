@@ -128,16 +128,22 @@
                             <div>
                                 <table class="table table-bordered" style="font-size:13px;width:100%;">
                                     <tr style="page-break-inside:avoid;">
-                                        <th style="width:20%">Imagen</th>
+                                        <t t-if="o.print_image">
+                                            <th style="width:20%">Imagen</th>
+                                        </t>
                                         <th style="width:50%;">Descripcion</th>
                                         <th style="width:10%;">Cant.</th>
                                         <th style="width:10">P. U.</th>
                                         <th style="width:10%;">Subtotal</th>
                                     </tr>
                                     <t t-foreach="o.order_line" t-as="p">
-                                        <tr t-if="p.product_uom_qty and p.price_unit" style="page-break-inside:avoid;">
-                                            <td class="text-center"><img t-if="p.image_128" t-att-src="image_data_uri(p.image_128)" style="width: 90%"/></td>
-<!--                                            <td></td>-->
+                                        <tr t-if="p.product_uom_qty" style="page-break-inside:avoid;">
+                                            <t t-if="o.print_image">
+                                                <td class="text-center">
+                                                    <img t-if="p.image_128" t-att-src="image_data_uri(p.image_128)"
+                                                         style="width: 90%"/>
+                                                </td>
+                                            </t>
                                             <td>
                                                 <span t-field="p.product_id.name"/>
                                             </td>

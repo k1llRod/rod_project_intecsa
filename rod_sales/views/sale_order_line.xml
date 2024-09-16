@@ -15,6 +15,7 @@
                     <field name="warranty"/>
                     <field name="payment_method"/>
                     <field name="delivery"/>
+                    <field name="type_sale_id"/>
                     <field name="readonly_user"/>
                     <field name="commission_percentage"/>
                 </xpath>
@@ -87,4 +88,9 @@
             </field>
         </record>
     </data>
+    <menuitem id="menu_type_sale_id"
+              name="Tipo de venta"
+              parent="sale.menu_sale_config"
+              action="action_commission_id"
+              sequence="1" />
 </odoo>
