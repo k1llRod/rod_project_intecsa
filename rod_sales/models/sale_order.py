@@ -74,6 +74,7 @@ class SaleOrder(models.Model):
             record.validity_date = fields.Date.today() + timedelta(days=record.type_sale_id.number_days)
 
     def sale_verification(self):
-        a = 1
-        # Lógica a ejecutar por el cron
-        pass
+        pickings = self.env['stock.picking'].search([('state', '=', 'confirmed'),('scheduled_date', '<', datetime.today())])
+        # Cancelar los albaranes vencidos
+        for picking in pickings:
+            picking.action_cancel()

@@ -39,9 +39,5 @@ Long description of module's purpose
         'report/report_pdf_proforma.xml',
         'report/report_certificate_warranty.xml',
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
 }
 
