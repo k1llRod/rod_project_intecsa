@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="whatsapp.MessagingMenu.content" t-inherit="mail.MessagingMenu.content" t-inherit-mode="extension">
-        <xpath expr="//t[@name='searchBar']//ChannelSelector" position="before">
+        <xpath expr="//t[@name='searchBar']//WhatsappChannelSelector" position="before">
             <t t-if="state.addingWhatsappChannel" t-set="category" t-value="store.discuss.whatsapp"/>
         </xpath>
 
