@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="whatsapp.MessagingMenu.content" t-inherit="mail.MessagingMenu.content" t-inherit-mode="extension">
-        <xpath expr="//t[@name='searchBar']//WhatsappChannelSelector" position="before">
-            <t t-if="state.addingWhatsappChannel" t-set="category" t-value="store.discuss.whatsapp"/>
-        </xpath>
+<!--        <xpath expr="//t[@name='searchBar']//WhatsappChannelSelector" position="before">-->
+<!--            <t t-if="state.addingWhatsappChannel" t-set="category" t-value="store.discuss.whatsapp"/>-->
+<!--        </xpath>-->
 
         <xpath expr="//t[@name='searchBar']" position="after">
             <button t-if="ui.isSmall and store.discuss.activeTab === 'whatsapp' and !state.addingWhatsappChannel" class="w-100 p-2 btn btn-secondary m-1" t-on-click.stop="() => this.state.addingWhatsappChannel = true">
