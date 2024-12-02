@@ -11,7 +11,7 @@
                     <field name="delivery_cost" sum="Total"/>
                 </xpath>
                 <xpath expr="//group[@name='partner_details']/field[@name='partner_id']" position="after">
-                    <field name="validity"/>
+                    <field name="validity" required="1"/>
                     <field name="warranty"/>
                     <field name="payment_method"/>
                     <field name="delivery"/>

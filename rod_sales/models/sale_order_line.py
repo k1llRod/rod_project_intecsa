@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
-    standard_price = fields.Float(string='Costo')
+    standard_price = fields.Float(string='Costo dev')
     delivery_cost = fields.Float(string='Envío')
 
     @api.onchange('product_template_id')

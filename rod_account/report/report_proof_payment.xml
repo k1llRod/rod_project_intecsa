@@ -12,7 +12,7 @@
                         </div>
                         <div class="col-4 text-center" style="font-size:20px;margin-top:25px;">
                             <ul style="list-style:none;">
-                                <li><strong>Comprobante de diario</strong></li>
+                                <li><strong><span t-field="o.journal_id.title_report"/></strong></li>
                                 <li><span t-field="o.journal_id.name"/></li>
                                 <li><span t-field="o.date"/></li>
                             </ul>
@@ -88,48 +88,48 @@
                             <div>
                                 <table class="table table-bordered" style="font-size:13px;width:100%;">
                                     <tr>
-                                        <th>Codigo de cuenta</th>
-                                        <th>Descripcion de la cuenta</th>
-                                        <th>Debe</th>
-                                        <th>Haber</th>
-                                        <th>Debe US$</th>
-                                        <th>Haber US$</th>
+                                        <th style="border:1px solid black;">Codigo de cuenta</th>
+                                        <th style="border:1px solid black;">Descripcion de la cuenta</th>
+                                        <th style="border:1px solid black;">Debe</th>
+                                        <th style="border:1px solid black;">Haber</th>
+<!--                                        <th>Debe US$</th>-->
+<!--                                        <th>Haber US$</th>-->
                                     </tr>
                                     <t t-foreach="o.line_ids" t-as="p">
                                         <tr>
-                                            <td>
+                                            <td style="border:1px solid black;">
                                                 <span t-field="p.account_id"/>
                                             </td>
-                                            <td>
+                                            <td style="border:1px solid black;">
                                                 <span t-field="p.account_id.name"/>
                                             </td>
-                                            <td>
+                                            <td style="border:1px solid black;">
                                                 <span t-field="p.debit"/>
-                                            </td>
-                                            <td>
+                                            </td >
+                                            <td style="border:1px solid black;">
                                                 <span t-field="p.credit"/>
                                             </td>
-                                            <td>
-<!--                                                <span t-field="p.price_subtotal"/>-->
-                                            </td>
-                                            <td>
+<!--                                            <td>-->
+<!--&lt;!&ndash;                                                <span t-field="p.price_subtotal"/>&ndash;&gt;-->
+<!--                                            </td>-->
+<!--                                            <td>-->
 
-                                            </td>
+<!--                                            </td>-->
                                         </tr>
                                     </t>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="2" style="text-align:right;">
+                                            <td colspan="2" style="text-align:right;border:1px solid black;">
                                                 <strong>Total del comprobante: </strong>
                                             </td>
-                                            <td>
+                                            <td style="border:1px solid black;">
                                                 <span t-field="o.amount_total"/>
                                             </td>
-                                            <td>
+                                            <td style="border:1px solid black;">
                                                 <span t-field="o.amount_total"/>
                                             </td>
-                                            <td></td>
-                                            <td></td>
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
                                         </tr>
                                     </tfoot>
                                 </table>
