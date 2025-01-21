@@ -58,3 +58,7 @@ class SellerCommission(models.Model):
             if rec.state == 'done':
                 raise UserError(_('No puede eliminar una comisión liquidada'))
         return super(SellerCommission, self).unlink()
+
+    def draft_massive(self):
+        for rec in self:
+            rec.state = 'draft'

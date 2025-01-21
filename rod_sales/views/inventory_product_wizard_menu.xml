@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Menú para abrir el Wizard -->
+    <menuitem id="menu_inventory_product_wizard"
+              name="Ajuste por Wizard"
+              parent="stock.menu_stock_inventory_control"
+              action="action_inventory_product_wizard"
+              sequence="60"
+              groups="stock.group_stock_manager"/>
+</odoo>

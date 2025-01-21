@@ -13,6 +13,8 @@
                 <field name="user_id"/>
                 <field name="date_from"/>
                 <field name="date_to"/>
+                <field name="account_move_id" readonly="1"/>
+                <field name="account_payment_id" readonly="1"/>
                 <field name="total_commission"/>
 <!--                <field name="state" decoration-success="state == 'done'" decoration-info="state == 'draft'" widget="badge"/>-->
             </tree>
@@ -36,6 +38,8 @@
                         <field name="user_id" />
                         <field name="date_from" />
                         <field name="date_to" />
+                        <field name="account_move_id" readonly="1"/>
+                        <field name="account_payment_id" readonly="1"/>
                         <field name="total_commission"/>
 <!--                        <field name="seller_ids" readonly="1"/>-->
                     </group>

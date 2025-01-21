@@ -10,3 +10,6 @@ from . import stock_move_line
 from . import stock_picking
 from . import stock_warehouse
 from . import type_sale
+from . import dollar_exchange_history
+from . import product_product
+from . import additional_costs

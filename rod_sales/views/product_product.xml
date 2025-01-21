@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    Inherit the view of product.template and add separate tab for purchase
+        history-->
+    <record id="product_template_only_form_view_dollar" model="ir.ui.view">
+        <field name="name">
+            product.template.view.form.inherit.dollar.product.history
+        </field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Historial dollar" name="po_dollar_exchange_history">
+                    <field name="profit_margin"/>
+                    <field name="po_dollar_exchange_history">
+                        <tree editable="bottom">
+                            <field name="date"/>
+                            <field name="lot_name"/>
+                            <field name="official_dollar_exchange"/>
+                            <field name="old_cost"/>
+                            <field name="parallel_dollar_exchange"/>
+                            <field name="new_cost"/>
+<!--                            <field name="price_subtotal"/>-->
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+<!--            <xpath expr="notebook" position="after">-->
+<!--                <field name="profit_margin"/>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+    <record id="view_product_template_form_inherit_newfield" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.newfield</field>
+        <field name="model">product.template</field>
+        <!-- Heredas la vista base del producto -->
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Buscas el field con name='list_price' y lo usas de referencia -->
+            <xpath expr="//field[@name='list_price']" position="after">
+                <label for="profit_margin"/>
+                    <div name="pricing" class="o_row">
+                      <field name="profit_margin" class="oe_inline" widget='monetary'
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                    </div>
+            </xpath>
+            <xpath expr="//notebook/page[@name='general_information']/group[1]/group[2]" position="inside">
+<!--                <field name="profit_margin"/>-->
+                <label for="profit_margin" style="font-weight:bold;color:red;"/>
+                    <div name="profit_margin" class="oe_inline">
+                      <field name="profit_margin" class="oe_inline"
+                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                    </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

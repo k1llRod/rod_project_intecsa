@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vista del Wizard -->
+    <record id="view_inventory_product_wizard_form" model="ir.ui.view">
+        <field name="name">inventory.product.wizard.form</field>
+        <field name="model">wizard.inventory.product</field>
+        <field name="arch" type="xml">
+            <form string="Seleccionar Productos para Inventario">
+                <group>
+<!--                    <field name="product_ids" widget="many2many_tags"/>-->
+                    <field name="official_dollar_exchange"/>
+                    <field name="parallel_dollar_exchange"/>
+                </group>
+<!--                <group>-->
+<!--                    <field name="product_ids" widget="many2many_tree" >-->
+<!--                        <tree string="Productos" editable="bottom">-->
+<!--                            <field name="name"/>-->
+<!--                            <field name="qty_available"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+<!--                </group>-->
+                <group col="4">
+                    <field name="product_quants_id" widget="many2many_tree" nolabel="1" colspan="4">
+                        <tree string="Productos" editable="bottom" style="width:100%;">
+                            <field name="product_id"/>
+                            <field name="location_id"/>
+                            <field name="lot_id"/>
+                            <field name="price_unit" string="Costo"/>
+                            <field name="quantity"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Aplicar" type="object" name="update_dollar_exchange" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción para abrir el Wizard -->
+    <record id="action_inventory_product_wizard" model="ir.actions.act_window">
+        <field name="name">Costeo Productos</field>
+        <field name="res_model">wizard.inventory.product</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

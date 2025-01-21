@@ -5,10 +5,10 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='purchase_price']"
                        position="after">
                     <field name="standard_price" readonly="parent.readonly_user == True" sum="Total" optional="hidden"/>
-                    <field name="delivery_cost" sum="Total"/>
+<!--                    <field name="delivery_cost" sum="Total"/>-->
                 </xpath>
                 <xpath expr="//group[@name='partner_details']/field[@name='partner_id']" position="after">
                     <field name="validity" required="1"/>
@@ -19,7 +19,18 @@
                     <field name="readonly_user"/>
                     <field name="commission_percentage"/>
                 </xpath>
-
+                <xpath expr="//notebook/page[@name='order_lines']" position="after">
+                    <page string="Costos Adicionales" name="additional_costs">
+                        <field name="additional_costs_ids">
+                            <tree editable="bottom">
+                                <field name="sale_order_ids" column_invisible="True"/>
+                                <field name="select_additional_costs"/>
+                                <field name="date"/>
+                                <field name="amount" sum="Total"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
             </field>
         </record>
 
@@ -48,6 +59,15 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='tax_totals']" position="after">
+                    <label for="margin" groups="base.group_user"/>
+                    <div class="text-nowrap" groups="base.group_user">
+                        <field name="margin" class="oe_inline"/>
+                        <field name="amount_untaxed" invisible="1" widget="account-tax-totals-field"/>
+                        <span class="oe_inline" invisible="amount_untaxed == 0">
+                            (<field name="margin_percent" nolabel="1" class="oe_inline" widget="percentage"/>)
+                        </span>
+                    </div>
+                    <hr/><br/>
                     <label for="delivery_total" groups="base.group_user"/>
                     <div class="text-nowrap" groups="base.group_user">
                         <field name="delivery_total" class="oe_inline"/>
@@ -56,14 +76,7 @@
                     <div class="text-nowrap" groups="base.group_user">
                         <field name="cost_total" class="oe_inline"/>
                     </div>
-<!--                    <label for="margin" groups="base.group_user"/>-->
-<!--                    <div class="text-nowrap" groups="base.group_user">-->
-<!--                        <field name="margin" class="oe_inline"/>-->
-<!--                        <field name="amount_untaxed" invisible="1"/>-->
-<!--                        <span class="oe_inline" invisible="amount_untaxed == 0">-->
-<!--                            (<field name="margin_percent" nolabel="1" class="oe_inline" widget="percentage"/>)-->
-<!--                        </span>-->
-<!--                    </div>-->
+
                     <label for="margin_commission" groups="base.group_user"/>
                     <div class="text-nowrap" groups="base.group_user">
                         <field name="margin_commission" class="oe_inline"/>
@@ -79,7 +92,6 @@
                             (<field name="commission_percentage" nolabel="1" class="oe_inline" widget="percentage"/>)
                         </span>
                     </div>
-
 <!--                    <label for="commission_total" groups="base.group_user"/>-->
 <!--                    <div class="text-nowrap" groups="base.group_user">-->
 <!--                        <field name="commission_total" class="oe_inline"/>-->

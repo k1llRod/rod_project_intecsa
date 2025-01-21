@@ -13,6 +13,8 @@ class CommissionPayment(models.Model):
     date_from = fields.Date(string='Desde', track_visibility='onchange')
     date_to = fields.Date(string='Hasta', track_visibility='onchange')
     seller_ids = fields.One2many('seller.commission', 'commission_id', string='Comisiones')
+    account_move_id = fields.Many2one('account.move', string='Asiento contable', track_visibility='onchange')
+    account_payment_id = fields.Many2one('account.payment', string='Pago', track_visibility='onchange')
 
     def action_payment(self):
         self.ensure_one()

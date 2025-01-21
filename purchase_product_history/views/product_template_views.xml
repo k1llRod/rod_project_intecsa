@@ -2,7 +2,7 @@
 <odoo>
 <!--    Inherit the view of product.template and add separate tab for purchase
         history-->
-    <record id="product_template_only_form_view" model="ir.ui.view">
+    <record id="product_template_only_form_view_inh" model="ir.ui.view">
         <field name="name">
             product.template.view.form.inherit.purchase.product.history
         </field>

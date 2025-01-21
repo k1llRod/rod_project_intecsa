@@ -1,3 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_commission,commission,model_commission,base.group_user,1,1,1,1
 access_type_sale,type_sale,model_type_sale,base.group_user,1,1,1,1
+access_wizard_inventory_product,wizard_inventory_product,model_wizard_inventory_product,base.group_user,1,1,1,1
+access_dollar_exchange_history,dollar_exchange_history,model_dollar_exchange_history,base.group_user,1,1,1,1
+access_additional_costs,additional_costs,model_additional_costs,base.group_user,1,1,1,1

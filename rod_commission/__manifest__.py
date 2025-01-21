@@ -27,6 +27,7 @@ Long description of module's purpose
         'views/commission_payment.xml',
         'views/seller_commission.xml',
         'views/sale_order.xml',
+        'views/res_config_setting.xml',
         'wizard/wizard_commission_payment.xml',
         'report/payment_receipt_pdf.xml',
         'report/report.xml',
