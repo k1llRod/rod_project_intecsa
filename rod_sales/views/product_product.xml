@@ -44,14 +44,14 @@
                         options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                     </div>
             </xpath>
-            <xpath expr="//notebook/page[@name='general_information']/group[1]/group[2]" position="inside">
-<!--                <field name="profit_margin"/>-->
-                <label for="profit_margin" style="font-weight:bold;color:red;"/>
-                    <div name="profit_margin" class="oe_inline">
-                      <field name="profit_margin" class="oe_inline"
-                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
-                    </div>
-            </xpath>
+<!--            <xpath expr="//notebook/page[@name='general_information']/group[1]/group[2]" position="inside">-->
+<!--&lt;!&ndash;                <field name="profit_margin"/>&ndash;&gt;-->
+<!--                <label for="profit_margin" style="font-weight:bold;color:red;"/>-->
+<!--                    <div name="profit_margin" class="oe_inline">-->
+<!--                      <field name="profit_margin" class="oe_inline"-->
+<!--                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>-->
+<!--                    </div>-->
+<!--            </xpath>-->
         </field>
     </record>
 </odoo>

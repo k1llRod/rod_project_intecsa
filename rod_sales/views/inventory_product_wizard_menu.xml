@@ -2,7 +2,7 @@
 <odoo>
     <!-- Menú para abrir el Wizard -->
     <menuitem id="menu_inventory_product_wizard"
-              name="Ajuste por Wizard"
+              name="Ajuste para costeo"
               parent="stock.menu_stock_inventory_control"
               action="action_inventory_product_wizard"
               sequence="60"

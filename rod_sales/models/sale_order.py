@@ -14,9 +14,10 @@ class SaleOrder(models.Model):
     commission = fields.Float(string='Comision', store=True, compute='_compute_commission_total')
     margin_commission = fields.Monetary(string='Margen dinamico', store=True, compute='_compute_commission_total')
 
-    validity = fields.Char(string='Validez')
+    # validity = fields.Char(string='Validez')
+    validity = fields.Selection([('5','5 dias'),('15','15 dias'),('30','30 dias')], string='Validez')
     warranty = fields.Char(string='Garantía')
-    delivery = fields.Char(string='Entrega')
+    delivery = fields.Date(string='Fecha entrega', default=fields.Date.today())
     payment_method = fields.Selection([('transfer','Transferencia'),('cheque','Cheque'),('qr','QR')], string='Forma de pago')
     name_ent = fields.Char(string='Numero de Entrega')
 
@@ -67,7 +68,7 @@ class SaleOrder(models.Model):
             c = 0
             suma = 0
             if rec.product_id.tracking == 'none':
-                rec.price_unit = rec.product_id.standard_price
+                rec.price_unit = self.env['stock.quant'].search([('product_id','=',rec.product_id.id)]).filtered(lambda x:x.location_id.usage == 'internal' or x.on_hand == True).price_unit
             if rec.product_id.tracking == 'serial' or rec.product_id.tracking == 'lot':
                 for record in rec.lot_ids:
                     suma =  self.env['stock.quant'].search([('lot_id','=',record.id)]).filtered(lambda x:x.quantity > 0).price_unit + suma
