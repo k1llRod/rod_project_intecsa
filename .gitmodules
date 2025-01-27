@@ -1,0 +1,3 @@
+[submodule "intecsa"]
+	path = intecsa
+	url = git@github.com:versatilsrl/intecsa.git
