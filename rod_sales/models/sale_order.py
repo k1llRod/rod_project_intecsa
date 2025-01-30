@@ -89,3 +89,20 @@ class SaleOrder(models.Model):
         # Cancelar los albaranes vencidos
         for picking in pickings:
             picking.action_cancel()
+
+    def _create_invoices(self, grouped=False, final=False, date=None):
+        """
+        Sobreescribe la creación de facturas para eliminar productos con precio de venta 0.
+        """
+        """
+                Sobreescribimos la creación de facturas para excluir productos con precio de venta 0.
+                """
+        # 1. Llamar al método original para obtener la factura
+        invoices = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final, date=date)
+
+        # 2. Filtrar las líneas con price_unit > 0
+        for invoice in invoices:
+            new_lines = invoice.invoice_line_ids.filtered(lambda line: line.price_unit > 0)
+            invoice.write({'invoice_line_ids': [(6, 0, new_lines.ids)]})  # Reemplazar líneas
+
+        return invoices

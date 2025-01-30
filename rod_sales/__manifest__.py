@@ -41,6 +41,7 @@ Long description of module's purpose
         'report/report_pdf_proforma.xml',
         'report/report_certificate_warranty.xml',
         'views/inventory_product_wizard_menu.xml',
+        'views/menu_sale_inherit.xml',
     ],
 }
 
