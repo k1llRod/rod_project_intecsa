@@ -7,14 +7,14 @@
                     <t t-set="company" t-value="o.company_id"/>
                     <t t-set="user" t-value="user"/>
                     <div class="row mt20 mb32" style="border-bottom:1px solid #dddbdb;padding-bottom:10px;">
-                        <div class="col-4">
+                        <div class="col-4" style="margin-top:15px;">
                             <img src="/rod_account/static/src/img/intecsa.jpeg" style="width:200px;"/>
                         </div>
                         <div class="col-4 text-center" style="font-size:20px;margin-top:25px;">
                             <ul style="list-style:none;">
                                 <li><strong><span t-field="o.journal_id.title_report"/></strong></li>
                                 <li><span t-field="o.journal_id.name"/></li>
-                                <li><span t-field="o.date"/></li>
+                                <li>Fecha: <span t-field="o.date"/></li>
                             </ul>
                         </div>
                         <div class="col-4 text-center" style="font-size:20px;margin-top:25px;">
@@ -28,25 +28,7 @@
             </div>
             <div class="footer o_standard_footer">
                 <div class="row">
-                    <table style="width:100%;border-top:1px solid black;border-bottom:1px solid black;">
-                        <tr>
-
-                        </tr>
-                        <tr>
-                            <td>
-<!--                                <center>-->
-<!--                                    <span t-field="o.user_id.name"/>-->
-<!--                                </center>-->
-                            </td>
-                            <td>
-                                <center></center>
-                            </td>
-                            <td>
-                                <center></center>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width:100%;border-top:1px solid black;border-bottom:1px solid black;margin-top:2px;">
+                    <table class="table">
                         <tr>
                             <td style="width:33%;">
                                 <center>Telf: 2311120 - 2314946</center>
@@ -69,70 +51,85 @@
                         <t t-call="rod_account.rod_account_layout">
                             <div class="oe_structure"/>
                             <div class="row mt20 mb32">
-                                <div class="col-6" style="font-size:16px;">
+                                <div class="col-8" style="font-size:14px;">
                                     <ul style="list-style:none;">
                                         <li>
-                                            <strong>Glosa general: </strong><span t-field="o.ref"/>
+                                            Glosa general: <span t-field="o.ref"/>
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-6" style="font-size:16px;">
+                                <div class="col-4" style="font-size:14px;">
                                     <ul style="list-style:none;">
                                         <li>
-                                            <strong>T.C.: </strong>
+                                            <span><strong>T.C.:</strong> <t t-esc="o.currency_id.rate"/> (<t t-esc="o.currency_id.symbol"/>)</span>
+<!--                                            <span t-field="o.currency_id.name"/>-->
                                         </li>
                                     </ul>
                                 </div>
 
                             </div>
                             <div>
-                                <table class="table table-bordered" style="font-size:13px;width:100%;">
-                                    <tr>
-                                        <th style="border:1px solid black;">Codigo de cuenta</th>
-                                        <th style="border:1px solid black;">Descripcion de la cuenta</th>
-                                        <th style="border:1px solid black;">Debe</th>
-                                        <th style="border:1px solid black;">Haber</th>
-<!--                                        <th>Debe US$</th>-->
-<!--                                        <th>Haber US$</th>-->
-                                    </tr>
+                                <table class="table" style="font-size:13px;width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Codigo de cuenta</th>
+                                            <th scope="col">Descripcion de la cuenta</th>
+                                            <th scope="col">Debe</th>
+                                            <th scope="col">Haber</th>
+                                        </tr>
+                                    </thead>
                                     <t t-foreach="o.line_ids" t-as="p">
                                         <tr>
-                                            <td style="border:1px solid black;">
+                                            <td>
                                                 <span t-field="p.account_id"/>
                                             </td>
-                                            <td style="border:1px solid black;">
+                                            <td>
                                                 <span t-field="p.account_id.name"/>
                                             </td>
-                                            <td style="border:1px solid black;">
+                                            <td>
                                                 <span t-field="p.debit"/>
-                                            </td >
-                                            <td style="border:1px solid black;">
+                                            </td>
+                                            <td>
                                                 <span t-field="p.credit"/>
                                             </td>
-<!--                                            <td>-->
-<!--&lt;!&ndash;                                                <span t-field="p.price_subtotal"/>&ndash;&gt;-->
-<!--                                            </td>-->
-<!--                                            <td>-->
-
-<!--                                            </td>-->
                                         </tr>
                                     </t>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="2" style="text-align:right;border:1px solid black;">
-                                                <strong>Total del comprobante: </strong>
-                                            </td>
-                                            <td style="border:1px solid black;">
-                                                <span t-field="o.amount_total"/>
-                                            </td>
-                                            <td style="border:1px solid black;">
-                                                <span t-field="o.amount_total"/>
-                                            </td>
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-                                        </tr>
-                                    </tfoot>
+                                    <tr>
+                                        <td colspan="2" style="text-align:right;">
+                                            <strong >Total del comprobante:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.amount_total"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.amount_total"/>
+                                        </td>
+                                        <!--                                            <td></td>-->
+                                        <!--                                            <td></td>-->
+                                    </tr>
+
                                 </table>
+                            </div>
+                            <div class="row mt20 mb32" style="padding-top:120px;">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-2" style="font-size:14px;border-top:1px solid black;">
+                                    <center>Preparado por</center>
+                                </div>
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-2" style="font-size:14px;border-top:1px solid black;">
+                                    <center>Autorizado por</center>
+                                </div>
+                                <div class="col-2">
+
+                                </div>
+
                             </div>
                             <div class="oe_structure"/>
                         </t>

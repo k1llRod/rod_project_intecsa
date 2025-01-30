@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="paperformat_letter_landscape" model="report.paperformat">
+        <field name="name">Carta Horizontal</field>
+        <field name="default" eval="False"/>
+        <field name="format">Letter</field>  <!-- Use predefined Letter size -->
+        <field name="orientation">Landscape</field>  <!-- Set landscape mode -->
+        <field name="margin_top" eval="40"/>
+        <field name="margin_bottom" eval="10"/>
+        <field name="margin_left" eval="10"/>
+        <field name="margin_right" eval="10"/>
+        <field name="header_spacing" eval="35"/>
+    </record>
     <record id="action_report_pdf_proforma" model="ir.actions.report">
         <field name="name">Comprobante de pago</field>
         <field name="model">account.move</field>
@@ -7,7 +18,7 @@
         <field name="report_name">rod_account.rod_proof_layout</field>
         <field name="report_file">rod_account.report.rod_proof_layout</field>
         <field name="binding_model_id" ref="account.model_account_move"/>
-<!--        <field name="paperformat_id" ref="rod_cooperativa_aportes.paperformat_certificate" />-->
+        <field name="paperformat_id" ref="rod_account.paperformat_letter_landscape" />
         <field name="binding_type">report</field>
     </record>
 </odoo>

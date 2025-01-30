@@ -7,6 +7,7 @@
             <field name="arch" type="xml">
                 <xpath expr="sheet/group[1]/group[1]/field[@name='type']" position="after">
                     <field name="title_report"/>
+                    <field name="select_report"/>
                 </xpath>
             </field>
         </record>
