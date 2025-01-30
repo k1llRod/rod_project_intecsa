@@ -110,27 +110,66 @@
 
                                 </table>
                             </div>
-                            <div class="row mt20 mb32" style="padding-top:120px;">
-                                <div class="col-2">
+                            <t t-if="o.journal_id.select_report == 'income'">
+                                <div class="row mt20 mb32" style="padding-top:120px;">
+                                    <div class="col-2">
+
+                                    </div>
+                                    <div class="col-2" style="font-size:14px;border-top:1px solid black;">
+                                        <center>Preparado por</center>
+                                    </div>
+                                    <div class="col-2">
+
+                                    </div>
+                                    <div class="col-2">
+
+                                    </div>
+                                    <div class="col-2" style="font-size:14px;border-top:1px solid black;">
+                                        <center>Autorizado por</center>
+                                    </div>
+                                    <div class="col-2">
+
+                                    </div>
 
                                 </div>
-                                <div class="col-2" style="font-size:14px;border-top:1px solid black;">
-                                    <center>Preparado por</center>
-                                </div>
-                                <div class="col-2">
+                            </t>
+                            <t t-if="o.journal_id.select_report=='egress'">
+                                <div class="row mt20 mb32" style="padding-top:120px;">
+                                    <div class="col-2">
+
+                                    </div>
+                                    <div class="col-2" style="font-size:14px;border-top:1px solid black;">
+                                        <center>Preparado por</center>
+                                        <br/>
+                                        <br/>
+
+                                    </div>
+                                    <div class="col-2">
+
+                                    </div>
+                                    <div class="col-2">
+
+                                    </div>
+                                    <div class="col-2" style="font-size:14px;border-top:1px solid black;">
+                                        <center>Autorizado por</center>
+                                    </div>
+                                    <div class="col-2">
+
+                                    </div>
 
                                 </div>
-                                <div class="col-2">
-
+                                <div class="row mt20 mb32" style="padding-top:120px;">
+                                    <div class="col-4">
+                                        <ul style="list-style:none;text-align:justify;padding:0;">
+                                            <li style="margin-top:10px;">Firma:..........................................................................</li>
+                                            <li style="margin-top:10px;">Aclaracion de firma:.............................................</li>
+                                            <li style="margin-top:10px;">Documento de identidad:..................................</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="col-2" style="font-size:14px;border-top:1px solid black;">
-                                    <center>Autorizado por</center>
-                                </div>
-                                <div class="col-2">
 
-                                </div>
+                            </t>
 
-                            </div>
                             <div class="oe_structure"/>
                         </t>
                     </div>
