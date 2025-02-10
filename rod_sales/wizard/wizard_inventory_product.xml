@@ -7,21 +7,14 @@
         <field name="arch" type="xml">
             <form string="Seleccionar Productos para Inventario">
                 <group>
-<!--                    <field name="product_ids" widget="many2many_tags"/>-->
                     <field name="official_dollar_exchange"/>
                     <field name="parallel_dollar_exchange"/>
+<!--                    <field name="company_id" invisible="1"/>-->
                 </group>
-<!--                <group>-->
-<!--                    <field name="product_ids" widget="many2many_tree" >-->
-<!--                        <tree string="Productos" editable="bottom">-->
-<!--                            <field name="name"/>-->
-<!--                            <field name="qty_available"/>-->
-<!--                        </tree>-->
-<!--                    </field>-->
-<!--                </group>-->
                 <group col="4">
-                    <field name="product_quants_id" widget="many2many_tree" nolabel="1" colspan="4">
-                        <tree string="Productos" editable="bottom" style="width:100%;">
+                    <field name="product_quants_id" nolabel="1" colspan="4" options="{'no_create': True}">
+                        <tree string="Productos" editable="bottom" >
+                            <field name="company_id" column_invisible="1"/>
                             <field name="product_id"/>
                             <field name="location_id"/>
                             <field name="lot_id"/>

@@ -34,6 +34,8 @@ Long description of module's purpose
         'views/res_partner.xml',
         'views/res_users.xml',
         'views/stock_warehouse.xml',
+        'views/stock_quant.xml',
+        'views/dollar_exchange_history.xml',
         'views/product_product.xml',
         'wizard/wizard_inventory_product.xml',
         'report/report.xml',

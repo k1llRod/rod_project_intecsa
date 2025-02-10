@@ -11,7 +11,7 @@
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page string="Historial dollar" name="po_dollar_exchange_history">
-                    <field name="profit_margin"/>
+<!--                    <field name="profit_margin"/>-->
                     <field name="po_dollar_exchange_history">
                         <tree editable="bottom">
                             <field name="date"/>

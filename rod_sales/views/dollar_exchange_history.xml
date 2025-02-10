@@ -5,6 +5,8 @@
         <field name="model">dollar.exchange.history</field>
         <field name="arch" type="xml">
             <tree string="Historial de Cambio de Dólar" editable="bottom">
+                <field name="product_ids"/>
+                <field name="lot_name"/>
                 <field name="date"/>
                 <field name="official_dollar_exchange"/>
                 <field name="old_cost"/>
@@ -22,6 +24,8 @@
             <form string="Historial de Cambio de Dólar">
                 <sheet>
                     <group>
+                        <field name="product_ids"/>
+                        <field name="lot_name"/>
                         <field name="date"/>
                         <field name="official_dollar_exchange"/>
                         <field name="old_cost"/>

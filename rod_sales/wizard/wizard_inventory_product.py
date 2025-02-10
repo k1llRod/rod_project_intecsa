@@ -8,8 +8,21 @@ class WizardInventoryProduct(models.TransientModel):
     # product_id = fields.Many2one('product.product', string='Producto')
     official_dollar_exchange = fields.Float(string='Cambio dolar oficial', readonly=True, default=lambda self: self._get_usd_rate(), digits=(12, 2))
     parallel_dollar_exchange = fields.Float(string='Cambio dolar paralelo', digits=(12, 2))
-    product_ids  = fields.Many2many('product.product', string="Products with Stock", compute='get_products_with_stock')
-    product_quants_id = fields.Many2many('stock.quant', string="Products with Stock", compute='get_products_with_stock')
+    product_ids  = fields.Many2many('product.product', string="Products with Stock", default=lambda self: self._default_products_template_with_stock())
+    product_quants_id = fields.Many2many('stock.quant', string="Products with Stock", default=lambda self: self._default_products_with_stock())
+
+    @api.model
+    def _default_products_with_stock(self):
+        # Recupera el filtro desde el contexto; si no se define, se usa una lista vacía.
+        domain = self.env.context.get('active_domain', [("location_id.usage", "=", "internal")])
+        return self.env['stock.quant'].search(domain)
+
+    @api.model
+    def _default_products_template_with_stock(self):
+        # Recupera el filtro desde el contexto; si no se define, se usa una lista vacía.
+        domain = self.env.context.get('active_domain', [("qty_available", ">", 0)])
+        return self.env['product.product'].search(domain)
+
     @api.model
     def _get_usd_rate(self):
         """
@@ -18,17 +31,17 @@ class WizardInventoryProduct(models.TransientModel):
         usd_currency = self.env['res.currency'].search([('name', '=', 'USD')], limit=1)
         return 1.0 / usd_currency.rate if usd_currency and usd_currency.rate else 0.0
 
-    @api.depends('official_dollar_exchange')
-    def get_products_with_stock(self):
-        """
-        Obtiene todos los productos con cantidades a mano.
-        """
-        # quants = self.env['stock.quant'].search([('quantity', '>', 0)])
-        quants = self.env['product.template'].search([('qty_available', '>', 0)]).product_variant_id
-        product_quant = self.env['stock.quant'].search([('location_id.usage','=','internal'),("on_hand", "=", True),('product_id', 'in', quants.ids)])
-        # product_ids = quants.mapped('product_id')
-        self.product_quants_id = product_quant
-        self.product_ids = quants
+    # @api.depends('official_dollar_exchange')
+    # def get_products_with_stock(self):
+    #     """
+    #     Obtiene todos los productos con cantidades a mano.
+    #     """
+    #     # quants = self.env['stock.quant'].search([('quantity', '>', 0)])
+    #     quants = self.env['product.template'].search([('qty_available', '>', 0)]).product_variant_id
+    #     product_quant = self.env['stock.quant'].search([('location_id.usage','=','internal'),("on_hand", "=", True),('product_id', 'in', quants.ids)])
+    #     # product_ids = quants.mapped('product_id')
+    #     self.product_quants_id = product_quant
+    #     self.product_ids = quants
 
     def update_dollar_exchange(self):
         """
@@ -44,8 +57,9 @@ class WizardInventoryProduct(models.TransientModel):
                 'price_unit': new_change,
             })
             if product_update:
-                self.env['dollar.exchange.history'].create({
+                product.product_tmpl_id.po_dollar_exchange_history.create({
                     'product_ids': product.product_id.id,
+                    'product_template_id': product.product_tmpl_id.id,
                     'lot_name': product.lot_id.name,
                     'date': fields.Date.today(),
                     'official_dollar_exchange': self.official_dollar_exchange,

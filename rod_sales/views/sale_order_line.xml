@@ -16,8 +16,8 @@
                     <field name="payment_method"/>
                     <field name="delivery"/>
                     <field name="type_sale_id"/>
-                    <field name="readonly_user"/>
-                    <field name="commission_percentage"/>
+                    <field name="readonly_user" invisible="1"/>
+                    <field name="commission_percentage" invisible="1"/>
                 </xpath>
                 <xpath expr="//notebook/page[@name='order_lines']" position="after">
                     <page string="Costos Adicionales" name="additional_costs">

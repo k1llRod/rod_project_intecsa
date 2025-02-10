@@ -13,3 +13,4 @@ from . import type_sale
 from . import dollar_exchange_history
 from . import product_product
 from . import additional_costs
+from . import stock_quant
