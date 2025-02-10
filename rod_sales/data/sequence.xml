@@ -9,5 +9,12 @@
             <field name="number_increment">1</field>  <!-- Incremento de la secuencia -->
             <field name="implementation">standard</field>  <!-- Tipo de implementación de la secuencia -->
         </record>
+        <record id="seq_product_product" model="ir.sequence">
+            <field name="name">Referencia Interna de Producto</field>
+            <field name="code">product.product.sequence</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="prefix"></field>
+        </record>
     </data>
 </odoo>
