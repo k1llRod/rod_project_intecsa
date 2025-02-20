@@ -12,7 +12,7 @@
                         </div>
                         <div class="col-4 text-center" style="font-size:20px;margin-top:25px;">
                             <ul style="list-style:none;">
-                                <li><strong><span t-field="o.journal_id.title_report"/></strong></li>
+                                <li><strong style="font-size:18px;"><span t-field="o.journal_id.title_report"/></strong></li>
                                 <li><span t-field="o.journal_id.name"/></li>
                                 <li>Fecha: <span t-field="o.date"/></li>
                             </ul>
@@ -53,8 +53,8 @@
                             <div class="row mt20 mb32">
                                 <div class="col-8" style="font-size:14px;">
                                     <ul style="list-style:none;">
-                                        <li>
-                                            Glosa general: <span t-field="o.ref"/>
+                                        <li style="font-size:16px;">
+                                            <strong>Glosa general:</strong> <span t-field="o.ref"/>
                                         </li>
                                     </ul>
                                 </div>
@@ -68,14 +68,15 @@
                                 </div>
 
                             </div>
+                            <br/>
                             <div>
-                                <table class="table" style="font-size:13px;width:100%;">
+                                <table class="table table-bordered" style="font-size:13px;width:100%;">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Codigo de cuenta</th>
-                                            <th scope="col">Descripcion de la cuenta</th>
-                                            <th scope="col">Debe</th>
-                                            <th scope="col">Haber</th>
+                                            <th style="font-size:16px;border-top:2px solid black;" scope="col">Codigo de cuenta</th>
+                                            <th style="font-size:16px;border-top:2px solid black;" scope="col">Descripcion de la cuenta</th>
+                                            <th style="font-size:16px;border-top:2px solid black;" scope="col">Debe</th>
+                                            <th style="font-size:16px;border-top:2px solid black;" scope="col">Haber</th>
                                         </tr>
                                     </thead>
                                     <t t-foreach="o.line_ids" t-as="p">
@@ -94,19 +95,22 @@
                                             </td>
                                         </tr>
                                     </t>
-                                    <tr>
-                                        <td colspan="2" style="text-align:right;">
-                                            <strong >Total del comprobante:</strong>
-                                        </td>
-                                        <td>
-                                            <span t-field="o.amount_total"/>
-                                        </td>
-                                        <td>
-                                            <span t-field="o.amount_total"/>
-                                        </td>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2" style="text-align:right;font-size:15px;border-bottom:2px solid black;">
+                                                <strong>Total del comprobante:</strong>
+                                            </td>
+                                            <td style="border-bottom:2px solid black;font-size:15px;">
+                                                <span t-field="o.amount_total"/>
+                                            </td>
+                                            <td style="border-bottom:2px solid black;font-size:15px;">
+                                                <span t-field="o.amount_total"/>
+                                            </td>
+                                        </tr>
+
                                         <!--                                            <td></td>-->
                                         <!--                                            <td></td>-->
-                                    </tr>
+                                    </tfoot>
 
                                 </table>
                             </div>
@@ -138,8 +142,8 @@
                                     <div class="col-2">
 
                                     </div>
-                                    <div class="col-2" style="font-size:14px;border-top:1px solid black;">
-                                        <center>Preparado por</center>
+                                    <div class="col-2" style="font-size:18px;border-top:1px solid black;">
+                                        <center style="font-size:16px;">Preparado por</center>
                                         <br/>
                                         <br/>
 
@@ -150,8 +154,8 @@
                                     <div class="col-2">
 
                                     </div>
-                                    <div class="col-2" style="font-size:14px;border-top:1px solid black;">
-                                        <center>Autorizado por</center>
+                                    <div class="col-2" style="font-size:16px;border-top:1px solid black;">
+                                        <center style="font-size:16px;">Autorizado por</center>
                                     </div>
                                     <div class="col-2">
 
@@ -160,7 +164,7 @@
                                 </div>
                                 <div class="row mt20 mb32" style="padding-top:120px;">
                                     <div class="col-4">
-                                        <ul style="list-style:none;text-align:justify;padding:0;">
+                                        <ul style="list-style:none;text-align:justify;padding:0;font-size:16px;">
                                             <li style="margin-top:10px;">Firma:..........................................................................</li>
                                             <li style="margin-top:10px;">Aclaracion de firma:.............................................</li>
                                             <li style="margin-top:10px;">Documento de identidad:..................................</li>

@@ -10,6 +10,11 @@
                     <field name="standard_price" readonly="parent.readonly_user == True" sum="Total" optional="hidden"/>
 <!--                    <field name="delivery_cost" sum="Total"/>-->
                 </xpath>
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='purchase_price']"
+                       position="attributes">
+                    <attribute name="sum">Total</attribute>
+                    <attribute name="groups">sales_team.group_sale_manager</attribute>
+                </xpath>
                 <xpath expr="//group[@name='partner_details']/field[@name='partner_id']" position="after">
                     <field name="validity" required="1"/>
                     <field name="warranty"/>

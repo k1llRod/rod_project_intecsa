@@ -104,5 +104,17 @@ class SaleOrder(models.Model):
         for invoice in invoices:
             new_lines = invoice.invoice_line_ids.filtered(lambda line: line.price_unit > 0)
             invoice.write({'invoice_line_ids': [(6, 0, new_lines.ids)]})  # Reemplazar líneas
-
         return invoices
+
+    @api.model
+    def cron_cancel_expired_quotations(self):
+        """Cancela automáticamente las cotizaciones vencidas."""
+        today = fields.Date.today()
+        expired_orders = self.search([
+            ('state', '=', 'draft'),  # Solo cotizaciones (no confirmadas)
+            ('validity_date', '<', today)  # Que la fecha de vencimiento sea anterior a hoy
+        ])
+
+        for order in expired_orders:
+            order.action_cancel()  # Cancela la cotización
+            self.env.cr.commit()  # Guarda cambios para evitar bloqueos
