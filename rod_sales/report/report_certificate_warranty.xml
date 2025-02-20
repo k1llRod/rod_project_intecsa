@@ -17,7 +17,7 @@
 
                         </div>
                         <div class="col-4 text-center" style="font-style:arial;font-size:11px;">
-                            <span t-field="company.partner_id"/>
+                            <span t-field="user.partner_id"/>
                             <br/>
                             <span t-field="user.property_warehouse_id.street"/>
                             <br/>
@@ -26,8 +26,7 @@
                             <span t-field="user.property_warehouse_id.city"/>
                             <br/>
                             <span t-field="user.property_warehouse_id.state_id.name"/>-
-                            <span t-field="user.property_warehouse_id.country_id"/>
-
+<!--                            <span t-field="user.property_warehouse_id.country_id"/>-->
                             <br/>
                         </div>
                     </div>
