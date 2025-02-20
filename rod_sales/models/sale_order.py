@@ -24,6 +24,7 @@ class SaleOrder(models.Model):
     type_sale_id = fields.Many2one('type.sale', string='Tipo de venta')
 
     additional_costs_ids = fields.One2many('additional.costs', 'sale_order_ids', string='Costos adicionales')
+    print_image = fields.Boolean(string='Imprimir imagen', default=False)
     def _compute_commission_percentage(self):
         for record in self:
             record.commission_percentage = 10
