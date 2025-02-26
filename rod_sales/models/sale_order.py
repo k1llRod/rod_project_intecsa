@@ -25,6 +25,25 @@ class SaleOrder(models.Model):
 
     additional_costs_ids = fields.One2many('additional.costs', 'sale_order_ids', string='Costos adicionales')
     print_image = fields.Boolean(string='Imprimir imagen', default=False)
+
+    state = fields.Selection(selection_add=[('approval', 'Aprobación')], ondelete={'approval': 'set default'})
+
+    def action_approve(self):
+        """Método para aprobar la cotización y pasar a 'sale' (Pedido de Venta)"""
+        for order in self:
+            if order.state == 'draft':
+                order.state = 'approval'
+
+    def action_confirm(self):
+        for order in self:
+            if order.state != 'approval':
+                # Lanza un error o pasa a 'approval' directamente, a tu elección
+                # raise UserError("No puedes confirmar hasta que esté en aprobación")
+                # order.state = 'approval'
+                # return
+                pass
+        return super(SaleOrder, self).action_confirm()
+
     def _compute_commission_percentage(self):
         for record in self:
             record.commission_percentage = 10
@@ -59,6 +78,7 @@ class SaleOrder(models.Model):
 
 
     def action_confirm(self):
+        a = 1
         res = super(SaleOrder, self).action_confirm()
         picking = self.picking_ids[-1].move_ids_without_package
         for record in self.picking_ids:
@@ -79,6 +99,9 @@ class SaleOrder(models.Model):
                 # rec.date_deadline = self.validity_date
                 # rec.picking_id.scheduled_date = self.validity_date
         return res
+    def _can_be_confirmed(self):
+        self.ensure_one()
+        return self.state in {'draft', 'sent', 'approval'}
 
     @api.onchange('type_sale_id')
     def _onchange_type_sale_id(self):

@@ -40,6 +40,29 @@
                         </field>
                     </page>
                 </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="widget">statusbar</attribute>
+                    <attribute name="options">{'clickable': True}</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='state']" position="inside">
+                     <value>draft</value>
+                     <value>sent</value>
+                     <value>approval</value>
+                     <value>sale</value>
+                     <value>done</value>
+                     <value>cancel</value>
+                 </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="action_approve"
+                            string="Aprobar"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="attributes">
+                    <!-- Odoo 17 ya no usa `attrs`; se usa `invisible="condición"` -->
+                    <attribute name="invisible">state != 'approval'</attribute>
+                </xpath>
             </field>
         </record>
 

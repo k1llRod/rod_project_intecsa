@@ -79,10 +79,11 @@
                                             <th style="font-size:16px;border-top:2px solid black;" scope="col">Haber</th>
                                         </tr>
                                     </thead>
-                                    <t t-foreach="o.line_ids" t-as="p">
+                                    <t t-set="ordered_lines" t-value="o.line_ids.sorted(key=lambda l: 0 if l.debit > 0 else 1)"/>
+                                    <t t-foreach="ordered_lines" t-as="p">
                                         <tr>
                                             <td>
-                                                <span t-field="p.account_id"/>
+                                                <span t-field="p.account_id.code"/>
                                             </td>
                                             <td>
                                                 <span t-field="p.account_id.name"/>

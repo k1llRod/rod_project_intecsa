@@ -12,7 +12,7 @@
         <field name="header_spacing" eval="35"/>
     </record>
     <record id="action_report_pdf_proforma" model="ir.actions.report">
-        <field name="name">Comprobante de pago</field>
+        <field name="name">Impresion de asientos contables</field>
         <field name="model">account.move</field>
         <field name="report_type">qweb-html</field>
         <field name="report_name">rod_account.rod_proof_layout</field>
