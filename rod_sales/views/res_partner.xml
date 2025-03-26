@@ -18,6 +18,17 @@
                 </xpath>
             </field>
         </record>
-
+        <record id="view_res_partner_tree_inherit_rod_sales" model="ir.ui.view">
+            <field name="name">res.partner.tree.inherit.rod_sales</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <!-- Añadir nuevas columnas al final de la vista -->
+                <xpath expr="//tree" position="inside">
+                    <!-- Agregamos columnas adicionales -->
+                    <field name="create_date"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

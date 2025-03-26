@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Grupo de Seguridad -->
+        <record id="group_no_delete_archive" model="res.groups">
+            <field name="name">No Archivar/Eliminar Contactos</field>
+        </record>
+        <record id="rule_no_delete_contacts" model="ir.rule">
+            <field name="name">No eliminar contactos</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('rod_contacts.group_no_delete_archive'))]"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
+</odoo>

@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale','sale_margin','report_py3o','stock'],
+    'depends': ['sale_management','sale','sale_margin','report_py3o','stock'],
 
     # always loaded
     'data': [
@@ -37,6 +37,7 @@ Long description of module's purpose
         'views/stock_quant.xml',
         'views/dollar_exchange_history.xml',
         'views/product_product.xml',
+        'views/sale_order_template.xml',
         'wizard/wizard_inventory_product.xml',
         'report/report.xml',
         # 'report/report_sale.xml',

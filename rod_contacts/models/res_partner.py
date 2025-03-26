@@ -21,3 +21,13 @@ class ResPartner(models.Model):
         if 'name' in vals and vals['name']:
             vals['name'] = vals['name'].upper()
         return super(ResPartner, self).write(vals)
+
+    def unlink(self):
+        if self.env.user.has_group('rod_contacts.group_no_delete_archive'):
+            raise models.ValidationError("No tienes permisos para eliminar contactos.")
+        return super(ResPartner, self).unlink()
+
+    def toggle_active(self):
+        if self.env.user.has_group('rod_contacts.group_no_delete_archive'):
+            raise models.ValidationError("No tienes permisos para archivar contactos.")
+        return super(ResPartner, self).toggle_active()

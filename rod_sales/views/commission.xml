@@ -33,4 +33,13 @@
         action="action_commission_id"
         parent="sale.menu_sale_config"
     />
+    <!-- Menú Plantillas de Cotización -->
+    <menuitem
+        id="menu_crm_quote_templates_rod"
+        name="Plantillas de Cotización"
+        parent="crm.crm_menu_root"
+        sequence="15"
+        action="sale_management.sale_order_template_action"
+    />
+
 </odoo>

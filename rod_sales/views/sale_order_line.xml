@@ -131,6 +131,19 @@
                 </xpath>
             </field>
         </record>
+        <record id="view_sale_order_tree_inherit_rod_sales" model="ir.ui.view">
+            <field name="name">sale.order.tree.inherit.rod_sales</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <!-- Agregar nuevas columnas al final -->
+                <xpath expr="//tree" position="inside">
+                    <!-- Añadir el nombre del vendedor (user_id) y la fecha de aprobación -->
+                    <field name="create_date"/>
+                </xpath>
+
+            </field>
+        </record>
     </data>
     <menuitem id="menu_type_sale_id"
               name="Tipo de venta"

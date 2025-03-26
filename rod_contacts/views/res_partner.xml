@@ -32,8 +32,62 @@
                     <field name="area"/>
                     <field name="name_contact"/>
                 </xpath>
+                <xpath expr="sheet/group[1]/group[2]/field[@name='website']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
             </field>
         </record>
-
+        <record id="view_res_partner_form_inh" model="ir.ui.view">
+            <field name="name">view.res.partner.form.inh</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="l10n_bo_invoicer_plus.view_res_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='vat_vies_container']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='l10n_latam_identification_type_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='vr_fecha_nacimiento']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[@name='vat_vies_container']" position="before">
+                    <field name="vat" string="NIT / CI" required="0"/>
+                    <field name="l10n_bo_extension" string="Complemento"/>
+                    <field name="l10n_latam_identification_type_id" string="Tipo de documento"/>
+                </xpath>
+                <xpath expr="//field[@name='vr_birthday_day']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vr_birthday_month']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vr_birthday_year']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[@class='o_address_format']/field[@name='street2']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+<!--                <xpath expr="//div[@class='o_address_format']/field[@name='l10n_bo_building_name']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//div[@class='o_address_format']/field[@name='l10n_bo_house_number']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//div[@class='o_address_format']/field[@name='zip']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_res_partner_form_inh" model="ir.ui.view">
+            <field name="name">view.res.partner.form.inh</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="l10n_bo_invoicer_plus.view_res_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='vat_vies_container']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

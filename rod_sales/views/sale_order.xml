@@ -11,8 +11,16 @@
             </field>
         </record>
     </data>
-    <menuitem id="menu_rod_commission" name="Comisiones" parent="sale.sale_menu_root" sequence="22" />
-    <menuitem id="menu_rod_sales_commissions" name="Tipo de comision" parent="menu_rod_commission" action="action_commission_id" sequence="1" />
+    <menuitem id="menu_rod_commission"
+              name="Comisiones"
+              parent="sale.sale_menu_root"
+              sequence="22" />
+    <menuitem id="menu_rod_sales_commissions"
+              name="Tipo de comision"
+              parent="menu_rod_commission"
+              action="action_commission_id"
+              sequence="1" />
+
 
 
 </odoo>

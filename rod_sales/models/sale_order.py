@@ -28,6 +28,7 @@ class SaleOrder(models.Model):
 
     state = fields.Selection(selection_add=[('approval', 'Aprobación')], ondelete={'approval': 'set default'})
 
+    sale_order_template_id = fields.Many2one('sale.order.template', string='Plantilla de cotizacion', domain="[('user_id', '=', uid)]")
     def action_approve(self):
         """Método para aprobar la cotización y pasar a 'sale' (Pedido de Venta)"""
         for order in self:
