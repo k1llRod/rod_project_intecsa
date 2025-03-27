@@ -61,7 +61,14 @@
                                 <div class="col-4" style="font-size:14px;">
                                     <ul style="list-style:none;">
                                         <li>
-                                            <span><strong>T.C.:</strong> <t t-esc="o.currency_id.rate"/> (<t t-esc="o.currency_id.symbol"/>)</span>
+                                            <span>
+                                                <strong>T.C.:</strong>
+                                                <t t-set="usd_currency"
+                                                   t-value="request.env['res.currency'].search([('name', '=', 'USD')], limit=1)"/>
+                                                <t t-esc="round(usd_currency.inverse_rate,2)"/>
+                                                (Bs.)
+                                            </span>
+<!--                                            <span><strong>T.C.:</strong> <t t-esc="o.currency_id.rate"/> (<t t-esc="o.currency_id.symbol"/>)</span>-->
 <!--                                            <span t-field="o.currency_id.name"/>-->
                                         </li>
                                     </ul>

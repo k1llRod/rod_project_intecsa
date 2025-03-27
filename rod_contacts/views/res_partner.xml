@@ -37,13 +37,14 @@
                 </xpath>
             </field>
         </record>
-        <record id="view_res_partner_form_inh" model="ir.ui.view">
-            <field name="name">view.res.partner.form.inh</field>
+        <record id="view_res_partner_form_inh_rod_contacts" model="ir.ui.view">
+            <field name="name">view.res.partner.form.inh.rod_contacts</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="l10n_bo_invoicer_plus.view_res_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[@name='vat_vies_container']" position="attributes">
                     <attribute name="invisible">1</attribute>
+                    <attribute name="required">0</attribute>
                 </xpath>
                 <xpath expr="//label[@for='l10n_latam_identification_type_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -52,9 +53,14 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//div[@name='vat_vies_container']" position="before">
-                    <field name="vat" string="NIT / CI" required="0"/>
+                    <field name="l10n_bo_business_name" default="S/N"/>
+                    <field name="vat" string="NIT / CI" required="0" default="0"/>
                     <field name="l10n_bo_extension" string="Complemento"/>
                     <field name="l10n_latam_identification_type_id" string="Tipo de documento"/>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="required">1</attribute>
+
                 </xpath>
                 <xpath expr="//field[@name='vr_birthday_day']" position="attributes">
                     <attribute name="invisible">1</attribute>
