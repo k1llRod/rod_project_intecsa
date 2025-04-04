@@ -4,6 +4,7 @@
         <!-- Grupo de Seguridad -->
         <record id="group_no_delete_archive" model="res.groups">
             <field name="name">No Archivar/Eliminar Contactos</field>
+            <field name="category_id" ref="base.module_contacts"/>
         </record>
         <record id="rule_no_delete_contacts" model="ir.rule">
             <field name="name">No eliminar contactos</field>

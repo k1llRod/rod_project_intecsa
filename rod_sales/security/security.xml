@@ -3,6 +3,7 @@
     <!--    Group for the Contact approval manager     -->
     <record model="res.groups" id="group_cost_readonly">
         <field name="name">Costo solo lectura</field>
+<!--        <field name="category_id" ref="base.module_sale_management"/>-->
 <!--        <field name="users" eval="[(4, ref('base.group_user'))]"/>-->
     </record>
     <record id="stock_rule_access_user" model="ir.model.access">
