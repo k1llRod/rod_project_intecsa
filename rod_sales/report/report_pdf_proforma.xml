@@ -195,6 +195,21 @@
 
                                 </table>
                             </div>
+                            <div name="total">
+                                <div class="col-4 pull-right" style="margin-top: 5px;">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td>
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.amount_total"
+                                                      t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                             <div class="oe_structure"/>
                         </t>
                     </div>
