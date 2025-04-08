@@ -25,7 +25,7 @@
                             <br/>
                             <span t-field="user.property_warehouse_id.city"/>
                             <br/>
-                            <span t-field="user.property_warehouse_id.state_id.name"/>-
+                            <span t-field="user.property_warehouse_id.state_id.name"/>
                             <span t-field="user.property_warehouse_id.country_id"/>
                             <!--                            <span t-field="company.partner_id.phone"/>-->
                             <!--                            <br/>-->
@@ -42,45 +42,60 @@
             </div>
             <div class="footer o_standard_footer">
                 <div class="row">
-                    <table style="width:100%;border-top:1px solid black;border-bottom:1px solid black;">
-                        <tr>
-                            <td style="width:33%;">
-                                <center>Vendedor</center>
-                            </td>
-                            <td style="width:33%;">
-                                <center>Telefono</center>
-                            </td>
-                            <td style="width:33%;">
-                                <center>Email</center>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <center>
-                                    <span t-field="o.user_id.name"/>
-                                </center>
-                            </td>
-                            <td>
-                                <center></center>
-                            </td>
-                            <td>
-                                <center></center>
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width:100%;border-top:1px solid black;border-bottom:1px solid black;margin-top:2px;">
-                        <tr>
-                            <td style="width:33%;">
-                                <center>Telf: 2311120 - 2314946</center>
-                            </td>
-                            <td style="width:33%;">
-                                <center>@ intecsa@intecsa.com.bo</center>
-                            </td>
-                            <td style="width:33%;">
-                                <center>https://www.intecsa.com.bo</center>
-                            </td>
-                        </tr>
-                    </table>
+                    <div>
+                        <table style="width:100%;border-top:1px solid gray;font-size:13px;">
+                            <tr>
+                                <td style="width:33%;">
+                                    <center>Vendedor</center>
+                                </td>
+                                <td style="width:33%;">
+                                    <center>Telefono</center>
+                                </td>
+                                <td style="width:33%;">
+                                    <center>Email</center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <center>
+                                        <span t-field="o.user_id.name"/>
+                                    </center>
+                                </td>
+                                <td>
+                                    <center>
+                                        <span t-field="o.user_id.mobile"/>
+                                    </center>
+                                </td>
+                                <td>
+                                    <center>
+                                        <span t-field="o.user_id.email"/>
+                                    </center>
+                                </td>
+                            </tr>
+                            <tr style="border-top:1px solid gray;border-bottom:1px solid gray;">
+                                <td style="width:33%;padding:10px;">
+                                    <center>Telf: 2311120 - 2314946</center>
+                                </td>
+                                <td style="width:33%;">
+                                    <center>@ intecsa@intecsa.com.bo</center>
+                                </td>
+                                <td style="width:33%;">
+                                    <center>https://www.intecsa.com.bo</center>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td colspan="3">
+                                    <center>
+                                        Pagina
+                                        <span class="page"/>
+                                        /
+                                        <span class="topage"/>
+                                    </center>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </template>
@@ -120,7 +135,18 @@
                                         </li>
                                         <li>
                                             <strong>Forma de pago:</strong>
-                                            <t t-esc="o.payment_method"/>
+                                            <t t-if="o.payment_method == 'transfer'">
+                                                <span>TRANFERENCIA</span>
+                                            </t>
+                                            <t t-if="o.payment_method == 'transfer_sigep'">
+                                                <span>TRANSFERENCIA SIGEP</span>
+                                            </t>
+                                            <t t-if="o.payment_method == 'cheque'">
+                                                <span>CHEQUE</span>
+                                            </t>
+                                            <t t-if="o.payment_method == 'qr'">
+                                                <span>QR</span>
+                                            </t>
                                         </li>
                                     </ul>
                                 </div>
@@ -131,10 +157,10 @@
                                         <t t-if="o.print_image">
                                             <th style="width:20%">Imagen</th>
                                         </t>
-                                        <th style="width:50%;">Descripcion</th>
-                                        <th style="width:10%;">Cant.</th>
-                                        <th style="width:10">P. U.</th>
-                                        <th style="width:10%;">Subtotal</th>
+                                        <td style="width:50%;"><strong>Descripcion</strong></td>
+                                        <td style="width:10%;"><strong>Cant.</strong></td>
+                                        <td style="width:10%"><strong>P.U.</strong></td>
+                                        <td style="width:10%;"><strong>Subtotal</strong></td>
                                     </tr>
                                     <t t-foreach="o.order_line" t-as="p">
                                         <tr t-if="p.product_uom_qty" style="page-break-inside:avoid;">

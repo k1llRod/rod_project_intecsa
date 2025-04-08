@@ -35,5 +35,8 @@ class SaleOrderLine(models.Model):
                 # Esto asegura que la nota aparezca después de la línea del producto
             }
             super(SaleOrderLine, self).create(note_vals)
-
+        if vals['display_type'] == 'line_note':
+            warehouse = self.env.user.property_warehouse_id.id
+            order_line.line_location_id = 1
+            order_line.warehouse_id = 1
         return order_line

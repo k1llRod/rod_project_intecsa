@@ -18,7 +18,10 @@ class SaleOrder(models.Model):
     validity = fields.Selection([('5','5 dias'),('15','15 dias'),('30','30 dias')], string='Validez')
     warranty = fields.Char(string='Garantía')
     delivery = fields.Date(string='Fecha entrega', default=fields.Date.today())
-    payment_method = fields.Selection([('transfer','Transferencia'),('cheque','Cheque'),('qr','QR')], string='Forma de pago')
+    payment_method = fields.Selection([('transfer','Transferencia'),
+                                       ('transfer_sigep', 'Transferencia SIGEP'),
+                                       ('cheque','Cheque'),
+                                       ('qr','QR')], string='Forma de pago')
     name_ent = fields.Char(string='Numero de Entrega')
 
     type_sale_id = fields.Many2one('type.sale', string='Tipo de venta')

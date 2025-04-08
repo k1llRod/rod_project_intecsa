@@ -63,12 +63,21 @@ class SaleOrderReportController(http.Controller):
             # Forma de pago
             hdr_cells = table_information.add_row().cells
             hdr_cells[0].paragraphs[0].add_run('Forma de pago').bold = True
-            hdr_cells[1].text = rec.payment_method if rec.payment_method else ''
+            method =  rec.payment_method if rec.payment_method else ''
+            if method == 'transfer':
+                hdr_cells[1].text = 'Transferencia'
+            elif method == 'transfer_sigep':
+                hdr_cells[1].text = 'Transferencia SIGEP'
+            elif method == 'cheque':
+                hdr_cells[1].text = 'Cheque'
+            elif method == 'qr':
+                hdr_cells[1].text = 'QR'
+
 
             # Fecha de entrega
             hdr_cells = table_information.add_row().cells
             hdr_cells[0].paragraphs[0].add_run('Fecha de entrega').bold = True
-            hdr_cells[1].text = rec.delivery if rec.delivery else ''
+            # hdr_cells[1].text = rec.delivery if rec.delivery else ''
             # hdr_cells = table_information.add_row().cells
 
         from docx.enum.table import WD_TABLE_ALIGNMENT

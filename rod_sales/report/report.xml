@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="paperformat_letter_landscape" model="report.paperformat">
+        <field name="name">Carta Horizontal</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <!-- Tamaño carta en mm: 215.9 x 279.4, en horizontal se invierte -->
+        <field name="page_width">279</field>
+        <field name="page_height">215</field>
+        <field name="orientation">Landscape</field>
+
+        <!-- Márgenes -->
+        <field name="margin_top">33</field>
+        <field name="margin_bottom">25</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+
+        <!-- Otras opciones -->
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+    </record>
     <record id="action_report_pdf_proforma" model="ir.actions.report">
         <field name="name">Cotizacion</field>
         <field name="model">sale.order</field>
@@ -7,7 +26,7 @@
         <field name="report_name">rod_sales.report_pdf_proforma</field>
         <field name="report_file">rod_sales.report.report_pdf_proforma</field>
         <field name="binding_model_id" ref="model_sale_order"/>
-<!--        <field name="paperformat_id" ref="rod_cooperativa_aportes.paperformat_certificate" />-->
+        <field name="paperformat_id" ref="rod_sales.paperformat_letter_landscape" />
         <field name="binding_type">report</field>
     </record>
 
