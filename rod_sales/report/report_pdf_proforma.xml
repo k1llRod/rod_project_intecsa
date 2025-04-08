@@ -43,15 +43,15 @@
             <div class="footer o_standard_footer">
                 <div class="row">
                     <div>
-                        <table style="width:100%;font-size:13px;">
+                        <table class="table" style="width:100%;font-size:13px;">
                             <tr>
-                                <td style="width:33%;">
+                                <td scope="col" style="width:33%;">
                                     <center>Vendedor</center>
                                 </td>
-                                <td style="width:33%;">
+                                <td scope="col" style="width:33%;">
                                     <center>Telefono</center>
                                 </td>
-                                <td style="width:33%;">
+                                <td scope="col" style="width:33%;">
                                     <center>Email</center>
                                 </td>
                             </tr>
