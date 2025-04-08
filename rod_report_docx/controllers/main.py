@@ -1,3 +1,4 @@
+import os
 from odoo import http
 from odoo.http import request
 from docx import Document
@@ -6,6 +7,7 @@ from docx.oxml import parse_xml
 from docx.shared import Pt, Inches
 from io import BytesIO
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+
 import os
 import base64
 import io
@@ -28,10 +30,12 @@ class SaleOrderReportController(http.Controller):
         section.right_margin = Inches(0.4)
         header = section.header
         header_paragraph = header.paragraphs[0]
+        module_path = os.path.dirname(os.path.abspath(__file__))
         # Ruta de la imagen (reemplazar con la ruta correcta o usar un stream si la imagen viene de la base de datos)
-        image_path = "custom_addons/rod_project_intecsa/rod_report_docx/static/src/img/intecsa.jpeg"
-        image_path_footer = "custom_addons/rod_project_intecsa/rod_report_docx/static/src/img/footer.png"
-
+        # image_path = "custom_addons/rod_project_intecsa/rod_report_docx/static/src/img/intecsa.jpeg"
+        # image_path_footer = "custom_addons/rod_project_intecsa/rod_report_docx/static/src/img/footer.png"
+        image_path = os.path.join(module_path, '..', 'static', 'src', 'img', 'intecsa.jpeg')
+        image_path_footer = os.path.join(module_path, '..', 'static', 'src', 'img', 'footer.png')
         header_paragraph.add_run().add_picture(image_path, width=Inches(1.25))
         # header_paragraph.add_run(f'Orden de entrega: {sale_order.name}')
 
