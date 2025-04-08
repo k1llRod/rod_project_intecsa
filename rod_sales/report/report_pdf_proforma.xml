@@ -42,76 +42,61 @@
             </div>
             <div class="footer o_standard_footer">
                 <div class="row">
-                    <!-- Bloque de estilos para el reporte (puede estar en la cabecera del template) -->
-<style type="text/css">
-    .footer.no-border table,
-    .footer.no-border table tr,
-    .footer.no-border table td,
-    .footer.no-border table th {
-        border: none !important;
-        border-collapse: collapse !important;
-    }
-</style>
-
-<!-- Ahora tu bloque HTML lo envuelves con la clase "no-border" -->
-<div class="footer o_standard_footer no-border">
-    <div class="row">
-        <div>
-            <table class="table table-condensed" style="width:100%; font-size:13px;">
-                <tr>
-                    <td scope="col" style="width:33%;">
-                        <center>Vendedor</center>
-                    </td>
-                    <td scope="col" style="width:33%;">
-                        <center>Telefono</center>
-                    </td>
-                    <td scope="col" style="width:33%;">
-                        <center>Email</center>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <center>
-                            <span t-field="o.user_id.name"/>
-                        </center>
-                    </td>
-                    <td>
-                        <center>
-                            <span t-field="o.user_id.mobile"/>
-                        </center>
-                    </td>
-                    <td>
-                        <center>
-                            <span t-field="o.user_id.email"/>
-                        </center>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:33%;padding:10px;">
-                        <center>Telf: 2311120 - 2314946</center>
-                    </td>
-                    <td style="width:33%;">
-                        <center>@ intecsa@intecsa.com.bo</center>
-                    </td>
-                    <td style="width:33%;">
-                        <center>https://www.intecsa.com.bo</center>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <center>
-                            Página
-                            <span class="page"/>
-                            /
-                            <span class="topage"/>
-                        </center>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div>
-
+                    <div>
+                        <!-- Se agrega border="0" y estilos inline para forzar que no se muestren bordes -->
+                        <table border="0" style="width:100%; font-size:13px; border: none; border-collapse: collapse;">
+                            <tr>
+                                <td scope="col" style="width:33%; border: none;">
+                                    <center>Vendedor</center>
+                                </td>
+                                <td scope="col" style="width:33%; border: none;">
+                                    <center>Telefono</center>
+                                </td>
+                                <td scope="col" style="width:33%; border: none;">
+                                    <center>Email</center>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none;">
+                                    <center>
+                                        <span t-field="o.user_id.name"/>
+                                    </center>
+                                </td>
+                                <td style="border: none;">
+                                    <center>
+                                        <span t-field="o.user_id.mobile"/>
+                                    </center>
+                                </td>
+                                <td style="border: none;">
+                                    <center>
+                                        <span t-field="o.user_id.email"/>
+                                    </center>
+                                </td>
+                            </tr>
+                            <!-- Si no deseas ningún borde en la tabla, remueve el estilo que define los bordes -->
+                            <tr style="border: none;">
+                                <td style="width:33%; padding:10px; border: none;">
+                                    <center>Telf: 2311120 - 2314946</center>
+                                </td>
+                                <td style="width:33%; border: none;">
+                                    <center>@ intecsa@intecsa.com.bo</center>
+                                </td>
+                                <td style="width:33%; border: none;">
+                                    <center>https://www.intecsa.com.bo</center>
+                                </td>
+                            </tr>
+                            <tr style="border: none;">
+                                <td colspan="3" style="border: none;">
+                                    <center>
+                                        Pagina
+                                        <span class="page"/>
+                                        /
+                                        <span class="topage"/>
+                                    </center>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
 
