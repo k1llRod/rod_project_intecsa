@@ -59,9 +59,13 @@
                             class="btn-primary"
                             invisible="state != 'draft'"/>
                 </xpath>
-                <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
                     <!-- Odoo 17 ya no usa `attrs`; se usa `invisible="condición"` -->
                     <attribute name="invisible">state != 'approval'</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <!-- Odoo 17 ya no usa `attrs`; se usa `invisible="condición"` -->
+                    <attribute name="invisible">1</attribute>
                 </xpath>
             </field>
         </record>
