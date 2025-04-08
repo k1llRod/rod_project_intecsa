@@ -166,8 +166,11 @@
                                         <tr t-if="p.product_uom_qty" style="page-break-inside:avoid;">
                                             <t t-if="o.print_image">
                                                 <td class="text-center">
-                                                    <img t-if="p.image_128" t-att-src="image_data_uri(p.image_128)"
+                                                    <t t-if="p.product_id.image_128">
+                                                        <img t-if="p.product_id.image_128" t-att-src="image_data_uri(p.image_128)"
                                                          style="width: 90%"/>
+                                                    </t>
+                                                    <t t-else=""></t>
                                                 </td>
                                             </t>
                                             <td>
