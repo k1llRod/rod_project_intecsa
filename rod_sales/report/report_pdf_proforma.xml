@@ -43,48 +43,50 @@
             <div class="footer o_standard_footer">
                 <div class="row">
                     <div>
-                        <table style="width:100%;font-size:13px;">
+                        <!-- Se agrega border="0" y estilos inline para forzar que no se muestren bordes -->
+                        <table border="0" style="width:100%; font-size:13px; border: none; border-collapse: collapse;">
                             <tr>
-                                <td scope="col" style="width:33%;">
+                                <td scope="col" style="width:33%; border: none;">
                                     <center>Vendedor</center>
                                 </td>
-                                <td scope="col" style="width:33%;">
+                                <td scope="col" style="width:33%; border: none;">
                                     <center>Telefono</center>
                                 </td>
-                                <td scope="col" style="width:33%;">
+                                <td scope="col" style="width:33%; border: none;">
                                     <center>Email</center>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="border: none;">
                                     <center>
                                         <span t-field="o.user_id.name"/>
                                     </center>
                                 </td>
-                                <td>
+                                <td style="border: none;">
                                     <center>
                                         <span t-field="o.user_id.mobile"/>
                                     </center>
                                 </td>
-                                <td>
+                                <td style="border: none;">
                                     <center>
                                         <span t-field="o.user_id.email"/>
                                     </center>
                                 </td>
                             </tr>
-                            <tr style="border-top:1px solid gray;border-bottom:1px solid gray;">
-                                <td style="width:33%;padding:10px;">
+                            <!-- Si no deseas ningún borde en la tabla, remueve el estilo que define los bordes -->
+                            <tr style="border: none;">
+                                <td style="width:33%; padding:10px; border: none;">
                                     <center>Telf: 2311120 - 2314946</center>
                                 </td>
-                                <td style="width:33%;">
+                                <td style="width:33%; border: none;">
                                     <center>@ intecsa@intecsa.com.bo</center>
                                 </td>
-                                <td style="width:33%;">
+                                <td style="width:33%; border: none;">
                                     <center>https://www.intecsa.com.bo</center>
                                 </td>
                             </tr>
-                            <tr >
-                                <td colspan="3">
+                            <tr style="border: none;">
+                                <td colspan="3" style="border: none;">
                                     <center>
                                         Pagina
                                         <span class="page"/>
@@ -95,9 +97,9 @@
                             </tr>
                         </table>
                     </div>
-
                 </div>
             </div>
+
         </template>
         <template id="report_pdf_proforma">
             <t t-call="web.html_container">
