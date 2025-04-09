@@ -18,6 +18,7 @@ class SaleOrder(models.Model):
     validity = fields.Selection([('5','5 dias'),('15','15 dias'),('30','30 dias')], string='Validez')
     warranty = fields.Char(string='Garantía')
     delivery = fields.Date(string='Fecha entrega', default=fields.Date.today())
+    delivery_text = fields.Char(string='Fecha de entrega')
     payment_method = fields.Selection([('transfer','Transferencia'),
                                        ('transfer_sigep', 'Transferencia SIGEP'),
                                        ('cheque','Cheque'),
@@ -66,7 +67,7 @@ class SaleOrder(models.Model):
     @api.depends('order_line', 'additional_costs_ids')
     def _compute_commission_total(self):
         for record in self:
-            percentage = self.env.user.partner_id.commission_ids.percentage if self.env.user.partner_id.commission_ids else 0
+            percentage = record.user_id.partner_id.commission_ids.percentage if record.user_id.partner_id.commission_ids.percentage else 0
             record.commission_percentage = percentage/100 if percentage else 0
             record.delivery_total = sum(line.amount for line in record.additional_costs_ids)
             record.cost_total = sum(line.standard_price * line.product_uom_qty for line in record.order_line) + record.delivery_total
@@ -146,3 +147,18 @@ class SaleOrder(models.Model):
         for order in expired_orders:
             order.action_cancel()  # Cancela la cotización
             self.env.cr.commit()  # Guarda cambios para evitar bloqueos
+
+    @api.model
+    def create(self, vals):
+        if 'warranty' in vals and vals.get('warranty'):
+            vals['warranty'] = vals['warranty'].upper()
+        if 'delivery_text' in vals and vals.get('delivery_text'):
+            vals['delivery_text'] = vals['delivery_text'].upper()
+        return super(SaleOrder, self).create(vals)
+
+    def write(self, vals):
+        if 'warranty' in vals and vals.get('warranty'):
+            vals['warranty'] = vals['warranty'].upper()
+        if 'delivery_text' in vals and vals.get('delivery_text'):
+            vals['delivery_text'] = vals['delivery_text'].upper()
+        return super(SaleOrder, self).write(vals)

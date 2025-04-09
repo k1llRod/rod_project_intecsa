@@ -23,7 +23,7 @@
                     <field name="validity" required="1"/>
                     <field name="warranty"/>
                     <field name="payment_method"/>
-                    <field name="delivery"/>
+                    <field name="delivery_text"/>
                     <field name="type_sale_id"/>
                     <field name="readonly_user" invisible="1"/>
                     <field name="commission_percentage" invisible="1"/>

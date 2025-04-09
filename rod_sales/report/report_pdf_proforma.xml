@@ -125,7 +125,7 @@
                                     <ul style="list-style:none;">
                                         <li>
                                             <strong>Validez:</strong>
-                                            <t t-esc="o.validity"/>
+                                            <t t-esc="o.validity"/> DIAS
                                         </li>
                                         <li>
                                             <strong>Garantia:</strong>
@@ -133,7 +133,7 @@
                                         </li>
                                         <li>
                                             <strong>Entrega:</strong>
-                                            <t t-esc="o.delivery"/>
+                                            <t t-esc="o.delivery_text"/>
                                         </li>
                                         <li>
                                             <strong>Forma de pago:</strong>
@@ -185,7 +185,7 @@
                                                 <span t-field="p.price_unit"/>
                                             </td>
                                             <td>
-                                                <span t-field="p.price_subtotal"/>
+                                                <span t-field="p.price_total"/>
                                             </td>
                                         </tr>
                                         <tr t-if="p.display_type =='line_note'" style="page-break-inside:avoid;">
