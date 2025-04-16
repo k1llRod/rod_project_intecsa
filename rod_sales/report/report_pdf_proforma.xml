@@ -8,7 +8,7 @@
                     <t t-set="user" t-value="user"/>
                     <div class="row mt20 mb32" >
                         <div class="col-4" style="border: 1px solid black;">
-                            <img src="/rod_sales/static/src/img/intecsa.jpeg" style="width:200px;"/>
+                            <img src="/rod_sales/static/src/img/intecsa.jpeg" style="width:240px;display:block;margin:auto;"/>
                         </div>
                         <div class="col-4 text-center" style="font-size:20px;border:1px solid black;">
                             <span style="font-weight:bold;">
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div>
                         <!-- Se agrega border="0" y estilos inline para forzar que no se muestren bordes -->
-                        <table border="0" style="width:100%; font-size:13px; border: none; border-collapse: collapse;">
+                        <table border="0" style="width:100%; font-size:13px; border-collapse: collapse; border-top: 1px solid black;">
                             <tr>
                                 <td scope="col" style="width:33%; border: none;">
                                     <center>Vendedor</center>
@@ -75,7 +75,7 @@
                                 </td>
                             </tr>
                             <!-- Si no deseas ningún borde en la tabla, remueve el estilo que define los bordes -->
-                            <tr style="border: none;">
+                            <tr style="border-bottom: 1px solid black;border-top: 1px solid black;">
                                 <td style="width:33%; padding:10px; border: none;">
                                     <center>Telf: 2311120 - 2314946</center>
                                 </td>
@@ -177,57 +177,59 @@
                                             </td>
                                         </tr>
                                     </thead>
+                                    <tbody style="background-image: url('rod_sales/static/src/img/fondo.png'); background-repeat: no-repeat; background-size: cover;">
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-foreach="o.order_line" t-as="p" >
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                            <tr t-if="p.product_uom_qty" style="page-break-inside:avoid;" t-att-style="'background-color: rgba(242,242,242,0.5);' if counter % 2 == 1 else ''">
+                                                <t t-if="o.print_image">
+                                                    <td class="text-center" style="border-left: 1px solid black;border-right: 1px solid black;">
+                                                        <t t-if="p.product_id.image_128">
+                                                            <img t-if="p.product_id.image_128" t-att-src="image_data_uri(p.image_128)"
+                                                             style="width: 90%"/>
+                                                        </t>
+                                                        <t t-else="">
 
-                                    <t t-foreach="o.order_line" t-as="p">
-                                        <tr t-if="p.product_uom_qty" style="page-break-inside:avoid;">
-                                            <t t-if="o.print_image">
-                                                <td class="text-center" style="border-left: 1px solid black;border-right: 1px solid black;">
-                                                    <t t-if="p.product_id.image_128">
-                                                        <img t-if="p.product_id.image_128" t-att-src="image_data_uri(p.image_128)"
-                                                         style="width: 90%"/>
-                                                    </t>
-                                                    <t t-else=""></t>
+                                                        </t>
+                                                    </td>
+                                                </t>
+                                                <td style="border-left: 1px solid black;border-right: 1px solid black;">
+                                                    <span t-field="p.product_id.name"/>
                                                 </td>
-                                            </t>
-                                            <td style="border-left: 1px solid black;border-right: 1px solid black;">
-                                                <span t-field="p.product_id.name"/>
-                                            </td>
-                                            <td style="border-left: 1px solid black;border-right: 1px solid black;">
-                                                <span t-field="p.product_uom_qty"/>
-                                            </td>
-                                            <td style="border-left: 1px solid black;border-right: 1px solid black;">
-                                                <span t-field="p.price_unit"/>
-                                            </td>
-                                            <td style="border-left: 1px solid black;border-right: 1px solid black;">
-                                                <span t-field="p.price_total"/>
-                                            </td>
-                                        </tr>
-                                        <tr t-if="p.display_type =='line_note'" style="page-break-inside:avoid;">
-                                            <td class="text-left" style="border-left: 1px solid black;border-right: 1px solid black;">
-                                                &amp;nbsp;
-                                            </td>
-                                            <td class="text-left" style="border-left: 1px solid black;border-right: 1px solid black;">
-                                                <span t-field="p.name"/>
-                                            </td>
-                                            <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                                            <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                                            <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
-                                        </tr>
-                                    </t>
-<!--                                    <tr style="border: 1px solid black;">-->
-<!--                                        <td colspan="2" style="background-color:white;"></td>-->
-<!--                                        <td><strong style="font-size:18px;">Total</strong></td>-->
-<!--                                        <td style="padding-top:12px;">-->
-<!--                                            <span t-field="o.amount_total"-->
-<!--                                                          t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
+                                                <td style="border-left: 1px solid black;border-right: 1px solid black;">
+                                                    <span t-field="p.product_uom_qty"/>
+                                                </td>
+                                                <td style="border-left: 1px solid black;border-right: 1px solid black;">
+                                                    <span t-field="p.price_unit"/>
+                                                </td>
+                                                <td style="border-left: 1px solid black;border-right: 1px solid black;">
+                                                    <span t-field="p.price_total"/>
+                                                </td>
+                                            </tr>
+                                            <tr t-if="p.display_type =='line_note'" style="page-break-inside:avoid;">
+                                                <t t-if="o.print_image">
+                                                    <td class="text-left"
+                                                        style="border-left: 1px solid black;border-right: 1px solid black;">
+                                                        &amp;nbsp;
+                                                    </td>
+                                                </t>
+
+                                                <td class="text-left" style="border-left: 1px solid black;border-right: 1px solid black;">
+                                                    <span t-field="p.name"/>
+                                                </td>
+                                                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                                                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                                                <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                                            </tr>
+                                        </t>
+
+                                    </tbody>
 
                                 </table>
                             </div>
                             <div name="total" class="col-12" style="margin-top:5px;">
                                 <div class="col-3 pull-right" style="margin-left: auto;">
-                                    <table class="table table-condensed" style="font-size:16px;width:100%;">
+                                    <table class="table table-condensed" style="font-size:16px;width:100%;background-color: rgba(242,242,242,0.5);">
                                         <tr>
                                             <td>
                                                 <strong>Total</strong>
