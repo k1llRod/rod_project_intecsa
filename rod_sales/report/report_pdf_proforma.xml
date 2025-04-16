@@ -8,9 +8,9 @@
                     <t t-set="user" t-value="user"/>
                     <div class="row mt20 mb32" >
                         <div class="col-4" style="border: 1px solid black;">
-                            <img src="/rod_sales/static/src/img/intecsa.jpeg" style="width:240px;display:block;margin:auto;"/>
+                            <img src="/rod_sales/static/src/img/intecsa.jpeg" style="width:240px;display:block;margin:auto;margin-top:3px;"/>
                         </div>
-                        <div class="col-4 text-center" style="font-size:20px;border:1px solid black;">
+                        <div class="col-4 text-center" style="font-size:24px;border:1px solid black;">
                             <span style="font-weight:bold;">
                                 <strong>PROFORMA</strong>
                                 <br/>
