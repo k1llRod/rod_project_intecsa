@@ -6,17 +6,18 @@
                 <div class="row">
                     <t t-set="company" t-value="o.company_id"/>
                     <t t-set="user" t-value="user"/>
-                    <div class="row mt20 mb32" style="border-bottom:1px solid #dddbdb;padding-bottom:10px;">
-                        <div class="col-4">
+                    <div class="row mt20 mb32" >
+                        <div class="col-4" style="border: 1px solid black;">
                             <img src="/rod_sales/static/src/img/intecsa.jpeg" style="width:200px;"/>
                         </div>
-                        <div class="col-4 text-center" style="font-size:20px;margin-top:25px;">
+                        <div class="col-4 text-center" style="font-size:20px;border:1px solid black;">
                             <span style="font-weight:bold;">
                                 <strong>PROFORMA</strong>
+                                <br/>
                             </span>
                             <span t-field="o.name"/>
                         </div>
-                        <div class="col-4 text-center" style="font-style:arial;font-size:11px;">
+                        <div class="col-4 text-center" style="font-style:arial;font-size:11px;border:1px solid black;">
                             <span t-field="company.partner_id"/>
                             <br/>
                             <span t-field="user.property_warehouse_id.street"/>
@@ -107,13 +108,15 @@
                     <div class="page">
                         <t t-call="rod_sales.rod_layout">
                             <div class="oe_structure"/>
-                            <div class="row mt20 mb32">
-                                <div class="col-6" style="font-size:16px;">
+                            <br/>
+                            <br/>
+                            <div class="row mt20">
+                                <div class="col-6" style="font-size:12px;">
                                     <ul style="list-style:none;">
                                         <li>
                                             <t t-esc="o.date_order.strftime('%A, %d de %B de %Y')"/>
                                         </li>
-                                        <li style="font-weigh;">
+                                        <li>
                                             <strong>Señor(es):</strong>
                                         </li>
                                         <li>
@@ -121,7 +124,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-6" style="font-size:16px;">
+                                <div class="col-6" style="font-size:12px;">
                                     <ul style="list-style:none;">
                                         <li>
                                             <strong>Validez:</strong>
@@ -154,20 +157,31 @@
                                 </div>
                             </div>
                             <div>
-                                <table class="table table-bordered" style="font-size:13px;width:100%;">
-                                    <tr style="page-break-inside:avoid;">
-                                        <t t-if="o.print_image">
-                                            <th style="width:20%">Imagen</th>
-                                        </t>
-                                        <td style="width:50%;"><strong>Descripcion</strong></td>
-                                        <td style="width:10%;"><strong>Cant.</strong></td>
-                                        <td style="width:10%"><strong>P.U.</strong></td>
-                                        <td style="width:10%;"><strong>Subtotal</strong></td>
-                                    </tr>
+                                <table class="table table-striped" style="font-size:12px;width:100%;">
+                                    <thead style="border-bottom-width: initial;">
+                                        <tr style="page-break-inside:avoid;">
+                                            <t t-if="o.print_image">
+                                                <td style="width:20%;border: 1px solid black;">Imagen</td>
+                                            </t>
+                                            <td style="width:50%;border: 1px solid black;">
+                                                <strong>Descripcion</strong>
+                                            </td>
+                                            <td style="width:10%;border: 1px solid black;">
+                                                <strong>Cant.</strong>
+                                            </td>
+                                            <td style="width:10%;border: 1px solid black;">
+                                                <strong>P.U.</strong>
+                                            </td>
+                                            <td style="width:10%;border: 1px solid black;">
+                                                <strong>Subtotal</strong>
+                                            </td>
+                                        </tr>
+                                    </thead>
+
                                     <t t-foreach="o.order_line" t-as="p">
                                         <tr t-if="p.product_uom_qty" style="page-break-inside:avoid;">
                                             <t t-if="o.print_image">
-                                                <td class="text-center">
+                                                <td class="text-center" style="border-left: 1px solid black;border-right: 1px solid black;">
                                                     <t t-if="p.product_id.image_128">
                                                         <img t-if="p.product_id.image_128" t-att-src="image_data_uri(p.image_128)"
                                                          style="width: 90%"/>
@@ -175,38 +189,57 @@
                                                     <t t-else=""></t>
                                                 </td>
                                             </t>
-                                            <td>
+                                            <td style="border-left: 1px solid black;border-right: 1px solid black;">
                                                 <span t-field="p.product_id.name"/>
                                             </td>
-                                            <td>
+                                            <td style="border-left: 1px solid black;border-right: 1px solid black;">
                                                 <span t-field="p.product_uom_qty"/>
                                             </td>
-                                            <td>
+                                            <td style="border-left: 1px solid black;border-right: 1px solid black;">
                                                 <span t-field="p.price_unit"/>
                                             </td>
-                                            <td>
+                                            <td style="border-left: 1px solid black;border-right: 1px solid black;">
                                                 <span t-field="p.price_total"/>
                                             </td>
                                         </tr>
                                         <tr t-if="p.display_type =='line_note'" style="page-break-inside:avoid;">
-<!--                                            <td class="text-left">-->
-<!--                                                &amp;nbsp;-->
-<!--                                            </td>-->
-                                            <td class="text-left" colspan="5">
+                                            <td class="text-left" style="border-left: 1px solid black;border-right: 1px solid black;">
+                                                &amp;nbsp;
+                                            </td>
+                                            <td class="text-left" style="border-left: 1px solid black;border-right: 1px solid black;">
                                                 <span t-field="p.name"/>
                                             </td>
+                                            <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                                            <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
+                                            <td style="border-left: 1px solid black;border-right: 1px solid black;"></td>
                                         </tr>
                                     </t>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td><strong style="font-size:18px;">Total</strong></td>
-                                        <td style="padding-top:12px;">
-                                            <span t-field="o.amount_total"
-                                                          t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
-                                        </td>
-                                    </tr>
+<!--                                    <tr style="border: 1px solid black;">-->
+<!--                                        <td colspan="2" style="background-color:white;"></td>-->
+<!--                                        <td><strong style="font-size:18px;">Total</strong></td>-->
+<!--                                        <td style="padding-top:12px;">-->
+<!--                                            <span t-field="o.amount_total"-->
+<!--                                                          t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
 
                                 </table>
+                            </div>
+                            <div name="total" class="col-12" style="margin-top:5px;">
+                                <div class="col-3 pull-right" style="margin-left: auto;">
+                                    <table class="table table-condensed" style="font-size:16px;width:100%;">
+                                        <tr>
+                                            <td>
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td>
+                                                <span t-field="o.amount_total"
+                                                          t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
                             </div>
                             <div class="oe_structure"/>
                         </t>

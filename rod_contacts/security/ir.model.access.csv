@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_rod_contacts_rod_contacts,rod_contacts.rod_contacts,model_rod_contacts_rod_contacts,base.group_user,1,1,1,1
+access_calendar_event_user,calendar.event,model_calendar_event,base.group_user,1,1,1,1
+
