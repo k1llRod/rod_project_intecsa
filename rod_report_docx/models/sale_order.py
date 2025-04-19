@@ -12,14 +12,14 @@ class SaleOrderReport(models.Model):
             # Agregar encabezado
             header = document.sections[0].header
             header_paragraph = header.paragraphs[0]
-            header_paragraph.text = f'Orden de entrega: {order.name}'
+            header_paragraph.text = f'Nota de entrega: {order.name}'
 
             # Agregar pie de página
             footer = document.sections[0].footer
             footer_paragraph = footer.paragraphs[0]
             footer_paragraph.text = 'Este es un pie de página.'
 
-            document.add_heading('Orden de entrega', level=1)
+            document.add_heading('Nota de entrega', level=1)
             document.add_paragraph(f'Orden: {order.name}')
             document.add_paragraph(f'Fecha: {order.date_order}')
             document.add_paragraph(f'Cliente: {order.partner_id.name}')

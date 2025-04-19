@@ -141,10 +141,33 @@
                                 <br/>
                                 <br/>
                                 <div class="row mt20 mb32">
-                                    <div class="col-12" style="font-size:16px;">
-                                        <center><h4>FIRMA CLIENTE Y/O SELLO</h4></center>
+                                    <div class="col-6" style="font-size:14px;">
+                                        <center><strong>SOPORTE TI INTECSA SRL.</strong></center>
+                                    </div>
+                                    <div class="col-6" style="font-size:14px;">
+                                        <center><strong>FIRMA CLIENTE Y/O SELLO</strong></center>
                                     </div>
                                 </div>
+<!--                                <div>-->
+<!--                                    <table style="width:100%; margin-top:30px; border: none; font-size:13px;">-->
+<!--                                        <tr>-->
+<!--                                            <td style="width:50%; text-align: center; padding-top:40px;">-->
+<!--                                                ___________________________-->
+<!--                                                <br/>-->
+<!--                                                <strong>Firma Autorizada</strong>-->
+<!--                                                <br/>-->
+<!--                                                Nombre y Cargo-->
+<!--                                            </td>-->
+<!--                                            <td style="width:50%; text-align: center; padding-top:40px;">-->
+<!--                                                ___________________________-->
+<!--                                                <br/>-->
+<!--                                                <strong>Cliente</strong>-->
+<!--                                                <br/>-->
+<!--                                                Nombre y C.I./Firma-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                    </table>-->
+<!--                                </div>-->
 
                             </div>
                             <div class="oe_structure"/>

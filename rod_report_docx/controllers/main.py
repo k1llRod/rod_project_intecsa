@@ -7,6 +7,9 @@ from docx.oxml import parse_xml
 from docx.shared import Pt, Inches
 from io import BytesIO
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.table import WD_TABLE_ALIGNMENT
+from num2words import num2words
+
 
 import os
 import base64
@@ -44,15 +47,48 @@ class SaleOrderReportController(http.Controller):
         footer_paragraph = footer.paragraphs[0]
         footer_paragraph.add_run().add_picture(image_path_footer, width=Inches(7.5))
 
-        document.add_heading('Orden de entrega', level=1).alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+        # document.add_heading('Orden de entrega', level=1).alignment = WD_ALIGN_PARAGRAPH.CENTER
+        for record in sale_order:
+            paragraph_code = document.add_paragraph()
+            paragraph_code.paragraph_format.space_before = Pt(0)
+            paragraph_code.paragraph_format.space_after = Pt(0)
+            run = paragraph_code.add_run(record.name)
+            paragraph_code.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            for r in record.picking_ids:
+                paragraph_code = document.add_paragraph()
+                paragraph_code.paragraph_format.space_before = Pt(0)
+                paragraph_code.paragraph_format.space_after = Pt(0)
+                run = paragraph_code.add_run(r.name_ent)
+                paragraph_code.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+
+
         table_information = document.add_table(rows=1, cols=2)
         table_information.style = 'Table Grid'
-        hdr_cells = table_information.rows[0].cells
+        table_information.autofit = False
+        first_row = table_information.rows[0].cells
+        first_row[0].width = Inches(2)  # 25% de 6 pulgadas
+        first_row[1].width = Inches(4)  # 75% de 6 pulgadas
+
+        # Fusionamos la primera celda con la segunda
+        merged_cell = first_row[0].merge(first_row[1])
+
+        # Agregamos el texto en la celda fusionada
+        paragraph = merged_cell.paragraphs[0]
+        paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        paragraph.add_run('NOTA DE ENTREGA').bold = True
+
 
         for rec in sale_order:
+
+
+            hdr_cells = table_information.add_row().cells
             # Nombre
+            hdr_cells[0].width = 10  # 25% de 6 pulgadas
+            hdr_cells[1].width = 20  # 75% de 6 pulgadas
             hdr_cells[0].paragraphs[0].add_run('Nombre').bold = True
             hdr_cells[1].text = rec.partner_id.name
+            hdr_cells[0].width = 100
 
             # NIT
             hdr_cells = table_information.add_row().cells
@@ -63,6 +99,16 @@ class SaleOrderReportController(http.Controller):
             hdr_cells = table_information.add_row().cells
             hdr_cells[0].paragraphs[0].add_run('Dirección').bold = True
             hdr_cells[1].text = rec.partner_id.street if rec.partner_id.street else ''
+
+            # Telefono
+            hdr_cells = table_information.add_row().cells
+            hdr_cells[0].paragraphs[0].add_run('Telefono').bold = True
+            hdr_cells[1].text = rec.partner_id.mobile if rec.partner_id.mobile else ''
+
+            # Departamento
+            hdr_cells = table_information.add_row().cells
+            hdr_cells[0].paragraphs[0].add_run('Departamento').bold = True
+            hdr_cells[1].text = rec.partner_id.state_id.name if rec.partner_id.state_id.name else ''
 
             # Forma de pago
             hdr_cells = table_information.add_row().cells
@@ -77,11 +123,10 @@ class SaleOrderReportController(http.Controller):
             elif method == 'qr':
                 hdr_cells[1].text = 'QR'
 
-
             # Fecha de entrega
             hdr_cells = table_information.add_row().cells
             hdr_cells[0].paragraphs[0].add_run('Fecha de entrega').bold = True
-            # hdr_cells[1].text = rec.delivery if rec.delivery else ''
+            hdr_cells[1].text = rec.delivery_text if rec.delivery_text else ''
             # hdr_cells = table_information.add_row().cells
 
         from docx.enum.table import WD_TABLE_ALIGNMENT
@@ -106,8 +151,36 @@ class SaleOrderReportController(http.Controller):
 
 
         table = document.add_table(rows=1, cols=4)
+        table.style = 'Table Grid'
+        table.autofit = False
+        table.alignment = WD_TABLE_ALIGNMENT.CENTER
         hdr_cells = table.rows[0].cells
-        hdr_cells[0].text = 'Producto'
+        # hdr_cells = table.add_row().cells
+        # hdr_cells = table.add_column(width=10)
+
+        # Asignar texto y ancho a cada columna (por ejemplo: total 6.5 pulgadas)
+        hdr_cells[0].width = Inches(2)  # Descripción
+        hdr_cells[1].width = Inches(1)  # Cantidad
+        hdr_cells[2].width = Inches(1)  # Precio unitario
+        hdr_cells[3].width = Inches(1)  # Precio total
+
+        headers = ['Descripción', 'Cantidad', 'Precio unitario', 'Precio total']
+        for i, cell in enumerate(hdr_cells):
+            # Texto
+            p = cell.paragraphs[0]
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            run = p.add_run(headers[i])
+            run.bold = True
+
+            # Alineación vertical al centro
+            cell.vertical_alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+            # Fondo gris plomo (transparente claro)
+            cell._tc.get_or_add_tcPr().append(parse_xml(
+                r'<w:shd {} w:fill="bfbfbf "/>'.format(nsdecls('w'))
+            ))
+
+        hdr_cells[0].text = 'Descripcion'
         hdr_cells[1].text = 'Cantidad'
         hdr_cells[2].text = 'Precio unitario'
         hdr_cells[3].text = 'Precio total'
@@ -120,10 +193,27 @@ class SaleOrderReportController(http.Controller):
                 row_cells[2].text = str(line.price_unit)
                 row_cells[3].text = str(line.price_total)
             if line.display_type == 'line_note':
-                row_cells[0].merge(row_cells[3])
+                # row_cells[0].merge(row_cells[3])
                 row_cells[0].text = line.name
                 # row_cells[1].merge(row_cells[2])
                 # row_cells[1].text = ''
+
+        row_cells = table.add_row().cells
+        row_cells[0].merge(row_cells[2])
+        row_cells[0].paragraphs[0].add_run('Total').bold = True
+        row_cells[3].text = str(sale_order.amount_total) if sale_order.amount_total else ''
+
+        literal_number = num2words(int(sale_order.amount_total), lang='es').upper()
+        decimal = str(round(sale_order.amount_total % 1 * 100))
+        literal_number = literal_number + ', CON ' + decimal + '/100 BOLIVIANOS'
+
+        row_cells = table.add_row().cells
+        row_cells[0].merge(row_cells[3])
+        row_cells[0].paragraphs[0].add_run('Precio total: ' + literal_number).bold = True
+        # row_cells[3].text = str(sale_order.amount_total) if sale_order.amount_total else ''
+
+
+
         tbl = table._tbl
         for cell in tbl.iter_tcs():
             tc_pr = cell.tcPr
