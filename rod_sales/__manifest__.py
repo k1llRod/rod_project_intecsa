@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['sale_management','sale','sale_margin','report_py3o','stock'],
+    'depends': ['sale_management','sale','sale_margin','stock'],
 
     # always loaded
     'data': [
