@@ -7,6 +7,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.misc import find_in_path
 from odoo.tools.safe_eval import safe_eval, time
+from Format import Formats
 
 logger = logging.getLogger(__name__)
 

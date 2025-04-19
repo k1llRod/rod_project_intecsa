@@ -45,19 +45,19 @@
                 <div class="row">
                     <div>
                         <!-- Se agrega border="0" y estilos inline para forzar que no se muestren bordes -->
-                        <table border="0" style="width:100%; font-size:13px; border-collapse: collapse; border-top: 1px solid black;">
-                            <tr>
+                        <table border="0" style="width:100%;border-style:hidden; font-size:13px; border-collapse: collapse; border-top: 1px solid black;">
+                            <tr >
                                 <td scope="col" style="width:33%; border: none;">
-                                    <center>Vendedor</center>
+                                    <center><strong>Vendedor</strong></center>
                                 </td>
                                 <td scope="col" style="width:33%; border: none;">
-                                    <center>Telefono</center>
+                                    <center><strong>Telefono</strong></center>
                                 </td>
                                 <td scope="col" style="width:33%; border: none;">
-                                    <center>Email</center>
+                                    <center><strong>Email</strong></center>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr style="border-style:hidden;border-bottom: 1px solid black;">
                                 <td style="border: none;">
                                     <center>
                                         <span t-field="o.user_id.name"/>
@@ -88,11 +88,11 @@
                             </tr>
                             <tr style="border: none;">
                                 <td colspan="3" style="border: none;">
-                                    <center>
+                                    <center style="color:gray;">
                                         Pagina
-                                        <span class="page"/>
+                                        <span class="page" style="color:gray;"/>
                                         /
-                                        <span class="topage"/>
+                                        <span class="topage" style="color:gray;"/>
                                     </center>
                                 </td>
                             </tr>
@@ -235,8 +235,10 @@
                                                 <strong>Total</strong>
                                             </td>
                                             <td>
-                                                <span t-field="o.amount_total"
+                                                <strong>
+                                                    <span t-field="o.amount_total"
                                                           t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+                                                </strong>
                                             </td>
                                         </tr>
 
