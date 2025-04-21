@@ -39,8 +39,8 @@ class SaleOrder(models.Model):
                     'product_id', '=', line.product_id.id),
                                                  ('line_location_id', '=',
                                                   line.line_location_id.id)])
-                if lines_count > 1 and line.display_type != 'line_note':
-                    raise ValidationError(
-                        _(f"You cannot add the same product"
-                          f" {line.product_id.display_name} with the same "
-                          f"location '{line.line_location_id.name}'."))
+                # if lines_count > 1 and line.display_type != 'line_note':
+                #     raise ValidationError(
+                #         _(f"You cannot add the same product"
+                #           f" {line.product_id.display_name} with the same "
+                #           f"location '{line.line_location_id.name}'."))

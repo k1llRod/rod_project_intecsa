@@ -194,7 +194,8 @@
                                                     </td>
                                                 </t>
                                                 <td style="border-left: 1px solid black;border-right: 1px solid black;">
-                                                    <span t-field="p.product_id.name"/>
+<!--                                                    <span t-field="p.product_id"/>-->
+                                                    <span t-field="p.name"/>
                                                 </td>
                                                 <td style="border-left: 1px solid black;border-right: 1px solid black;">
                                                     <span t-field="p.product_uom_qty"/>
