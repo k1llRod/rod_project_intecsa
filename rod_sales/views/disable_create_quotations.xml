@@ -1,0 +1,9 @@
+<odoo>
+  <data>
+    <!-- Actualizamos la acción existente con ID externo sale.action_quotations -->
+    <record id="sale.action_quotations" model="ir.actions.act_window">
+      <!-- Aquí modificamos el contexto de la acción -->
+      <field name="context">{'search_default_my_quotation': 1, 'create': False}</field>
+    </record>
+  </data>
+</odoo>

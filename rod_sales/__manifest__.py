@@ -38,6 +38,7 @@ Long description of module's purpose
         'views/dollar_exchange_history.xml',
         'views/product_product.xml',
         'views/sale_order_template.xml',
+        'views/disable_create_quotations.xml',
         'wizard/wizard_inventory_product.xml',
         'report/report.xml',
         # 'report/report_sale.xml',
