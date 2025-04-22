@@ -10,6 +10,18 @@
                 </xpath>
             </field>
         </record>
+        <record id="view_sales_order_filter_inherit_remove_partner" model="ir.ui.view">
+            <field name="name">sale.order.search.remove.partner</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="filter_domain">['|', ('name', 'ilike', self), ('client_order_ref', 'ilike',
+                        self)]
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
     </data>
     <menuitem id="menu_rod_commission"
               name="Comisiones"
