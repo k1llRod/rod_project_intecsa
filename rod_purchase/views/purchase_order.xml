@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="purchase_order_form_inherit_hide_confirm" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit.hide.confirm</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Reemplazamos el botón Confirmar Orden -->
+                <xpath expr="//button[@name='button_confirm'][1]" position="replace">
+                    <button name="button_confirm"
+                            type="object"
+                            invisible="state != 'sent'"
+                            string="Confirm Order"
+                            context="{'validate_analytic': True}"
+                            class="oe_highlight"
+                            id="bid_confirm"
+                            data-hotkey="q"
+                            groups="purchase.group_purchase_manager"
+                    />
+                </xpath>
+                <xpath expr="//button[@name='button_confirm'][2]" position="replace">
+                    <button name="button_confirm"
+                            type="object"
+                            invisible="state != 'draft'"
+                            context="{'validate_analytic': True}"
+                            string="Confirmar Orden"
+                            id="draft_confirm"
+                            data-hotkey="q"
+                            groups="purchase.group_purchase_manager"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -4,7 +4,7 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     price_unit = fields.Float(string='Precio unidad',store=True)
-    price = fields.Float(string='Precio',compute='_compute_price',store=True)
+    price = fields.Float(string='Precio',store=True)
 
     def _compute_price(self):
         for record in self:

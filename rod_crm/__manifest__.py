@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "rod_purchase",
+    'name': "rod_crm",
 
     'summary': "Short (1 phrase/line) summary of the module's purpose",
 
@@ -18,16 +18,13 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','purchase','stock','rod_sales'],
+    'depends': ['base','crm','contacts'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/stock_move_line.xml',
-        'views/stock_quant.xml',
-        'views/purchase_order.xml',
-        # 'views/stock_move_line.xml',
+        'views/crm_lead_search.xml',
     ],
-    # only loaded in demonstration mode
+
 }
 
