@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="calendar_custom_view" model="ir.ui.view">
+            <field name="name">Custom Calendar</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
+            <field name="arch" type="xml">
+                <xpath expr="//calendar" position="attributes">
+                    <!-- Aquí modificas los atributos -->
+                    <attribute name="color">user_id</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_ids']" position="attributes">
+                    <attribute name="domain">[('user_ids', '!=', False)]</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
