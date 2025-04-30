@@ -24,4 +24,10 @@ class ProductTemplate(models.Model):
                 record.list_price = record.standard_price * (1 + (record.profit_margin or 0.0) / 100.0)
             else:
                 record.list_price = 0.0
+    @api.model
+    def default_get(self, fields_list):
+        defaults = super(ProductTemplate, self).default_get(fields_list)
+        if 'detailed_type' in fields_list:
+            defaults['detailed_type'] = 'product'  # 'product' = almacenable
+        return defaults
 

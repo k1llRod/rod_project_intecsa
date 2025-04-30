@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['sale_management','sale','sale_margin','stock'],
+    'depends': ['sale_management','stock','rod_purchase','sale_margin'],
 
     # always loaded
     'data': [

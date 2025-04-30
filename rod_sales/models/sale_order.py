@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    readonly_user = fields.Boolean(string='Readonly User', store=True, compute='_compute_readonly_user')
+    readonly_user = fields.Boolean(string='Readonly User', compute='_compute_readonly_user')
 
     cost = fields.Float(string='Costo', store=True, compute='_compute_commission_total')
     cost_total = fields.Float(string='Costo total', store=True, compute='_compute_commission_total')
@@ -14,7 +14,7 @@ class SaleOrder(models.Model):
     commission = fields.Float(string='Comision', store=True, compute='_compute_commission_total')
     margin_commission = fields.Monetary(string='Margen dinamico', store=True, compute='_compute_commission_total')
 
-    # validity = fields.Char(string='Validez')
+    validity_date = fields.Date(string='Fecha de validez', default=fields.Date.today())
     validity = fields.Selection([('5','5 dias'),('15','15 dias'),('30','30 dias')], string='Validez')
     warranty = fields.Char(string='Garantía')
     delivery = fields.Date(string='Fecha entrega', default=fields.Date.today())
@@ -79,7 +79,7 @@ class SaleOrder(models.Model):
     @api.depends('partner_id', 'create_uid')
     def _compute_readonly_user(self):
         for record in self:
-            record.readonly_user = record.create_uid.has_group("rod_sales.group_cost_readonly")
+            record.readonly_user = record.env.user.has_group("rod_sales.group_cost_readonly")
 
 
     def action_confirm(self):

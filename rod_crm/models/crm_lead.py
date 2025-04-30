@@ -20,4 +20,5 @@ class CrmLead(models.Model):
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
-        print('partner_id')
+        if self.partner_id and self.partner_id.user_id:
+            self.user_id = self.partner_id.user_id
