@@ -11,6 +11,7 @@ from docx.enum.table import WD_TABLE_ALIGNMENT
 from num2words import num2words
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+from datetime import datetime
 
 
 import os
@@ -327,43 +328,36 @@ class SaleOrderReportController(http.Controller):
         table_header.columns[1].width = Inches(3)
         table_header.columns[2].width = Inches(2)
 
-        # Contenido de cada celda
-        # cell_left = table_header.cell(0, 0).paragraphs[0]
-        # run_left = cell_left.add_run("N°  ITC/3012/2025\nS 02150")
-        # run_left.bold = True
-        # cell_left.alignment = WD_ALIGN_PARAGRAPH.LEFT
-
-        # cell_center = table_header.cell(0, 1).paragraphs[0]
-        # run_center = cell_center.add_run("CERTIFICADO DE GARANTÍA")
-        # run_center.bold = True
-        # run_center.underline = True
-        # cell_center.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
         for record in sale_order:
             cell_left = table_header.cell(0, 0).paragraphs[0]
-            run_left = cell_left.add_run(record.name+'\n')
+            run_left = cell_left.add_run("N°. " + record.name+'\n')
             run_left.bold = True
             cell_left.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            # paragraph_code = document.add_paragraph()
-            # paragraph_code.paragraph_format.space_before = Pt(0)
-            # paragraph_code.paragraph_format.space_after = Pt(0)
-            # run = paragraph_code.add_run(record.name)
-            # paragraph_code.alignment = WD_ALIGN_PARAGRAPH.RIGHT
             for r in record.picking_ids:
                 cell_left = table_header.cell(0, 0).paragraphs[0]
-                run_left = cell_left.add_run(r.name_ent)
+                run_left = cell_left.add_run(r.name_ent + '\n')
                 run_left.bold = True
                 cell_left.alignment = WD_ALIGN_PARAGRAPH.LEFT
-                # paragraph_code = document.add_paragraph()
-                # paragraph_code.paragraph_format.space_before = Pt(0)
-                # paragraph_code.paragraph_format.space_after = Pt(0)
-                # run = paragraph_code.add_run(r.name_ent)
-                # paragraph_code.alignment = WD_ALIGN_PARAGRAPH.RIGHT
 
         cell_right = table_header.cell(0, 2).paragraphs[0]
-        run_right = cell_right.add_run("17/04/2025")
+        run_right = cell_right.add_run(datetime.now().strftime("%d/%m/%Y"))
         run_right.bold = True
         cell_right.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+
+        tbl3 = table_header._tbl
+        for cell in tbl3.iter_tcs():
+            tc_pr_header = cell.tcPr
+            borders = parse_xml(
+                r'<w:tcBorders %s>'
+                r'<w:top w:val="nil"/>'
+                r'<w:left w:val="nil"/>'
+                r'<w:bottom w:val="nil"/>'
+                r'<w:right w:val="nil"/>'
+                r'</w:tcBorders>' % nsdecls('w')
+            )
+            tc_pr_header.append(borders)
+
+
 
 
         # Agregar un párrafo personalizado
@@ -382,6 +376,7 @@ class SaleOrderReportController(http.Controller):
             "recibidos para reparación por garantía en el menor tiempo posible. En este contexto,"
             "se establece que INTECSA SRL estará sujeto a los tiempos de ejecución de garantía propia"
             "de la marca, para mayor información, escanear el código QR y/o visita: https://intecsa.com.bo/politicas/"
+            "Los equipos en garantia son:"
         )
 
 
@@ -411,9 +406,9 @@ class SaleOrderReportController(http.Controller):
                 p.add_run(f"{int(line.product_uom_qty)} {line.product_id.name}\n").bold = False
 
         # Texto adicional
-        p.add_run("\nGARANTÍA 12 MESES DE FÁBRICA ORIGINAL\n").bold = True
+        p.add_run("\n" + sale_order.warranty +"DE FÁBRICA ORIGINAL\n").bold = True
         p.add_run("COMSURRAL XXI\n").bold = True
-        p.add_run(f"SEGÚN DETALLE DE CARACTERÍSTICAS EN NOTA DE ENTREGA N.º {sale_order.name}\n").bold = True
+        p.add_run(f"SEGÚN DETALLE DE CARACTERÍSTICAS EN NOTA DE ENTREGA N.º {sale_order.picking_ids[-1].name_ent}\n").bold = True
 
         # Celda derecha: imagen y título
         cell_right = table.cell(0, 1)
@@ -422,7 +417,7 @@ class SaleOrderReportController(http.Controller):
         p_right.add_run("POLÍTICAS DE GARANTÍA\n").bold = True
 
         # Agregar imagen (QR u otro)
-        image_path = os.path.join(os.path.dirname(__file__), 'static', 'src', 'img', 'qr_warranty.png')  # actualiza ruta
+        image_path = os.path.join(os.path.dirname(__file__),'..', 'static', 'src', 'img', 'qr_warranty.png')  # actualiza ruta
         if os.path.exists(image_path):
             p_right.add_run().add_picture(image_path, width=Inches(1.5))
 
@@ -436,6 +431,36 @@ class SaleOrderReportController(http.Controller):
                                 r'<w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>'
                                 r'</w:tcBorders>')
             tc_pr.append(borders)
+
+        # Texto introductorio
+        intro = "Cualquier defecto debido a componentes o materiales, está cubierto por la presente garantía, con la excepción de los siguientes casos:"
+        p_intro = document.add_paragraph(intro)
+        p_intro.paragraph_format.space_after = Pt(6)
+
+        # Lista de excepciones con viñetas
+        lista = [
+            "Problemas derivados de transporte después de la compra.",
+            "Falla producida por conexiones externas, derivadas de la instalación, conexión a fuentes de alimentación diferentes a las indicaciones de las especificaciones técnicas del producto.",
+            "Mal manejo, mal trato, uso indebido del producto o uso de accesorios inadecuados.",
+            "Uso del producto bajo condiciones externas: intemperie, humedad, alta temperatura.",
+            "Intervención de personal ajeno a nuestros Servicios Técnicos Autorizados.",
+            "Casos fortuitos o de causa mayor.",
+            "Daños accidentales, o por negligencia del CLIENTE en el uso de enchufe, voltaje inadecuado u otra alteración que afecte la confiabilidad y calidad de la unidad no atribuible a una falla en la fabricación del equipo de computación y sus accesorios.",
+            "Soporte técnico en laboratorio técnico del proveedor.",
+        ]
+
+        for item in lista:
+            p = document.add_paragraph(item, style='List Bullet')
+            p.paragraph_format.space_after = Pt(2)
+
+        # Texto de cierre
+        cierre = (
+            "De acuerdo a las políticas y condiciones de garantía de la empresa InteCSA SRL, "
+            "el cliente firma en señal de conformidad:"
+        )
+        p_cierre = document.add_paragraph()
+        p_cierre.add_run(cierre)
+        p_cierre.paragraph_format.space_before = Pt(10)
 
         document.add_paragraph('')
         document.add_heading('OBSERVACIONES', level=1)

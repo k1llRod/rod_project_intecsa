@@ -16,6 +16,7 @@ class SaleOrder(models.Model):
 
     validity_date = fields.Date(string='Fecha de validez', default=fields.Date.today())
     validity = fields.Selection([('5','5 dias'),('15','15 dias'),('30','30 dias')], string='Validez')
+    validity_text = fields.Char(string='Validez')
     warranty = fields.Char(string='Garantía')
     delivery = fields.Date(string='Fecha entrega', default=fields.Date.today())
     delivery_text = fields.Char(string='Fecha de entrega')
@@ -154,6 +155,8 @@ class SaleOrder(models.Model):
             vals['warranty'] = vals['warranty'].upper()
         if 'delivery_text' in vals and vals.get('delivery_text'):
             vals['delivery_text'] = vals['delivery_text'].upper()
+        if 'validity_text' in vals and vals.get('validity_text'):
+            vals['validity_text'] = vals['validity_text'].upper()
         return super(SaleOrder, self).create(vals)
 
     def write(self, vals):
@@ -161,4 +164,6 @@ class SaleOrder(models.Model):
             vals['warranty'] = vals['warranty'].upper()
         if 'delivery_text' in vals and vals.get('delivery_text'):
             vals['delivery_text'] = vals['delivery_text'].upper()
+        if 'validity_text' in vals and vals.get('validity_text'):
+            vals['validity_text'] = vals['validity_text'].upper()
         return super(SaleOrder, self).write(vals)

@@ -128,7 +128,8 @@
                                     <ul style="list-style:none;">
                                         <li>
                                             <strong>Validez:</strong>
-                                            <t t-esc="o.validity"/> DIAS
+                                            <t t-esc="o.validity_text"/>
+<!--                                            <t t-esc="o.validity"/> DIAS-->
                                         </li>
                                         <li>
                                             <strong>Garantia:</strong>

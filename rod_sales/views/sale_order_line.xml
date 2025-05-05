@@ -20,7 +20,8 @@
                     <attribute name="groups">sales_team.group_sale_manager</attribute>
                 </xpath>
                 <xpath expr="//group[@name='partner_details']/field[@name='partner_id']" position="after">
-                    <field name="validity" required="1"/>
+<!--                    <field name="validity" required="1"/>-->
+                    <field name="validity_text" required="1"/>
                     <field name="warranty"/>
                     <field name="payment_method"/>
                     <field name="delivery_text"/>
