@@ -159,6 +159,12 @@
                         self)]
                     </attribute>
                 </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="filter_domain">[('partner_id.name', 'ilike', self)]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="filter_domain">[('user_id.name', 'ilike', self)]</attribute>
+                </xpath>
             </field>
         </record>
     </data>
