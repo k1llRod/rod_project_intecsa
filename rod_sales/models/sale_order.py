@@ -1,5 +1,7 @@
 from odoo import models, fields, api
 from datetime import datetime, timedelta
+from babel.dates import format_datetime
+import pytz
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -34,6 +36,16 @@ class SaleOrder(models.Model):
     state = fields.Selection(selection_add=[('approval', 'Aprobación')], ondelete={'approval': 'set default'})
 
     sale_order_template_id = fields.Many2one('sale.order.template', string='Plantilla de cotizacion', domain="[('user_id', '=', uid)]")
+
+    date_order_text = fields.Char(string='Fecha de cotización', compute='_compute_date_order_text')
+
+    @api.depends('date_order')
+    def _compute_date_order_text(self):
+        for record in self:
+            tz = pytz.timezone('America/La_Paz')
+            # Convertir la fecha a la zona horaria de La Paz
+            record.date_order_text = format_datetime(record.date_order.astimezone(tz), "EEEE, d 'de' MMMM 'de' y", locale='es')
+
     def action_approve(self):
         """Método para aprobar la cotización y pasar a 'sale' (Pedido de Venta)"""
         for order in self:
@@ -167,3 +179,10 @@ class SaleOrder(models.Model):
         if 'validity_text' in vals and vals.get('validity_text'):
             vals['validity_text'] = vals['validity_text'].upper()
         return super(SaleOrder, self).write(vals)
+
+    def update_cost(self):
+        for record in self:
+            picking = record.picking_ids.move_ids_without_package.stock_valuation_layer_ids
+            for line in record.order_line:
+                line.standard_price = picking.filtered(lambda x: x.product_id.id == line.product_id.id).unit_cost
+        return True

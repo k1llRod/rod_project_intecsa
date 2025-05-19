@@ -114,7 +114,8 @@
                                 <div class="col-6" style="font-size:12px;">
                                     <ul style="list-style:none;">
                                         <li>
-                                            <t t-esc="o.date_order.strftime('%A, %d de %B de %Y')"/>
+                                            <t t-esc="o.date_order_text"/>
+<!--                                            <t t-esc="o.date_order.strftime('%A, %d de %B de %Y')"/>-->
                                         </li>
                                         <li>
                                             <strong>Señor(es):</strong>

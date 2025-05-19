@@ -8,8 +8,9 @@ class StockPickin(models.Model):
         if self.picking_type_id.code == 'outgoing':
             for line in self.move_ids_without_package:
                 # line.sale_line_id.purchase_price = line.price_unit
-                line.sale_line_id.standard_price = line.price_unit
+                line.price_unit = line.stock_valuation_layer_ids[-1].unit_cost
+                line.sale_line_id.standard_price = line.stock_valuation_layer_ids[-1].unit_cost
         sequence = self.env['ir.sequence'].next_by_code('stock.picking')
-        self.name_ent  = sequence
+        self.name_ent = sequence
         self.sale_id.name_ent = sequence
         return res

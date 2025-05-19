@@ -28,6 +28,7 @@
                     <field name="type_sale_id"/>
                     <field name="readonly_user" invisible="1"/>
                     <field name="commission_percentage" invisible="1"/>
+                    <field name="date_order_text"/>
                 </xpath>
                 <xpath expr="//notebook/page[@name='order_lines']" position="after">
                     <page string="Costos Adicionales" name="additional_costs">
@@ -167,6 +168,17 @@
                 </xpath>
             </field>
         </record>
+        <record id="action_update_dynamic_cost" model="ir.actions.server">
+            <field name="name">Actualizar Costos</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">
+                for record in records:
+                    record.update_cost()
+            </field>
+        </record>
+
     </data>
     <menuitem id="menu_type_sale_id"
               name="Tipo de venta"
