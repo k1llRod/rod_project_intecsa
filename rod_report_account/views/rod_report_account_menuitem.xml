@@ -1,0 +1,7 @@
+<odoo>
+    <menuitem id="menu_custom_account_report"
+              name="Reportes Financieros"
+              parent="account.menu_finance_reports"
+              action="action_wizard_account_report_id"
+              sequence="99"/>
+</odoo>

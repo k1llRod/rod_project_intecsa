@@ -1,0 +1,12 @@
+<odoo>
+    <record id="account_move_line_pdf_report" model="ir.actions.report">
+    <field name="name">Reporte de Account Move Line</field>
+    <field name="model">account.move.line</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">rod_report_account.report_account_move_line</field>
+    <field name="report_file">rod_report_account.report_account_move_line</field>
+    <field name="print_report_name">'Reporte Account Move Line'</field>
+    <!-- Opcional: define paperformat personalizado si tienes uno -->
+    <!-- <field name="paperformat_id" ref="your_module.paperformat_custom" /> -->
+    </record>
+</odoo>
