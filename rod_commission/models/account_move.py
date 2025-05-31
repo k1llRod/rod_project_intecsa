@@ -24,3 +24,19 @@ class AccountMove(models.Model):
                         'state': 'draft',
                     })
         return res
+
+    # def action_create_invoice(self):
+    #     res = super().action_create_invoice()
+    #     for order in self:
+    #         invoices = order.invoice_ids.filtered(lambda inv: inv.state in ['draft', 'posted'])
+    #         for invoice in invoices:
+    #             invoice.invoice_line_ids.create({
+    #                 'invoice_id': invoice.id,
+    #                 'name': 'Gasto adicional',
+    #                 'quantity': 1,
+    #                 'price_unit': 100.00,  # cambia esto por el monto del gasto
+    #                 'account_id': self.env['account.account'].search([('code', '=', '610101')], limit=1).id,
+    #                 # busca una cuenta válida
+    #                 'product_id': self.env.ref('product.product_product_consultant').id,  # opcional, puedes omitirlo
+    #             })
+    #     return res

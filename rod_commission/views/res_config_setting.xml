@@ -19,12 +19,15 @@
                     <setting string="Cuenta comision de cliente">
                         <field name="account_client_commission_ids"/>
                     </setting>
+                    <setting string="Cuenta factura de proveedor">
+                        <field name="account_supplier_invoice_ids"/>
+                    </setting>
                     <setting string="Diario comision">
                         <field name="journal_id"/>
                     </setting>
-<!--                    <setting string="Cuenta comision de cliente">-->
-<!--                        <field name="account_sale_extra_3"/>-->
-<!--                    </setting>-->
+                    <setting string="Cuenta base gastos">
+                        <field name="account_base"/>
+                    </setting>
                 </block>
             </xpath>
         </field>

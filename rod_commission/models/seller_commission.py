@@ -16,6 +16,11 @@ class SellerCommission(models.Model):
     cost_total = fields.Float(string='Costo total')
     margin = fields.Float(string='Margen')
     commission_id = fields.Many2one('commission.payment', string='Commission')
+    supplier_invoice = fields.Float(string='Factura proveedor')
+    guarantee_slip = fields.Float(string='Boleta Garantía')
+    transportation_costs = fields.Float(string='Costos de transporte')
+    legalized_documents = fields.Float(string='Documentos legalizados')
+    client_commission = fields.Float(string='Comisión cliente')
     state = fields.Selection([('draft', 'Draft'), ('done', 'Done')], string='State')
     def action_confirm(self):
         sum_commission = 0

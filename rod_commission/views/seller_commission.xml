@@ -22,6 +22,11 @@
                 <field name="amount_tax" sum="Total"/>
                 <field name="amount_total" sum="Total"/>
                 <field name="cost_total" sum="Total"/>
+                <field name="supplier_invoice"/>
+                <field name="guarantee_slip"/>
+                <field name="transportation_costs"/>
+                <field name="legalized_documents"/>
+                <field name="client_commission"/>
                 <field name="total" sum="Settled total"/>
                 <field name="state" decoration-success="state == 'done'" decoration-info="state == 'draft'" widget="badge"/>
             </tree>
