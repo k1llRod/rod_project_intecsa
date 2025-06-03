@@ -22,12 +22,22 @@
                     <setting string="Cuenta factura de proveedor">
                         <field name="account_supplier_invoice_ids"/>
                     </setting>
-                    <setting string="Diario comision">
-                        <field name="journal_id"/>
-                    </setting>
                     <setting string="Cuenta base gastos">
                         <field name="account_base"/>
                     </setting>
+                    <setting string="Cuenta de impuesto de gastos ">
+                        <field name="account_tax_expense"/>
+                    </setting>
+                    <setting string="Diario comision">
+                        <field name="journal_id"/>
+                    </setting>
+                    <setting string="Diario pago sin factura">
+                        <field name="payment_with_invoice"/>
+                    </setting>
+                    <setting string="Diario gastos">
+                        <field name="journal_expense_id"/>
+                    </setting>
+
                 </block>
             </xpath>
         </field>

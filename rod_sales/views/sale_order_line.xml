@@ -38,6 +38,7 @@
                                 <field name="select_additional_costs"/>
                                 <field name="date"/>
                                 <field name="amount" sum="Total"/>
+                                <field name="with_invoice"/>
                             </tree>
                         </field>
                     </page>

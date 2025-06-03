@@ -15,7 +15,9 @@
                 </xpath>
                 <xpath expr="//field[@name='payment_term_id']" position="after">
 <!--                    <field name="payment_comision" invisible="0"/>-->
+                    <field name="payment_sale_id" readonly="1"/>
                     <field name="payment_comision_id" readonly="1"/>
+                    <field name="expense_move_id" readonly="1"/>
                 </xpath>
                 <xpath expr="//sheet/div[@name='button_box']" position="after">
                     <widget name="web_ribbon" text="Pagado" invisible="payment_comision_id == False"/>

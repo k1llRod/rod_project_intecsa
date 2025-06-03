@@ -144,63 +144,6 @@ class SaleOrder(models.Model):
         for invoice in invoices:
             new_lines = invoice.invoice_line_ids.filtered(lambda line: line.price_unit > 0)
             invoice.write({'invoice_line_ids': [(6, 0, new_lines.ids)]})  # Reemplazar líneas
-
-        # 3. Obtener cuentas configuradas desde parámetros del sistema
-        account_guarantee_slip_ids = int(
-            self.env['ir.config_parameter'].sudo().get_param('sales_config.account_guarantee_slip_ids', default=False))
-        account_transportation_costs_ids = int(
-            self.env['ir.config_parameter'].sudo().get_param('sales_config.account_transportation_expenses_ids',
-                                                             default=False))
-        account_legalized_documents_ids = int(
-            self.env['ir.config_parameter'].sudo().get_param('sales_config.account_legalized_documents_ids',
-                                                             default=False))
-        account_client_commission_ids = int(
-            self.env['ir.config_parameter'].sudo().get_param('sales_config.account_client_commission_ids',
-                                                             default=False))
-        account_supplier_invoice_ids = int(
-            self.env['ir.config_parameter'].sudo().get_param('sales_config.account_supplier_invoice_ids',
-                                                             default=False))
-        account_base = int(self.env['ir.config_parameter'].sudo().get_param('sales_config.account_base', default=False))
-
-        move_type = invoices.move_type
-        # invoices.move_type = ''  # Evita validación prematura de líneas
-
-        for record in self:
-            for rec in record.additional_costs_ids:
-                selection_name = dict(rec.fields_get()['select_additional_costs']['selection'])[
-                    rec.select_additional_costs]
-                account_id = False
-
-                if rec.select_additional_costs == 'supplier_invoice':
-                    account_id = account_supplier_invoice_ids
-                elif rec.select_additional_costs == 'guarantee_slip':
-                    account_id = account_guarantee_slip_ids
-                elif rec.select_additional_costs == 'transportation_costs':
-                    account_id = account_transportation_costs_ids
-                elif rec.select_additional_costs == 'legalized_documents':
-                    account_id = account_legalized_documents_ids
-                elif rec.select_additional_costs == 'client_commission':
-                    account_id = account_client_commission_ids
-
-                if account_id:
-                    invoices.invoice_line_ids.create({
-                        'move_id': invoices.id,
-                        'account_id': account_id,
-                        'name': selection_name,
-                        'quantity': 1,
-                        'price_unit': -rec.amount,  # Crédito (gasto)
-                    })
-
-            # Línea de débito para cubrir los gastos (ej. delivery_total)
-            if record.delivery_total:
-                invoices.invoice_line_ids.create({
-                    'move_id': invoices.id,
-                    'account_id': account_base,
-                    'name': 'Gastos adicionales',
-                    'quantity': 1,
-                    'price_unit': record.delivery_total,  # Débito
-                })
-
         # invoices.move_type = move_type  # Restaurar tipo de movimiento
         return invoices
 
