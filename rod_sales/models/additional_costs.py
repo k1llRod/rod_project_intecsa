@@ -14,3 +14,4 @@ class AdditionalCosts(models.Model):
     date = fields.Date(string='Fecha', required=True)
     amount = fields.Float(string='Monto', required=True, digits=(12, 2))
     sale_order_ids = fields.Many2one('sale.order', string='Productos')
+    with_invoice = fields.Boolean(string='Con factura', default=False)
