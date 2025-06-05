@@ -40,14 +40,14 @@ class ProductTemplate(models.Model):
             result.append((product_id, name_with_stock))
         return result
 
-    def _compute_display_name(self):
-        for product in self:
-            code = product.default_code or ""
-            name = product.name or product.product_tmpl_id.name
-            qty = int(product.qty_available)
-            if code:
-                product.display_name = f"[{code}] {name} - Disponible: [{qty}]"
-            else:
-                product.display_name = f"{name} - Disponible: [{qty}]"
+    # def _compute_display_name(self):
+    #     for product in self:
+    #         code = product.default_code or ""
+    #         name = product.name or product.product_tmpl_id.name
+    #         qty = int(product.qty_available)
+    #         if code:
+    #             product.display_name = f"[{code}] {name} - Disponible: [{qty}]"
+    #         else:
+    #             product.display_name = f"{name} - Disponible: [{qty}]"
 
 
