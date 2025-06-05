@@ -4,6 +4,7 @@ class AdditionalCosts(models.Model):
     _name = 'additional.costs'
     _description = 'Additional Costs'
 
+    
     select_additional_costs = fields.Selection([
         ('supplier_invoice', 'Facturas de proveedores'),
         ('guarantee_slip', 'Boleta de garantia'),

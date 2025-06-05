@@ -107,10 +107,10 @@ class SaleOrder(models.Model):
             c = 0
             suma = 0
             if rec.product_id.tracking == 'none':
-                rec.price_unit = self.env['stock.quant'].search([('product_id','=',rec.product_id.id)]).filtered(lambda x:x.location_id.usage == 'internal' or x.on_hand == True).price_unit
+                rec.price_unit = rec.env['stock.quant'].search([('product_id','=',rec.product_id.id)]).filtered(lambda x:x.location_id.usage == 'internal' or x.on_hand == True)[-1].price_unit
             if rec.product_id.tracking == 'serial' or rec.product_id.tracking == 'lot':
                 for record in rec.lot_ids:
-                    suma =  self.env['stock.quant'].search([('lot_id','=',record.id)]).filtered(lambda x:x.quantity > 0).price_unit + suma
+                    suma =  rec.env['stock.quant'].search([('lot_id','=',record.id)]).filtered(lambda x:x.quantity > 0).price_unit + suma
                     c += 1
                 suma = round(suma / c, 2) if c > 0 else 0
                 rec.price_unit = suma
@@ -127,9 +127,14 @@ class SaleOrder(models.Model):
             record.validity_date = fields.Date.today() + timedelta(days=record.type_sale_id.number_days)
 
     def sale_verification(self):
-        pickings = self.env['stock.picking'].search([('state', '=', 'confirmed'),('scheduled_date', '<', datetime.today())])
+        pickings = self.env['stock.picking'].search([
+            ('picking_type_code', '=', 'outgoing'),
+            ('state', 'in', ['confirmed', 'assigned']),
+            ('scheduled_date', '<', datetime.today()),
+        ])
         # Cancelar los albaranes vencidos
         for picking in pickings:
+            picking.do_unreserve()
             picking.action_cancel()
 
     def _create_invoices(self, grouped=False, final=False, date=None):
@@ -185,3 +190,5 @@ class SaleOrder(models.Model):
             for line in record.order_line:
                 line.standard_price = picking.filtered(lambda x: x.product_id.id == line.product_id.id).unit_cost
         return True
+
+

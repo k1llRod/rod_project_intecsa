@@ -41,18 +41,18 @@ class AccountMove(models.Model):
     #                 'product_id': self.env.ref('product.product_product_consultant').id,  # opcional, puedes omitirlo
     #             })
     #     return res
-    def action_register_payment(self):
-        for move in self:
-            if move.move_type == 'out_invoice':
-                sale_orders = move.invoice_line_ids.mapped('sale_line_ids.order_id')
-                if sale_orders:
-                    sale_order = sale_orders[0]  # Tomamos el primero
-                    if not sale_order.payment_comision_id:
-                        sale_order.action_create_payment()
-                    # Crear asiento de gastos si no existe
-                    # if not sale_order.expense_move_id:
-                    #     sale_order.create_account_move_expenses(move)
-        return super().action_register_payment()
+    # def action_register_payment(self):
+    #     for move in self:
+    #         if move.move_type == 'out_invoice':
+    #             sale_orders = move.invoice_line_ids.mapped('sale_line_ids.order_id')
+    #             if sale_orders:
+    #                 sale_order = sale_orders[0]  # Tomamos el primero
+    #                 if not sale_order.payment_comision_id:
+    #                     sale_order.action_create_payment()
+    #                 # Crear asiento de gastos si no existe
+    #                 # if not sale_order.expense_move_id:
+    #                 #     sale_order.create_account_move_expenses(move)
+    #     return super().action_register_payment()
 
     def action_create_payments(self):
         res = super().action_create_payments()

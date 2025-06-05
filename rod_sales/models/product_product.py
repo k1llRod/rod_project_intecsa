@@ -13,3 +13,16 @@ class ProductProduct(models.Model):
             if seq:
                 vals['default_code'] = seq
         return super(ProductProduct, self).create(vals)
+
+    # @api.depends('name', 'default_code', 'qty_available')
+    # def _compute_display_name(self):
+    #     super()._compute_display_name()  # Llamamos primero al original
+    #
+    #     for product in self:
+    #         # Añadimos al final del nombre la cantidad disponible
+    #         product.display_name = f"{product.display_name} - Disponible: {int(product.qty_available)}"
+    # @api.depends('name', 'default_code', 'qty_available')
+    # def _compute_display_name(self):
+    #     for product in self:
+    #         qty = int(product.qty_available)
+    #         product.product_template_id.name = f"[{product.name}] - Disponible: [{qty}]"

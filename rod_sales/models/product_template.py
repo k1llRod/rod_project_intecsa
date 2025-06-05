@@ -31,3 +31,23 @@ class ProductTemplate(models.Model):
             defaults['detailed_type'] = 'product'  # 'product' = almacenable
         return defaults
 
+    def name_get(self):
+        res = super().name_get()
+        result = []
+        for product_id, name in res:
+            product = self.browse(product_id)
+            name_with_stock = f"{name} - Disponible: {int(product.qty_available)}"
+            result.append((product_id, name_with_stock))
+        return result
+
+    def _compute_display_name(self):
+        for product in self:
+            code = product.default_code or ""
+            name = product.name or product.product_tmpl_id.name
+            qty = int(product.qty_available)
+            if code:
+                product.display_name = f"[{code}] {name} - Disponible: [{qty}]"
+            else:
+                product.display_name = f"{name} - Disponible: [{qty}]"
+
+

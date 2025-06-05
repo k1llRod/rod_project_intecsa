@@ -10,8 +10,7 @@ class SaleOrder(models.Model):
     date_invoice = fields.Date(string='Fecha de factura', related='invoice_ids.invoice_date')
     payment_sale_id = fields.Many2one('account.payment', string='Pago de venta', copy=False)
     expense_move_id = fields.Many2one('account.move', string='Asiento de gastos', copy=False)
-
-    def create_account_move_expenses(self, invoices):
+    def create_account_move_expenses(self):
         tax_rate = 0.13  # IVA 13%
 
         # Obtener cuentas desde la configuración
@@ -29,11 +28,12 @@ class SaleOrder(models.Model):
         account_supplier_invoice_ids = int(
             self.env['ir.config_parameter'].sudo().get_param('sales_config.account_supplier_invoice_ids',
                                                              default=False))
-        account_base = int(self.env['ir.config_parameter'].sudo().get_param('sales_config.account_base', default=False))
+        account_base = int(
+            self.env['ir.config_parameter'].sudo().get_param('sales_config.account_base', default=False))
         account_tax_expense = int(
             self.env['ir.config_parameter'].sudo().get_param('sales_config.account_tax_expense', default=False))
         journal_id = int(
-            self.env['ir.config_parameter'].sudo().get_param('sales_config.journal_expense_id', default=False))  # nuevo
+            self.env['ir.config_parameter'].sudo().get_param('sales_config.journal_expense_id', default=False))
 
         for record in self:
             move_lines = []
@@ -57,8 +57,12 @@ class SaleOrder(models.Model):
                     account_id = account_client_commission_ids
 
                 if account_id:
-                    base_amount = rec.amount / (1 + tax_rate)
-                    tax_amount = rec.amount - base_amount
+                    if rec.with_invoice:
+                        base_amount = rec.amount / (1 + tax_rate)
+                        tax_amount = rec.amount - base_amount
+                    else:
+                        base_amount = rec.amount
+                        tax_amount = 0.0
 
                     # Gasto base (crédito)
                     move_lines.append((0, 0, {
@@ -69,15 +73,15 @@ class SaleOrder(models.Model):
                     total_credit += base_amount
 
                     # Impuesto (crédito)
-                    move_lines.append((0, 0, {
-                        'account_id': account_tax_expense,
-                        'name': f'IVA {selection_name}',
-                        'debit': round(tax_amount, 2),
-                    }))
-                    total_credit += tax_amount
+                    if tax_amount:
+                        move_lines.append((0, 0, {
+                            'account_id': account_tax_expense,
+                            'name': f'IVA {selection_name}',
+                            'debit': round(tax_amount, 2),
+                        }))
+                        total_credit += tax_amount
 
             if record.delivery_total:
-                # Línea de débito por el total de gastos
                 move_lines.append((0, 0, {
                     'account_id': account_base,
                     'name': 'Gastos adicionales',
@@ -94,15 +98,15 @@ class SaleOrder(models.Model):
                     'line_ids': move_lines,
                 }
                 move = self.env['account.move'].create(move_vals)
-                # move.action_post()  # Publicar el asiento
-                record.expense_move_id = move.id  # Opcional: guardar la referencia si quieres enlazarlo
+                # move.action_post()  # Descomenta si deseas validar automáticamente
+                record.expense_move_id = move.id
     def action_create_payment(self):
         self.ensure_one()
         invoice = self.invoice_ids.filtered(lambda x:x.state == 'posted')
         for rec in self:
             if invoice:
-                if invoice.filtered(lambda x: x.payment_ids):
-                    raise UserError("Esta factura ya tiene pagos registrados.")
+                # if invoice.filtered(lambda x: x.payment_ids):
+                #     raise UserError("Esta factura ya tiene pagos registrados.")
                 if invoice.filtered(lambda x: x.payment_state in ('in_payment', 'paid')):
                     raise UserError("La factura ya está pagada o tiene pagos en proceso.")
 
@@ -150,4 +154,4 @@ class SaleOrder(models.Model):
             })
             rec.payment_comision_id = create_payment.id
             if create_payment and rec.delivery_total > 0:
-                expenses = rec.create_account_move_expenses(invoice)
+                expenses = rec.create_account_move_expenses()
