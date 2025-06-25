@@ -10,6 +10,9 @@
                     <setting string="Cuenta boleta de garantia">
                         <field name="account_guarantee_slip_ids"/>
                     </setting>
+                    <setting string="Contra Cuenta boleta de garantia">
+                        <field name="contra_account_guarantee_slip_ids"/>
+                    </setting>
                     <setting string="Cuenta gastos de transporte">
                         <field name="account_transportation_expenses_ids"/>
                     </setting>

@@ -1,0 +1,29 @@
+<!-- views/helpdesk_ticket_form.xml -->
+<odoo>
+    <record id="view_helpdesk_ticket_form_inherit_accessories" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.inherit.accessories</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[1]" position="after">
+                <group>
+                    <field name="accessory_line_ids">
+                        <tree editable="bottom" string="Lista de accesorios">
+                            <field name="accesory_description" string="Descripción"/>
+                            <field name="quantity" string="Cantidad" widget="float"/>
+                            <field name="notes" string="Observaciones" widget="text"/>
+                            <field name="state" string="Estado"/>
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="string">Tipo de equipo</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="marca"/>
+                <field name="modelo"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

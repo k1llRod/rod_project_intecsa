@@ -53,6 +53,11 @@ class ResConfigSettings(models.TransientModel):
         string="Diario de gastos",
         help="Diario utilizado para registrar los gastos adicionales."
     )
+    contra_account_guarantee_slip_ids = fields.Many2one(
+        'account.account',
+        string="Contra cuenta de boleta de garantia",
+        help="Contra cuenta contable para boleta de garantía."
+    )
 
     @api.model
     def get_values(self):
@@ -73,6 +78,7 @@ class ResConfigSettings(models.TransientModel):
         journal_expense_id = IrConfigParam.sudo().get_param('sales_config.journal_expense_id', default=False)
         payment_with_invoice = IrConfigParam.sudo().get_param('sales_config.payment_with_invoice', default=False)
         account_id_6 = IrConfigParam.sudo().get_param('sales_config.account_tax_expense', default=False)
+        account_id_7 = IrConfigParam.sudo().get_param('sales_config.contra_account_guarantee_slip_ids', default=False)
         res.update({
             'account_guarantee_slip_ids': int(account_id_1) if account_id_1 else False,
             'account_transportation_expenses_ids': int(account_id_2) if account_id_2 else False,
@@ -84,6 +90,7 @@ class ResConfigSettings(models.TransientModel):
             'payment_with_invoice': int(payment_with_invoice) if payment_with_invoice else False,
             'account_tax_expense': int(account_id_6) if account_id_6 else False,
             'journal_expense_id': int(journal_expense_id) if journal_expense_id else False,
+            'contra_account_guarantee_slip_ids': int(account_id_7) if account_id_7 else False,
         })
         return res
 
@@ -105,3 +112,4 @@ class ResConfigSettings(models.TransientModel):
         IrConfigParam.set_param('sales_config.account_supplier_invoice_ids', self.account_supplier_invoice_ids.id or False)
         IrConfigParam.set_param('sales_config.account_tax_expense', self.account_tax_expense.id or False)
         IrConfigParam.set_param('sales_config.journal_expense_id', self.journal_expense_id.id or False)
+        IrConfigParam.set_param('sales_config.contra_account_guarantee_slip_ids', self.contra_account_guarantee_slip_ids.id or False)
