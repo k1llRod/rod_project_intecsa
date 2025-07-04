@@ -27,6 +27,8 @@
                 <xpath expr="//tree" position="inside">
                     <!-- Agregamos columnas adicionales -->
                     <field name="create_date"/>
+                    <field name="area"/>
+                    <field name="name_contact"/>
                 </xpath>
             </field>
         </record>
