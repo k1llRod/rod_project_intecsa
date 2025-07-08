@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_account_move_line">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="body">
+                            <!--               <t t-call="rod_account_coa.rod_layout_balance_sheet">-->
+                            <center style="font-weight:bold;"><span t-esc="title"/></center>
+                            <center style="font-weight:bold;">Del <span t-esc="date_start"/> al <span t-esc="date_end"/> </center>
+                            <center style="font-weight:bold;">Expresado en Bolivianos </center>
+                            <!--               </t>-->
+                            <table class="table align-middle" style="font-size:12px;">
+                                <thead>
+                                    <tr>
+                                        <th style="border-top:1px solid black;border-bottom:1px solid black;">CODIGO</th>
+                                        <th style="border-top:1px solid black;border-bottom:1px solid black;">NOMBRE DE CUENTA</th>
+                                        <!--                                    <th>DEBE</th>-->
+                                        <!--                                    <th>HABER</th>-->
+                                        <th style="border-top:1px solid black;border-bottom:1px solid black;">SALDO</th>
+                                        <th style="border-top:1px solid black;border-bottom:1px solid black;">TOTAL</th>
+                                    </tr>
+
+                                </thead>
+                                <t t-foreach="docs" t-as="line">
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding:0px">
+                                                <t t-if="line[5] == True">
+                                                    <strong><span t-esc="line[0]"/></strong>
+                                                </t>
+                                                <t t-else="line[5] == False">
+                                                    <span t-esc="line[0]"/>
+                                                </t>
+                                            </td>
+                                            <td style="padding:0px">
+                                                <t t-if="line[5] == True">
+                                                    <strong t-attf-style="padding-left: #{line[6] * 20}px;"><span t-esc="line[1]"/></strong>
+                                                </t>
+                                                <t t-else="line[5] == False">
+                                                    <span t-attf-style="padding-left: #{line[6] * 20}px;" t-esc="line[1]"/>
+                                                </t>
+                                            </td>
+<!--                                            <td>-->
+<!--                                                <span t-esc="line[2]"/>-->
+<!--                                            </td>-->
+<!--                                            <td>-->
+<!--                                                <span t-esc="line[3]"/>-->
+<!--                                            </td>-->
+                                            <td style="padding:0px">
+                                                <t t-if="line[7] == False">
+                                                    <t t-if="line[5] == True">
+                                                        <strong>
+                                                            <span t-esc="line[4]"/>
+                                                        </strong>
+                                                    </t>
+                                                    <t t-else="line[5] == False">
+                                                        <span t-esc="line[4]"/>
+                                                    </t>
+                                                </t>
+
+                                            </td>
+                                            <td style="padding:0px">
+                                                <t t-if="line[7] == True">
+                                                    <t t-if="line[0]=='3'">
+
+                                                    </t>
+                                                    <span t-esc="line[4]"/>
+                                                </t>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </t>
+<!--                                <tfoot>-->
+                                    <t t-if="title=='BALANCE GENERAL'">
+                                        <tr>
+                                            <td colspan="2" style="text-align:right;border-top:1px solid black;">
+                                                <strong>TOTAL ACTIVO:</strong>
+                                            </td>
+                                            <td style="border-top:1px solid black;">
+                                                <strong>
+                                                    <span t-esc="total_income"/>
+                                                </strong>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="text-align:right;border-bottom:1px solid black;">
+                                                <strong>TOTAL PASIVO + CAPITAL:</strong>
+                                            </td>
+                                            <td style="border-bottom:1px solid black;">
+                                                <strong>
+                                                    <span t-esc="total_excercise"/>
+                                                </strong>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="text-align:right;border-bottom:1px solid black;">
+                                                <strong>UTILIDAD ANTERIOR:</strong>
+                                            </td>
+                                            <td style="border-bottom:1px solid black;">
+                                                <strong>
+                                                    <span t-esc="sum_filtered_lines_historical"/>
+                                                </strong>
+                                            </td>
+                                            <td style="border-bottom:1px solid black;border-top:1px solid black;"></td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="title == 'ESTADO DE RESULTADOS'">
+                                        <tr>
+                                            <td colspan="2" style="text-align:right;border-top:1px solid black;">
+                                                <strong>TOTAL INGRESOS:</strong>
+                                            </td>
+                                            <td style="border-top:1px solid black;">
+                                                <strong>
+                                                    <span t-esc="total_income"/>
+                                                </strong>
+                                            </td>
+                                            <td style="border-top:1px solid black;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="text-align:right;">
+                                                <strong>TOTAL GASTOS:</strong>
+                                            </td>
+                                            <td >
+                                                <strong>
+                                                    <span t-esc="total_expense"/>
+                                                </strong>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="text-align:right;border-bottom:1px solid black;">
+                                                <strong>UTILIDAD = INGRESOS + GASTOS:</strong>
+                                            </td>
+                                            <td style="border-bottom:1px solid black;">
+                                                <strong>
+                                                    <span t-esc="exercise"/>
+                                                </strong>
+                                            </td>
+                                            <td style="border-bottom:1px solid black;"></td>
+                                        </tr>
+
+                                    </t>
+
+<!--                                    </tfoot>-->
+                            </table>
+                        </div>
+                    </div>
+                </t>
+
+            </t>
+        </template>
+    </data>
+
+</odoo>

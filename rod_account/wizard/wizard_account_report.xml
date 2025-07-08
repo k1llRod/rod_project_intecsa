@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <record id="wizard_account_report_id" model="ir.ui.view">
+            <field name="name">wizard.account.report.form</field>
+            <field name="model">wizard.account.report</field>
+            <field name="arch" type="xml">
+                <form string="Your Wizard">
+                    <group>
+                        <group>
+                            <field name="date_start" />
+                            <field name="date_end"/>
+<!--                            <field name="account_journal_id"/>-->
+<!--                            <field name="state"/>-->
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="report_account_move_line" string="Balance general" type="object" class="oe_highlight"/>
+                        <button name="report_income_statement" string="Estado de resultados" type="object" class="oe_highlight"/>
+                        <button name="report_sums_balances" string="Sumas y saldos" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_wizard_account_report_id">
+            <field name="name">Formulario de reporte</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.account.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_account_report_id" />
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

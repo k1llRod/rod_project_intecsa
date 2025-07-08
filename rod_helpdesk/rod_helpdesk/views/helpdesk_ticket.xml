@@ -23,6 +23,7 @@
             <xpath expr="//field[@name='tag_ids']" position="after">
                 <field name="marca"/>
                 <field name="modelo"/>
+                <field name="serial_number"/>
             </xpath>
         </field>
     </record>

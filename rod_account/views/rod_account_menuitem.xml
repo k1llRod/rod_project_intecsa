@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- Menú "Reportes" dentro de Facturación / Contabilidad -->
+    <menuitem id="menu_rod_account_report"
+              name="Reportes"
+              parent="account.menu_finance_reports"
+              sequence="102" />
+
+    <!-- Submenú: Balance General -->
+    <menuitem id="menu_rod_balance_sheet"
+              name="Balance General"
+              parent="menu_rod_account_report"
+              sequence="1"
+              action="rod_account.action_wizard_account_report_id"/>
+
+    <!-- Submenú: Libro Mayor -->
+    <menuitem id="menu_rod_mayor_book"
+              name="Reporte Libro Mayor"
+              parent="menu_rod_account_report"
+              sequence="2"
+              action="rod_account.action_wizard_mayor_book_report_id"/>
+
+  </data>
+</odoo>

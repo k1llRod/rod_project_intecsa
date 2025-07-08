@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_rod_account_rod_account,rod_account.rod_account,model_rod_account_rod_account,base.group_user,1,1,1,1
+access_wizard_account_report,wizard.account.report,model_wizard_account_report,base.group_user,1,1,1,1
+access_wizard_mayor_book,wizard.mayor.book,model_wizard_mayor_book,base.group_user,1,1,1,1
+access_account_category,account.category,model_account_category,base.group_user,1,1,1,1

@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <!-- Vista del wizard -->
+        <record id="wizard_mayor_book_id" model="ir.ui.view">
+            <field name="name">wizard.mayor.book.form</field>
+            <field name="model">wizard.mayor.book</field>
+            <field name="arch" type="xml">
+                <form string="Libro mayor">
+                    <group>
+                        <group>
+                            <field name="date_start" />
+                            <field name="date_end"/>
+                            <field name="account_id" widget="many2many_tags" options="{'no_create': True}"/>
+<!--                            <field name="state"/>-->
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="report_mayor_book" string="Libro mayor" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_mayor_book_report_id">
+            <field name="name">Formulario libro mayor</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.mayor.book</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_mayor_book_id" />
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

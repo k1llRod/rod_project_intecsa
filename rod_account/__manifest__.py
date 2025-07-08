@@ -22,10 +22,16 @@ Long description of module's purpose
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/account_journal.xml',
+        'views/account_account.xml',
+        'wizard/wizard_account_report.xml',
+        'wizard/wizard_mayor_book.xml',
         'report/report.xml',
+        'report/report_account_move_line.xml',
         'report/report_proof_payment.xml',
+        'views/rod_account_menuitem.xml',
+
     ],
 }
 
