@@ -25,6 +25,34 @@
                 <field name="modelo"/>
                 <field name="serial_number"/>
             </xpath>
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button type="action"
+                        name="%(action_helpdesk_ticket_sale_orders)d"
+                        string="Ventas"
+                        icon="fa-shopping-cart"
+                        class="oe_stat_button"
+                        modifiers='{"invisible": [["sale_order_ids", "=", false]]}'>
+                    <field name="sale_order_ids" widget="statinfo"/>
+                </button>
+            </xpath>
         </field>
     </record>
+    <record id="action_helpdesk_ticket_sale_orders" model="ir.actions.act_window">
+        <field name="name">Ventas Relacionadas</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('ticket_id', '=', active_id)]</field>
+        <field name="context">{}</field>
+    </record>
+    <record id="view_order_tree_inherit_helpdesk" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit.helpdesk</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="ticket_id"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
