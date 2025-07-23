@@ -25,6 +25,7 @@ Long description of module's purpose
         'security/ir.model.access.csv',
         'views/account_journal.xml',
         'views/account_account.xml',
+        'views/account_move.xml',
         'wizard/wizard_account_report.xml',
         'wizard/wizard_mayor_book.xml',
         'report/report.xml',

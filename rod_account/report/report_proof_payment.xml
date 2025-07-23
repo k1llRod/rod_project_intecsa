@@ -54,6 +54,9 @@
                                 <div class="col-8" style="font-size:14px;">
                                     <ul style="list-style:none;">
                                         <li style="font-size:16px;">
+                                            <strong>Cliente: </strong> <span t-field="o.partner_id"/>
+                                        </li>
+                                        <li style="font-size:16px;">
                                             <strong>Glosa general:</strong> <span t-field="o.ref"/>
                                         </li>
                                     </ul>
@@ -84,6 +87,8 @@
                                             <th style="font-size:16px;border-top:2px solid black;" scope="col">Descripcion de la cuenta</th>
                                             <th style="font-size:16px;border-top:2px solid black;" scope="col">Debe</th>
                                             <th style="font-size:16px;border-top:2px solid black;" scope="col">Haber</th>
+                                            <th style="font-size:16px;border-top:2px solid black;" scope="col">Debe (USD)</th>
+                                            <th style="font-size:16px;border-top:2px solid black;" scope="col">Haber (USD)</th>
                                         </tr>
                                     </thead>
                                     <t t-set="ordered_lines" t-value="o.line_ids.sorted(key=lambda l: 0 if l.debit > 0 else 1)"/>
@@ -101,18 +106,32 @@
                                             <td style="text-align:right;">
                                                 <span t-field="p.credit"/>
                                             </td>
+                                            <td style="text-align:right;">
+                                                <t t-esc="round(usd_currency and p.debit / usd_currency.inverse_rate,2) if p.debit else 0.0"/> $
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <t t-esc="round(usd_currency and p.credit / usd_currency.inverse_rate,2) if p.credit else 0.0"/> $
+                                            </td>
                                         </tr>
                                     </t>
+                                    <t t-set="total_debit" t-value="sum(p.debit for p in ordered_lines)"/>
+                                    <t t-set="total_credit" t-value="sum(p.credit for p in ordered_lines)"/>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="2" style="text-align:right;font-size:15px;border-bottom:2px solid black;">
+                                            <td colspan="2" style="text-align:right;font-size:14px;border-bottom:2px solid black;">
                                                 <strong>Total del comprobante:</strong>
                                             </td>
-                                            <td style="border-bottom:2px solid black;font-size:15px;text-align:right;">
-                                                <span t-field="o.amount_total"/>
+                                            <td style="border-bottom:2px solid black;font-size:14px;text-align:right;">
+                                                <span t-field="o.total_debit"/>
                                             </td>
-                                            <td style="border-bottom:2px solid black;font-size:15px;text-align:right;">
-                                                <span t-field="o.amount_total"/>
+                                            <td style="border-bottom:2px solid black;font-size:14px;text-align:right;">
+                                                <span t-field="o.total_credit"/>
+                                            </td>
+                                            <td style="border-bottom:2px solid black;font-size:14px;text-align:right;">
+                                                <t t-esc="round(usd_currency and o.total_debit / usd_currency.inverse_rate,2)"/> $
+                                            </td>
+                                            <td style="border-bottom:2px solid black;font-size:14px;text-align:right;">
+                                                <t t-esc="round(usd_currency and o.total_credit / usd_currency.inverse_rate,2)"/> $
                                             </td>
                                         </tr>
 
