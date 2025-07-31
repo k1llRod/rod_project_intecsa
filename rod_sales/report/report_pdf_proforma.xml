@@ -183,15 +183,15 @@
                                         <t t-set="counter" t-value="0"/>
                                         <t t-foreach="o.order_line" t-as="p" >
                                             <t t-set="counter" t-value="counter + 1"/>
-                                            <tr t-if="p.product_uom_qty" style="page-break-inside:avoid;" t-att-style="'background-color: rgba(242,242,242,0.5);' if counter % 2 == 1 else ''">
+                                            <tr t-if="p.product_uom_qty and p.price_unit" style="page-break-inside:avoid;" t-att-style="'background-color: rgba(242,242,242,0.5);' if counter % 2 == 1 else ''">
                                                 <t t-if="o.print_image">
                                                     <td class="text-center" style="border-left: 1px solid black;border-right: 1px solid black;">
-                                                        <t t-if="p.product_id.image_128">
-                                                            <img t-if="p.product_id.image_128" t-att-src="image_data_uri(p.image_128)"
-                                                             style="width: 90%"/>
+                                                        <t t-if="p.image_128">
+                                                            <img t-att-src="image_data_uri(p.image_128)" style="width: 90%"/>
                                                         </t>
-                                                        <t t-else="">
-
+                                                        <t t-elif="p.product_id.image_128">
+                                                            <img t-att-src="image_data_uri(p.product_id.image_128)"
+                                                                 style="width: 90%"/>
                                                         </t>
                                                     </td>
                                                 </t>
