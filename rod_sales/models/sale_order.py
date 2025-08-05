@@ -83,14 +83,21 @@ class SaleOrder(models.Model):
             percentage = record.user_id.partner_id.commission_ids.percentage if record.user_id.partner_id.commission_ids.percentage else 0
             record.commission_percentage = percentage/100 if percentage else 0
 
-            tax_amount_total = record.amount_total * 0.16
+            # Verificar si hay impuestos en alguna línea
+            has_taxes = any(line.tax_id for line in record.order_line)
+            tax_amount_total = record.amount_total * 0.16 if has_taxes else 0
             sub_amount_total = record.amount_total - tax_amount_total
 
+            # Cálculo de costos
             record.delivery_total = sum(line.amount for line in record.additional_costs_ids)
-            record.cost_total = sum(line.standard_price * line.product_uom_qty for line in record.order_line) + record.delivery_total
-            # record.margin_commission = record.amount_untaxed - record.cost_total
+            record.cost_total = sum(
+                line.standard_price * line.product_uom_qty for line in record.order_line) + record.delivery_total
+
+            # Margen y comisión
             record.margin_commission = sub_amount_total - record.cost_total
-            record.commission_total = record.margin_commission * (percentage/100)
+            record.commission_total = record.margin_commission * (percentage / 100)
+
+            # Permiso de solo lectura
             record.readonly_user = record.create_uid.has_group("rod_sales.group_cost_readonly")
 
             # record.commission_total = record.commission
