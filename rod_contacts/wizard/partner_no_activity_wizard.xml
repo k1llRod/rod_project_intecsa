@@ -1,0 +1,32 @@
+<odoo>
+  <record id="view_partner_no_activity_wizard_form" model="ir.ui.view">
+    <field name="name">partner.no.activity.wizard.form</field>
+    <field name="model">partner.no.activity.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Clientes sin actividad de cotizaciones">
+        <group>
+          <group>
+            <field name="date_start" required="1"/>
+            <field name="date_end" required="1"/>
+          </group>
+          <group>
+            <field name="include_confirmed"/>
+            <field name="company_id"/>
+          </group>
+        </group>
+        <footer>
+          <button name="action_export_xlsx" string="Exportar Excel" type="object" class="btn-primary"/>
+          <button string="Cancelar" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_partner_no_activity_wizard" model="ir.actions.act_window">
+    <field name="name">Clientes sin actividad (XLSX)</field>
+    <field name="res_model">partner.no.activity.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="context">{}</field>
+  </record>
+</odoo>

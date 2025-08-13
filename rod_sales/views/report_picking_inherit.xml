@@ -1,0 +1,31 @@
+<odoo>
+  <!-- Herencia del reporte stock.report_picking -->
+  <template id="report_picking_add_price_unit" inherit_id="stock.report_picking">
+
+    <!-- 1) Encabezado: agregamos la última columna "Precio U." -->
+    <xpath expr="//table[contains(@class,'table')]/thead/tr" position="inside">
+      <th class="text-right">
+        <strong>Precio U.</strong>
+      </th>
+    </xpath>
+
+    <!-- 2) Cuerpo: agregamos la celda final con ml.move_id.price_unit -->
+    <!-- Apuntamos al <tr> que muestra la línea de producto (tiene ml.product_id.display_name) -->
+<!--    <xpath expr="//tbody/tr[.//t[@t-field='ml.product_id.display_name']]" position="inside">-->
+<!--      <td class="text-right">-->
+<!--        <span t-esc="format_amount(ml.move_id.price_unit, o.company_id.currency_id)"/>-->
+<!--      </td>-->
+<!--    </xpath>-->
+    <xpath expr="//tbody/tr[.//span[@t-field='ml.product_id.display_name']]" position="inside">
+      <td class="text-right">
+        <span t-esc="ml.move_id.price_unit"/>
+      </td>
+    </xpath>
+<!--    <xpath expr="//tbody/tr[contains(@t-foreach, 'o.move_line_ids_without_package')]" position="inside">-->
+<!--      <td class="text-right">-->
+<!--        <span t-esc="ml.move_id.price_unit"/>-->
+<!--      </td>-->
+<!--    </xpath>-->
+
+  </template>
+</odoo>

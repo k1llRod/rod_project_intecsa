@@ -1,0 +1,7 @@
+<odoo>
+  <menuitem id="menu_partner_no_activity_report"
+            name="Clientes sin actividad (XLSX)"
+            parent="contacts.menu_contacts"
+            action="action_partner_no_activity_wizard"
+            sequence="98"/>
+</odoo>

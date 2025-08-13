@@ -14,3 +14,8 @@ class StockPickin(models.Model):
         self.name_ent = sequence
         self.sale_id.name_ent = sequence
         return res
+
+    def do_print_picking(self):
+        res = super(StockPickin, self).do_print_picking()
+
+        return res
