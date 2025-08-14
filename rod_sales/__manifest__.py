@@ -41,6 +41,7 @@ Long description of module's purpose
         'views/disable_create_quotations.xml',
         'wizard/wizard_inventory_product.xml',
         'views/report_picking_inherit.xml',
+        'views/stock_picking.xml',
         'report/report.xml',
         # 'report/report_sale.xml',
         'report/report_pdf_proforma.xml',

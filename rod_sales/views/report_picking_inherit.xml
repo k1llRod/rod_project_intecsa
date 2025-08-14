@@ -7,6 +7,9 @@
       <th class="text-right">
         <strong>Precio U.</strong>
       </th>
+      <th class="text-right">
+        <strong>Subtotal</strong>
+      </th>
     </xpath>
 
     <!-- 2) Cuerpo: agregamos la celda final con ml.move_id.price_unit -->
@@ -18,9 +21,92 @@
 <!--    </xpath>-->
     <xpath expr="//tbody/tr[.//span[@t-field='ml.product_id.display_name']]" position="inside">
       <td class="text-right">
+        <t t-set="u_cost" t-value="ml.move_id.price_unit"/>
         <span t-esc="ml.move_id.price_unit"/>
       </td>
+      <td class="text-right">
+        <t t-set="qty" t-value="ml.quantity or 0.0"/>
+        <t t-set="sub_total" t-value="(u_cost or 0.0) * (qty or 0.0)"/>
+        <span t-esc="round(sub_total,2)"/>
+        <!-- acumular -->
+        <t t-set="total_price" t-value="(total_price or 0.0) + (sub_total or 0.0)"/>
+      </td>
     </xpath>
+    <xpath expr="//table[contains(@class,'table')][.//th[@name='th_product']]/tbody" position="after">
+      <tfoot>
+        <tr>
+          <td colspan="100" class="text-end">
+            <strong>Total:</strong>
+            <span t-esc="round(total_price or 0.0, 2)"/>
+          </td>
+        </tr>
+      </tfoot>
+    </xpath>
+    <xpath expr="//table[contains(@class,'table')][.//th[@name='th_product']]" position="after">
+      <!-- Bloque para ENTREGA -->
+      <t t-if="o.picking_type_id.code == 'outgoing'">
+        <br/>
+        <br/>
+        <div class="mt32">
+          <table style="width:100%; table-layout: fixed;">
+            <tr>
+              <td style="width:48%; padding-top:30px; vertical-align:bottom;">
+                <div style="border-top:1px solid #000; height:1px; margin-bottom:6px;"></div>
+                <strong>Solicitado por:</strong>
+              </td>
+              <td style="width:4%;"></td>
+              <td style="width:48%; padding-top:30px; vertical-align:bottom;">
+                <div style="border-top:1px solid #000; height:1px; margin-bottom:6px;"></div>
+                <strong>Entregado a:</strong>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </t>
+
+      <!-- Bloque para RECEPCIÓN / INGRESO -->
+      <t t-if="o.picking_type_id.code == 'incoming'">
+        <br/>
+        <br/>
+        <div class="mt32">
+          <table style="width:100%; table-layout: fixed;">
+            <tr>
+              <td style="width:48%; padding-top:30px; vertical-align:bottom;">
+                <div style="border-top:1px solid #000; height:1px; margin-bottom:6px;"></div>
+                <strong>Aprobado por:</strong>
+              </td>
+              <td style="width:4%;"></td>
+              <td style="width:48%; padding-top:30px; vertical-align:bottom;">
+                <div style="border-top:1px solid #000; height:1px; margin-bottom:6px;"></div>
+                <strong>Recibido por:</strong>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </t>
+
+      <!-- (Opcional) Transferencia interna: deja un área genérica -->
+      <t t-if="o.picking_type_id.code == 'internal'">
+        <br/>
+        <br/>
+        <div class="mt32">
+          <table style="width:100%; table-layout: fixed;">
+            <tr>
+              <td style="width:48%; padding-top:30px; vertical-align:bottom;">
+                <div style="border-top:1px solid #000; height:1px; margin-bottom:6px;"></div>
+                <strong>Entregado por:</strong>
+              </td>
+              <td style="width:4%;"></td>
+              <td style="width:48%; padding-top:30px; vertical-align:bottom;">
+                <div style="border-top:1px solid #000; height:1px; margin-bottom:6px;"></div>
+                <strong>Recibido por:</strong>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </t>
+    </xpath>
+
 <!--    <xpath expr="//tbody/tr[contains(@t-foreach, 'o.move_line_ids_without_package')]" position="inside">-->
 <!--      <td class="text-right">-->
 <!--        <span t-esc="ml.move_id.price_unit"/>-->

@@ -19,6 +19,10 @@
                 <xpath expr="//field[@name='ref']" position="attributes">
                     <attribute name="invisible">0</attribute>
                 </xpath>
+                <xpath expr="//field[@name='ref'][2]" position="after">
+                    <field name="literal_number" />
+                    <field name="move_type"/>
+                </xpath>
 
             </field>
         </record>

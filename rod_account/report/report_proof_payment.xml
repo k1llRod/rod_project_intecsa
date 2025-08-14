@@ -61,10 +61,10 @@
                                                 <strong>Cliente: </strong>
                                             </t>
                                             <t t-if="o.move_type == 'in_invoice'">
-                                                <strong>Proveedor: </strong>
+                                                <strong>Pagado a: </strong>
                                             </t>
                                             <t t-if="o.move_type == 'in_refund'">
-                                                <strong>Proveedor: </strong> <span>Nota de Debito
+                                                <strong>Pagado a: </strong> <span>Nota de Debito
                                                 </span>
                                             </t>
                                             <t t-if="o.move_type == 'entry'">
@@ -72,9 +72,13 @@
                                                     <strong>Cliente: </strong>
                                                 </t>
                                                 <t t-if="o.payment_id.payment_type == 'outbound'">
-                                                    <strong>Proveedor: </strong>
+                                                    <strong>Pagado a: </strong>
+                                                </t>
+                                                <t t-else="">
+                                                    <strong>Contacto: </strong>
                                                 </t>
                                             </t>
+
                                             <span t-field="o.partner_id"/>
                                         </li>
                                         <li style="font-size:16px;">
@@ -171,6 +175,11 @@
                                     </tfoot>
 
                                 </table>
+                                <br/>
+                                <div>
+                                    <span style="font-size:14px;"><strong>SON: </strong></span>
+                                    <span t-field="o.literal_number" style="font-size:14px;"/>
+                                </div>
                             </div>
                             <t t-if="o.journal_id.select_report == 'income'">
                                 <div class="row mt20 mb32" style="padding-top:120px;">
