@@ -9,8 +9,21 @@ class HelpdeskTicket(models.Model):
     marca = fields.Char(string='Marca', help="Marca del producto o accesorio entregado")
     modelo = fields.Char(string='Modelo', help="Modelo del producto o accesorio entregado")
     serial_number = fields.Char(string='Numero serie', help="Número de serie del producto o accesorio entregado")
-    sale_order_ids = fields.One2many('sale.order', 'ticket_id', string='Ventas')
-    def action_create_sale_order(self):
+    sale_order_id = fields.One2many('sale.order', 'ticket_id', string='Ventas')
+    sale_order_count = fields.Integer(
+        compute="_compute_sale_order_count",
+        string="Nº de pedidos"
+    )
+
+    def _compute_sale_order_count(self):
+        for ticket in self:
+            ticket.sale_order_count = len(ticket.sale_order_id)
+    def action_view_sale_orders(self):
+        self.ensure_one()
+        action = self.env.ref("sale.action_quotations_with_onboarding").read()[0]
+        action["domain"] = [("id", "in", self.sale_order_id.ids)]
+        return action
+    def create_sale_orders(self):
         for ticket in self:
             if not ticket.partner_id:
                 raise UserError("Debe asignar un cliente al ticket antes de crear una venta.")
@@ -21,7 +34,7 @@ class HelpdeskTicket(models.Model):
                 'client_order_ref': ticket.description or ticket.name,
                 'ticket_id': ticket.id if 'ticket_id' in self.env['sale.order']._fields else False,
             })
-            ticket.sale_order_id = sale.id
+            # ticket.sale_order_id = sale.id
             return {
                 'type': 'ir.actions.act_window',
                 'res_model': 'sale.order',

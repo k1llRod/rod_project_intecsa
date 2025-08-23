@@ -26,14 +26,21 @@
                 <field name="serial_number"/>
             </xpath>
             <xpath expr="//div[@class='oe_button_box']" position="inside">
-                <button type="action"
-                        name="%(action_helpdesk_ticket_sale_orders)d"
+                <button type="object"
+                        name="action_view_sale_orders"
                         string="Ventas"
                         icon="fa-shopping-cart"
                         class="oe_stat_button"
-                        modifiers='{"invisible": [["sale_order_ids", "=", false]]}'>
-                    <field name="sale_order_ids" widget="statinfo"/>
+                        invisible="sale_order_count == 0">
+                    <field name="sale_order_count" widget="statinfo"/>
                 </button>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="create_sale_orders"
+                        type="object"
+                        string="Crear cotizacion"
+                        class="btn-primary"
+                        />
             </xpath>
         </field>
     </record>
