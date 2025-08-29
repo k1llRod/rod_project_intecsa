@@ -85,41 +85,34 @@ class AccountMoveLineReport(models.AbstractModel):
         result = self.env.cr.fetchall()
         query_income = """
             SELECT 
-                account_type.name AS tipo_cuenta,
-                SUM(aml.debit) AS total_egresos,
+                account.account_type AS tipo_cuenta,
+                SUM(aml.debit)  AS total_egresos,
                 SUM(aml.credit) AS total_ingresos,
                 SUM(aml.credit) - SUM(aml.debit) AS resultado_ejercicio
             FROM account_move_line aml
             JOIN account_account account ON aml.account_id = account.id
-            JOIN account_account_type account_type ON account.user_type_id = account_type.id
             JOIN account_move move ON aml.move_id = move.id
-            WHERE move.date BETWEEN %s AND %s
-            AND move.state = 'posted'
-            AND account_type.name IN ('Income', 'Expenses') 
-            GROUP BY account_type.name;
+            WHERE move.state = 'posted'
+              AND move.date BETWEEN %s AND %s
+              AND account.account_type IN ('income', 'expense')
+            GROUP BY account.account_type
+            ORDER BY account.account_type;
             """
         query_historical = """
             SELECT 
-                account_type.internal_group AS group_name,
-                SUM(aml.debit) AS total_debit, 
+                account.internal_group AS group_name,
+                SUM(aml.debit)  AS total_debit, 
                 SUM(aml.credit) AS total_credit,
                 SUM(aml.debit - aml.credit) AS total_balance
-            FROM 
-                account_move_line aml 
-            LEFT JOIN 
-                account_account account ON aml.account_id = account.id
-            LEFT JOIN 
-                account_account_type account_type ON account.user_type_id = account_type.id
-            LEFT JOIN 
-                account_move move ON aml.move_id = move.id
-            WHERE 
-                move.date BETWEEN '2023-01-01' AND %s
-                AND move.state = 'posted'
-                AND account_type.internal_group IN ('income', 'expense')
-            GROUP BY 
-                account_type.internal_group
-            ORDER BY 
-                account_type.internal_group;
+            FROM account_move_line aml
+            JOIN account_account account ON aml.account_id = account.id
+            JOIN account_move move ON aml.move_id = move.id
+            WHERE move.state = 'posted'
+              AND move.date >= '2025-01-01'
+              AND move.date <= %s
+              AND account.internal_group IN ('income', 'expense')
+            GROUP BY account.internal_group
+            ORDER BY account.internal_group;
         """
         self.env.cr.execute(query_income, (date_start, date_end))
         result_income = self.env.cr.fetchall()

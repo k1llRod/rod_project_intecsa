@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_mayor_book_layout">
+            <div class="header">
+                <div class="row">
+                    <!-- Cabecera a la izquierda -->
+                    <div class="col-1">
+                        <img t-att-src="'/rod_account/static/src/img/coaa.png'" style="width:60px;"/>
+                    </div>
+                    <div class="col-7" style="font-size:12px;">
+                        <center><strong>COOPERATIVA DE AHORRO Y CRÉDITO DE VINCULO LABORAL </strong></center>
+                        <center><strong>COA-4 DE DICIEMBRE R.L.</strong></center>
+                    </div>
+                    <!-- Número de página a la derecha -->
+                    <div class="col-4 text-right" style="font-size:12px;">
+                        <ul style="list-style:none;">
+                            <li>Página
+                                <span class="page"/>
+                                de
+                                <span class="topage"/>
+                            </li>
+                            <li><strong><t t-esc="current_date"/></strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="article o_report_layout_standard">
+                <t t-out="0"/>
+            </div>
+        </template>
+        <template id="report_mayor_book_pdf">
+            <t t-call="web.html_container">
+                <t t-call="rod_account.custom_mayor_book_layout">
+                    <div>
+                        <br/>
+                        <center>
+                            <h3>LIBRO MAYOR</h3>
+                        </center>
+                        <center>Desde:
+                            <t t-esc="date_start"/>
+                            Hasta:
+                            <t t-esc="date_end"/>
+                        </center>
+                        <br/>
+                        <t t-set="i" t-value="0"/>
+                        <t t-foreach="docs.items()" t-as="account_data">
+                            <div class="page" t-att-style="'page-break-before: always;' if i != 0 else ''">
+                                <t t-set="account_id" t-value="account_data[0]"/>
+                                <t t-set="account_info" t-value="account_data[1]"/>
+                                <h4>
+                                    <t t-esc="account_info['code']"/>-
+                                    <t t-esc="account_info['account_name']"/>
+<!--                                    <t t-esc="i"/>-->
+                                </h4>
+                                <table class="table table-sm" style="font-size:10px;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:85px;">Fecha</th>
+                                            <th>Nro.Doc.</th>
+                                            <th>Concepto</th>
+                                            <!--                                            <th>N.Cheque</th>-->
+                                            <!--                                        <th>T.C.</th>-->
+                                            <th>Debe</th>
+                                            <th>Haber</th>
+                                            <th>Saldo</th>
+                                            <th>Saldo1</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>SALDO ANTERIOR</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <t t-esc="account_info['difference']"/>
+                                            </td>
+                                        </tr>
+
+                                        <t t-foreach="account_info['lines']" t-as="l">
+
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="l['date']"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="l['move_name']"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="l['ref']"/>
+                                                </td>
+                                                <!--                                                <td></td>-->
+                                                <!--                                            <td>6.96</td>-->
+                                                <td>
+                                                    <t t-esc="l['debit_str']"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="l['credit_str']"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="l['balance_str']"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="l['before_balance_str']"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td colspan="3" style="text-align:right;">Totales:</td>
+                                            <td>
+                                                <t t-esc="account_info['total_debit_str']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="account_info['total_credit_str']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="account_info['total_balance_str']"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <t t-set="i" t-value="i + 1"/>
+                        </t>
+                    </div>
+                    <div class="oe_structure"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_sums_balances_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="body">
+                            <center><span t-esc="title"/></center>
+                            <center style="font-weight:bold;">Del <span t-esc="date_start"/> al <span t-esc="date_end"/> </center>
+                            <center style="font-weight:bold;">Expresado en Bolivianos </center>
+                            <table class="table table-sm align-middle" style="font-size:12px;">
+                                    <tr>
+                                        <td style="border:1px solid black;"></td>
+                                        <td style="border:1px solid black;"></td>
+                                        <td colspan="2" style="border:1px solid black;"><center>SUMAS</center></td>
+                                        <td colspan="2" style="border:1px solid black;"><center>SALDOS</center></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border:1px solid black;">CODIGO</td>
+                                        <td style="border:1px solid black;">CUENTA</td>
+                                        <td style="border:1px solid black;">DEBE</td>
+                                        <td style="border:1px solid black;">HABER</td>
+                                        <td style="border:1px solid black;">DEUDOR</td>
+                                        <td style="border:1px solid black;">ACREEDOR</td>
+                                    </tr>
+                                <t t-foreach="docs" t-as="line">
+
+                                        <tr>
+                                            <td>
+                                                <span t-esc="line[0]"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="line[1]"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="line[3]"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="line[4]"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="line[5]"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="line[6]"/>
+                                            </td>
+                                        </tr>
+                                </t>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><span t-esc="total_debit"/></td>
+                                    <td><span t-esc="total_credit"/></td>
+                                    <td><span t-esc="total_debtor"/></td>
+                                    <td><span t-esc="total_creditor"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+
+            </t>
+        </template>
+    </data>
+
+</odoo>

@@ -31,6 +31,8 @@ Long description of module's purpose
         'report/report.xml',
         'report/report_account_move_line.xml',
         'report/report_proof_payment.xml',
+        'report/report_mayor_book.xml',
+        'report/report_sums_balances.xml',
         'views/rod_account_menuitem.xml',
 
     ],

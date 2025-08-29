@@ -32,5 +32,28 @@
             <field name="binding_type">report</field>
             <field name="print_report_name">'Reporte Account Move Line - %s' % object.date'</field>
         </record>
+
+        <record id="report_mayor_book" model="ir.actions.report">
+            <field name="name">Reporte de libro mayor</field>
+            <field name="model">account.move.line</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">rod_account.report_mayor_book_pdf</field>
+            <field name="report_file">rod_account.report_mayor_book_pdf</field>
+            <field name="binding_model_id" ref="account.model_account_move_line"/>
+<!--            <field name="paperformat_id" ref="rod_account_coa.paperformat_officio_landscape"/>-->
+<!--            <field name="paperformat_id" ref="rod_cooperativa_aportes.paperformat_certificate" />-->
+            <field name="binding_type">report</field>
+        </record>
+        <record id="report_sums_balances" model="ir.actions.report">
+            <field name="name">Reporte de sumas y saldos</field>
+            <field name="model">account.move.line</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">rod_account.report_sums_balances_pdf</field>
+            <field name="report_file">rod_account.report_sums_balances_pdf</field>
+            <field name="binding_model_id" ref="account.model_account_move_line"/>
+<!--            <field name="paperformat_id" ref="rod_account_coa.paperformat_officio_landscape"/>-->
+<!--            <field name="paperformat_id" ref="rod_cooperativa_aportes.paperformat_certificate" />-->
+            <field name="binding_type">report</field>
+        </record>
     </data>
 </odoo>
