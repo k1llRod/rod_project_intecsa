@@ -29,3 +29,7 @@ class AccountMove(models.Model):
             record.literal_number = num2words(int(record.amount_total), lang='es').upper()
             decimal = str(round(record.amount_total % 1 * 100))
             record.literal_number = record.literal_number + ', CON ' + decimal + '/100 BOLIVIANOS'
+
+    def action_vr_send_to_middleware(self):
+        for record in self:
+            record.vr_send_to_middleware = False
